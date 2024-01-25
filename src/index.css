@@ -1,0 +1,46 @@
+body{
+  margin :0px;
+  text-transform: none;
+}
+
+.MuiButtonText-root {
+  text-transform: none;
+}
+
+.MuiTypography-root {
+  margin: 0px;
+  padding: 0px;
+  text-transform: none;
+}
+
+.MuiCard-root {
+  margin:0px;
+  padding:0px;
+}
+
+.MuiCardMedia-root {
+  padding:0px;
+  margin:0px
+}
+
+.MuiCardContent-root {
+  padding:0;
+  margin:0;
+  /* background-color: pink; */
+  display: block;
+  justify-content: start;
+  align-items: start;
+}
+
+.slick-prev {
+  left: -102px !important;
+}
+.slick-next:before,
+.slick-prev:before {
+  content: "" !important;
+}
+.next-slick-arrow,
+.prev-slick-arrow {
+  color: #000000;
+  font-size: 45px;
+}
