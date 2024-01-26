@@ -4,6 +4,8 @@ import Home from '../pages/Home';
 import Category from '../pages/Category';
 import HowItWorks from '../pages/HowItWorks';
 import Deal from '../pages/Deal';
+import Travel from '../components/categories/Travel';
+import Broadband from '../components/categories/Broadband';
 
 export const Router = ()=>{
     return useRoutes([
@@ -12,18 +14,27 @@ export const Router = ()=>{
         children:[
             { element: <Home />, index: true,},
             {path:"how-it-works", element:<HowItWorks />},
-            {path:"deals", element:<Deal />}
+            {path:"deals", element:<Deal />},
+            
+            
+            {path:"categories", 
+            children : [
+                { element: <Navigate to="categories/travel" replace />, index: true },
+                { path: 'travel', element: <Travel />,      },
+                { path: 'broadband', element: <Broadband /> },
+            ]
+        }
         ]
 
     
     },
-    {path : "categories",
-    element: <Category />,
-    children: [
-        {
+//     {path : "categories",
+//     element: <Category />,
+//     children: [
+//         {
 
-        }
-    ]    
-}
+//         }
+//     ]    
+// }
     ])
 }
