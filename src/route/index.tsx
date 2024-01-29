@@ -1,11 +1,14 @@
 import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 import Layout from '../pages/Layout';
 import Home from '../pages/Home';
-import Category from '../pages/Category';
+import Category from '../pages/CategoryList';
 import HowItWorks from '../pages/HowItWorks';
 import Deal from '../pages/Deal';
 import Travel from '../components/categories/Travel';
 import Broadband from '../components/categories/Broadband';
+import CategoryList from '../pages/CategoryList';
+import Store from '../pages/Store';
+import OnlineStore from '../components/store/OnlineStore';
 
 export const Router = ()=>{
     return useRoutes([
@@ -14,16 +17,10 @@ export const Router = ()=>{
         children:[
             { element: <Home />, index: true,},
             {path:"how-it-works", element:<HowItWorks />},
+            {path:"online-stores", element:<OnlineStore />},
+            {path:"stores", element:<Store />},
             {path:"deals", element:<Deal />},
-            
-            
-            {path:"categories", 
-            children : [
-                { element: <Navigate to="categories/travel" replace />, index: true },
-                { path: 'travel', element: <Travel />,      },
-                { path: 'broadband', element: <Broadband /> },
-            ]
-        }
+            {path:"categories", element:<CategoryList /> }
         ]
 
     

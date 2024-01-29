@@ -8,7 +8,6 @@ import { getData } from "../../api/homeApi";
 import CommonCoupon from "../common components/CommonCoupon";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
-import { Height } from "@mui/icons-material";
 import theme from "../../theme";
 import { filterData } from "../../features/filterData";
 import { filterDataByCategory } from "../../features/filterData";

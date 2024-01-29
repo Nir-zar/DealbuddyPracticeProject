@@ -133,6 +133,11 @@ const theme = createTheme({
           fontSize: "24px",
         },
       },
+      md: {
+        "@media (min-width:992px)": {
+          fontSize: "20px",
+        },
+      },
     },
 
     h6: {
