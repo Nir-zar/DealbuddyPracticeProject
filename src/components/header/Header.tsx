@@ -28,7 +28,7 @@ import Modal from "@mui/material/Modal";
 import { ArrowDropDown, Height } from "@mui/icons-material";
 import SendIcon from "@mui/icons-material/Send";
 import { getData } from "../../api/homeApi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {  useDispatch, useSelector } from "react-redux";
 import { storePageNumber } from "../../features/storeData";
@@ -45,6 +45,9 @@ const style = {
   p: { xl: "1rem 2rem" },
   height: "auto",
 };
+
+
+
 
 const category_style = {
   category_list_style: {
@@ -69,7 +72,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const pageNumber = useSelector((store)=> store.storeData.pageNumber)
 
-  console.log(params);
+
+
 
   const gotoHomePage = () => {
     navigae("/");

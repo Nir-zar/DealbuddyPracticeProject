@@ -21,8 +21,6 @@ import { getStoreData } from "../../api/storeApi";
 import { useSelector, useDispatch } from "react-redux";
 import { storePageNumber } from "../../features/storeData";
 
-
-
 const AllStore = () => {
   const [storeData, setStoredata] = useState([]);
 
@@ -30,7 +28,6 @@ const AllStore = () => {
     (store) => store.storeData
   );
   const dispatch = useDispatch();
-  console.log(pageNumber);
 
   useEffect(() => {
     const params = {
@@ -42,7 +39,6 @@ const AllStore = () => {
 
     if (pageNumber == 1) {
       getStoreData(params).then((res) => {
-        console.log(res.data.items);
         setStoredata(res.data.items);
       });
     } else {

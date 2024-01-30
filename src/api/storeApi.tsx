@@ -17,3 +17,12 @@ export const getStoreData = async (params:StoreParams)=>{
     });
     return data;
 }
+
+export const getIndividualStoreData = async (params:StoreParams)=>{
+    const data = await axios.get(`${BASE_URL}/store/slug-or-id`,{
+        params : {
+            ...params,
+        }
+    });
+    return data;
+}

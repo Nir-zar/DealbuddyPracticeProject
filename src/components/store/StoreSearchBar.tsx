@@ -9,13 +9,18 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { all_center } from "../../constant/commonStyle";
 import theme from "../../theme";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { UseDispatch, useDispatch } from "react-redux";
-import { storeSearchBarValue } from "../../features/storeData";
+import { useDispatch } from "react-redux";
+import {
+storeCategoryType, storeDiscountType,
+  storeSearchBarValue,
+} from "../../features/storeData";
+import { getCategoryList } from "../../api/categoryApi";
+import { getData } from "../../api/homeApi";
 
 const storeType = {
   all: {
@@ -33,29 +38,56 @@ const storeType = {
 };
 
 const StoreSearchBar = () => {
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [btnTwoanchorEl, setbtnTwoAnchorEl] =
+    React.useState<null | HTMLElement>(null);
+  const [categoryList, setCategoryList] = useState([]);
+  const [discountTypeList, setDiscountTypeList] = useState([]);
+  const [currentPlaceHolderValue, setCurrentPlaceHolderValue] = useState({
+    discountType: "Discount Type",
+    CategoryType: "Categories",
+  });
+
   const open = Boolean(anchorEl);
+  const menuTwoOpen = Boolean(btnTwoanchorEl);
+  const urlForDiscountType = "discount-type";
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    getCategoryList().then((res) => {
+      setCategoryList(res.data.items);
+    });
+
+    getData(urlForDiscountType).then((res) => {
+      setDiscountTypeList(res.data.items);
+    });
+  }, []);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setbtnTwoAnchorEl(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
+    setbtnTwoAnchorEl(null);
   };
 
 
-  const dispatch = useDispatch();
 
-  const searchBarValue = (e)=>{
-    dispatch(storeSearchBarValue({searchBarValue: e.target.value}));
-  }
-
+  const searchBarValue = (e) => {
+    dispatch(storeSearchBarValue({ searchBarValue: e.target.value }));
+  };
 
   return (
     <Grid container sx={{ ...all_center }}>
       <Box
         component={"div"}
-        sx={{ height: "auto", width: "1300px", p: "2rem 0 0 0", }}
+        sx={{ height: "auto", width: "1300px", p: "2rem 0 0 0" }}
       >
         <Box
           component={"div"}
@@ -107,7 +139,7 @@ const StoreSearchBar = () => {
           >
             <FormControl sx={{ height: "auto", width: "891px" }}>
               <Input
-              onChange={(e)=> searchBarValue(e)}
+                onChange={(e) => searchBarValue(e)}
                 placeholder="Search Store"
                 endAdornment={
                   <InputAdornment position="end">
@@ -131,17 +163,25 @@ const StoreSearchBar = () => {
             </FormControl>
 
             <Button
+              id="button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick2}
               variant="outlined"
               sx={{
                 height: "3rem",
                 width: "192px",
                 border: `1px solid ${theme.palette.grey[300]}`,
                 borderRadius: "10px",
-                "&:hover":{bgcolor:"transparent", border:`1px solid ${theme.palette.grey[300]}`}
+                "&:hover": {
+                  bgcolor: "transparent",
+                  border: `1px solid ${theme.palette.grey[300]}`,
+                },
               }}
             >
               <Typography sx={{ color: theme.palette.common.black }}>
-                Discount Type
+                {currentPlaceHolderValue.discountType}
               </Typography>
               <ArrowDropDownIcon
                 sx={{ ml: { xl: "1rem" }, color: theme.palette.common.black }}
@@ -149,42 +189,117 @@ const StoreSearchBar = () => {
             </Button>
 
             <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
+              id="basic-menu"
+              anchorEl={btnTwoanchorEl}
+              open={menuTwoOpen}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem
+                onClick={() => {
+                  setCurrentPlaceHolderValue({
+                    ...currentPlaceHolderValue,
+                    discountType: "Discount Type",
+                  });
+                  handleClose();
+                  dispatch(
+                    storeDiscountType("")
+                  );
+                }}
+              >
+                All Discount Type
+              </MenuItem>
+              {discountTypeList.map((data) => {
+                return (
+                  <MenuItem
+                    onClick={() => {
+                      setCurrentPlaceHolderValue({
+                        ...currentPlaceHolderValue,
+                        discountType: data.name,
+                      });
+                      handleClose();
+                      dispatch(
+                        storeDiscountType(data.id)
+                      );
+                    }}
+                    value={data.id}
+                  >
+                    {data.name}
+                  </MenuItem>
+                );
+              })}
+            </Menu>
 
             <Button
-             id="button"
-             aria-controls={open ? 'basic-menu' : undefined}
-             aria-haspopup="true"
-             aria-expanded={open ? 'true' : undefined}
-             onClick={handleClick}
-             
+              id="button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
               variant="outlined"
               sx={{
                 height: "3rem",
                 width: "166px",
                 border: `1px solid ${theme.palette.grey[300]}`,
                 borderRadius: "10px",
-                "&:hover":{bgcolor:"transparent", border:`1px solid ${theme.palette.grey[300]}`}
+                "&:hover": {
+                  bgcolor: "transparent",
+                  border: `1px solid ${theme.palette.grey[300]}`,
+                },
               }}
             >
               <Typography sx={{ color: theme.palette.common.black }}>
-                Categories
+                {currentPlaceHolderValue.CategoryType}
               </Typography>
               <ArrowDropDownIcon
                 sx={{ ml: { xl: "1rem" }, color: theme.palette.common.black }}
               />
             </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem
+                onClick={() => {
+                  setCurrentPlaceHolderValue({
+                    ...currentPlaceHolderValue,
+                    discountType: "Categories",
+                  });
+                  handleClose();
+                  dispatch(
+                    storeCategoryType("")
+                  );
+                }}
+              >
+                All Categories
+              </MenuItem>
+              {categoryList.map((data) => {
+                return (
+                  <MenuItem
+                    value={data.id}
+                    onClick={() => {
+                      setCurrentPlaceHolderValue({
+                        ...currentPlaceHolderValue,
+                        CategoryType: data.name,
+                      });
+                      handleClose();
+                      dispatch(
+                        storeCategoryType(data.id)
+                      );
+                    }}
+                  >
+                    {data.name}
+                  </MenuItem>
+                );
+              })}
+            </Menu>
           </Box>
         </Box>
       </Box>
