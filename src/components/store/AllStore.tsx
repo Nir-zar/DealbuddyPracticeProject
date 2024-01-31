@@ -19,7 +19,9 @@ import Category_section_title from "../common components/CategorySection_title";
 import { getData } from "../../api/homeApi";
 import { getStoreData } from "../../api/storeApi";
 import { useSelector, useDispatch } from "react-redux";
-import { storePageNumber } from "../../features/storeData";
+import { storeCategoryType, storeDiscountType, storePageNumber } from "../../features/storeData";
+import { useNavigate } from "react-router-dom";
+import StoreSearchBar from "./storeSearchBar";
 
 const AllStore = () => {
   const [storeData, setStoredata] = useState([]);
@@ -28,28 +30,65 @@ const AllStore = () => {
     (store) => store.storeData
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const params = {
+  //     take: 20,
+  //     page: pageNumber,
+  //     skip: 0,
+  //     searchKeyword: searchBarValue,
+  //   };
+
+  //   if (pageNumber == 1) {
+  //     getStoreData(params).then((res) => {
+  //       setStoredata(res.data.items);
+  //     });
+  //   } else {
+  //     getStoreData(params).then((res) => {
+  //       const nextPageData = res.data.items;
+  //       setStoredata(storeData.concat(nextPageData));
+  //     });
+  //   }
+  // }, [pageNumber, searchBarValue]);
 
   useEffect(() => {
     const params = {
       take: 20,
       page: pageNumber,
       skip: 0,
-      searchKeyword: searchBarValue,
+      searchKeyword: "",
+      storeMode: "Online",
+      discountTypeId : storeDiscountType,
+      categoryId : storeCategoryType,
     };
 
     if (pageNumber == 1) {
       getStoreData(params).then((res) => {
+        setLoading(true)
+        setCurrentItemsLength(res.data.items.length)
+        setCurrentResponseTotalCount(res.data.total)
+        console.log(res.data.items);
         setStoredata(res.data.items);
+        setCurrentDataLength(res.data.items.length)
+        setLoading(false)
       });
     } else {
       getStoreData(params).then((res) => {
+        setLoading(true)
+        setCurrentItemsLength(currentItemsLength + res.data.items.length);
+        setCurrentResponseTotalCount(res.data.total);
+        setCurrentDataLength(res.data.items.length)
         const nextPageData = res.data.items;
         setStoredata(storeData.concat(nextPageData));
+        setLoading(false)
       });
     }
-  }, [pageNumber, searchBarValue]);
+  }, [pageNumber, storeDiscountType, storeCategoryType]);
 
   return (
+    <>
+    
     <Grid container sx={{ ...all_center, height: "auto" }}>
       <Box
         sx={{
@@ -66,14 +105,17 @@ const AllStore = () => {
         }}
       >
         {storeData.map(
-          ({ imageUrl, name, address, zipCode, activeDealsCount }) => {
+          ({ imageUrl, name, address, slug, activeDealsCount }) => {
             return (
+              <>
+             
               <Grid
                 item
                 xl={4}
                 sx={{ ...all_center, height: "auto", mt: "2rem" }}
               >
                 <Card
+                  onClick={() => navigate(`/store/${slug}`)}
                   sx={{
                     alignItems: "center",
                     height: "auto",
@@ -84,6 +126,7 @@ const AllStore = () => {
                     flexDirection: "row",
                     borderRadius: "10px",
                     mt: "0rem",
+                    cursor: "pointer"
                   }}
                 >
                   <CardMedia
@@ -127,8 +170,7 @@ const AllStore = () => {
                       }}
                     >
                       <PlaceOutlinedIcon
-                        sx={{ color: theme.palette.primary.main }}
-                      />
+                        sx={{ color: theme.palette.primary.main }} />
                       <Typography
                         sx={{
                           ml: "0.7rem",
@@ -151,15 +193,14 @@ const AllStore = () => {
                       }}
                     >
                       <LocalOfferOutlinedIcon
-                        sx={{ color: theme.palette.primary.main }}
-                      />
+                        sx={{ color: theme.palette.primary.main }} />
                       <Typography
                         sx={{
                           ml: "0.7rem",
                           fontSize: theme.typography.subtitle2.xl,
                         }}
                       >
-                        1 active deal
+                        {activeDealsCount} active deal
                       </Typography>
                     </Box>
 
@@ -202,7 +243,7 @@ const AllStore = () => {
                     <></>
                   )}
                 </Card>
-              </Grid>
+              </Grid></>
             );
           }
         )}
@@ -234,6 +275,9 @@ const AllStore = () => {
         </Box>
       </Box>
     </Grid>
+    
+    
+    </>
   );
 };
 

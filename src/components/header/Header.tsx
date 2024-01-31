@@ -457,9 +457,15 @@ const Header = () => {
                 sx={{
                   color: theme.palette.common.black,
                   fontSize: theme.typography.subtitle1.xl,
+                  "&:hover":{bgcolor:'transparent'}
                 }}
               >
+                 <Typography
+                sx={{ ...category_style.category_font_style, ml: "10px","&:hover":{fontWeight:800} }}
+              >
                 Store
+              </Typography>
+                
               </Button>
               <Menu
                 id="basic-menu"

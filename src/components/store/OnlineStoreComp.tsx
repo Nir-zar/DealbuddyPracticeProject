@@ -21,7 +21,7 @@ import { getData } from "../../api/homeApi";
 import { getStoreData } from "../../api/storeApi";
 import { useSelector, useDispatch } from "react-redux";
 import { storePageNumber } from "../../features/storeData";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OnlineStoreComp = () => {
   const [storeData, setStoredata] = useState([]);
@@ -38,6 +38,9 @@ const OnlineStoreComp = () => {
   const {storeDiscountType, storeCategoryType} = useSelector((store)=> store.storeData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+
 
   useEffect(() => {
     const params = {
@@ -45,7 +48,7 @@ const OnlineStoreComp = () => {
       page: pageNumber,
       skip: 0,
       searchKeyword: "",
-      storeMode: "Online",
+      storeMode: location.pathname == "/online-stores" ? "Online" : "" ,
       discountTypeId : storeDiscountType,
       categoryId : storeCategoryType,
     };
@@ -55,7 +58,6 @@ const OnlineStoreComp = () => {
         setLoading(true)
         setCurrentItemsLength(res.data.items.length)
         setCurrentResponseTotalCount(res.data.total)
-        console.log(res.data.items);
         setStoredata(res.data.items);
         setCurrentDataLength(res.data.items.length)
         setLoading(false)
@@ -71,9 +73,8 @@ const OnlineStoreComp = () => {
         setLoading(false)
       });
     }
-  }, [pageNumber, storeDiscountType, storeCategoryType]);
+  }, [pageNumber, storeDiscountType, storeCategoryType,location.pathname]);
 
-  console.log(storeData.length);
   
 
   return (
@@ -130,12 +131,12 @@ const OnlineStoreComp = () => {
                         alignItems: "center",
                         height: "auto",
                         width: { xl: "390px" },
-                        //   bgcolor: "red",
                         border: "1px solid #DEDEDE",
                         display: "flex",
                         flexDirection: "row",
                         borderRadius: "10px",
                         mt: "0rem",
+                        cursor:"pointer"
                       }}
                     >
                       <CardMedia

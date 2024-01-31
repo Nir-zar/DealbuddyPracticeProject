@@ -15,6 +15,7 @@ import { all_center } from "../../constant/commonStyle";
 import ShortcutSharpIcon from "@mui/icons-material/ShortcutSharp";
 import { useParams } from "react-router-dom";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
+import IndividualStoreDetail from "./IndividualStoreDetail";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -33,24 +34,16 @@ const DealCards = () => {
   const [value, setValue] = React.useState(0);
   const [salesCardData, setSalesCardData] = useState([]);
   const [dataStats, setDataStats] = useState({ all: "", sale: "", coupon: "" });
-  const [currentCard, setCurrentCard] = useState("all");
   const [loading, setLoading] = useState(true);
-  const [shortBy, setShortBy] = useState("date");
-  const [productType, setProductType] = useState("");
   const [currentItemsLength, setCurrentItemsLength] = useState(0);
   const [totalCardCount, setTotalCardCount] = useState(0);
-  // const [pageNumber, setPageNumber] = useState(1)
 
-  // const data = useSelector((store)=>{
-  //   const newData = store.filterData.shortBy;
-  //   setShortBy(newData)
-  // });
 
   const valueNew = useSelector((store) => store.filterData.shortBy);
   const pageNumber = useSelector((store) => store.filterData.pageNumber);
   const productCategory = useSelector((store) => store.filterData.productType);
   const { dealModes, discountTypes } = useSelector((store) => store.filterData);
-  const { slug } = useParams();
+  const { slug,storeSlug } = useParams();
 
   const url = `deal/deals?v=1705657100045&&updateViewCount=true&t=1705657100045`;
   const dispatch = useDispatch();
@@ -62,6 +55,7 @@ const DealCards = () => {
       dealModes: dealModes,
       discountTypes: discountTypes,
       categorySlug: slug,
+      storeSlug:storeSlug,
     };
 
     const paramsForSaleAndCoupon = {
@@ -71,7 +65,13 @@ const DealCards = () => {
       dealModes: dealModes,
       discountTypes: discountTypes,
       categorySlug: slug,
+      storeSlug:storeSlug,
     };
+
+    if(storeSlug)
+    {
+      console.log(storeSlug);
+    }
 
     if (pageNumber == 1) {
       setLoading(true);
@@ -80,7 +80,6 @@ const DealCards = () => {
         productCategory == "all" ? paramsForAll : paramsForSaleAndCoupon
       ).then((res) => {
         setCurrentItemsLength(res.data.items.length);
-        console.log(res.data.total, res.data.items.length);
         setTotalCardCount(res.data.total);
         setSalesCardData(res.data.items);
         setDataStats({
@@ -97,13 +96,9 @@ const DealCards = () => {
         productCategory == "all" ? paramsForAll : paramsForSaleAndCoupon
       ).then((res) => {
         setCurrentItemsLength(currentItemsLength + res.data.items.length);
-        console.log(totalCardCount, currentItemsLength);
-
         setTotalCardCount(res.data.total);
         const newPageData = res.data.items;
         setSalesCardData(salesCardData.concat(newPageData));
-        console.log(salesCardData);
-        console.log(salesCardData.concat(newPageData));
         setDataStats({
           ...dataStats,
           sale: res.data.sellCount,
@@ -112,10 +107,10 @@ const DealCards = () => {
         setLoading(false);
       });
     }
-    console.log(currentItemsLength);
+   
 
     return;
-  }, [valueNew, pageNumber, productCategory, dealModes, discountTypes, slug]);
+  }, [valueNew, pageNumber, productCategory, dealModes, discountTypes, slug,]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -129,6 +124,9 @@ const DealCards = () => {
     }
   };
 
+  console.log(salesCardData);
+  
+
   return (
     <Box
       component={"div"}
@@ -140,42 +138,10 @@ const DealCards = () => {
         overflowY: "scoll",
       }}
     >
-      <Box sx={{ width: "100%" }}>
-        <Box component={'div'}
-          sx={{
-            ...all_center,
-            height: "6rem",
-            border: `1px solid ${theme.palette.grey[300]}`,
-            borderRadius: "10px",
-            mb: "2rem",
-            p: "1rem 0.8rem",
-            flexDirection:"column"
-          }}
-        >
-          <Box component={'div'} sx={{height:"100%",width:"100%",display:"flex", flexDirection:"row"}}>
-         
-         {/* image section start */}
-          <Box component={'img'}
-          src={`https://d12agcgpij2qxn.cloudfront.net/store/2023/12/store-1702247641-209-thumb.png`}
-          sx={{height:"90px", width:"90px", objectFit:'contain'}}>
+      <Box sx={{ width: "100%", }}>
 
-          </Box>
-          {/* image section end */}
-
-          {/* title and detail start */}
-          <Box component={'div'}
-          sx={{height:"100%", width:"60%", border:"1px solid grey", ml:"0.5rem", display:"flex", flexDirection:"column"}}>
-
-         <Box sx={{height:"auto", width:"100%"}}>
-          <PlaceOutlinedIcon sx={{color:theme.palette.primary.main}} />
-          <Typography></Typography>
-         </Box>
-
-          </Box>
-          {/* title and detail end */}
-
-          </Box>
-        </Box>
+      {storeSlug && <IndividualStoreDetail />}
+      
 
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
@@ -218,7 +184,7 @@ const DealCards = () => {
       <Box
         component={"div"}
         sx={{
-          height: "55rem",
+          height: "auto",
           width: "100%",
           display: "flex",
           flexWrap: "wrap",
@@ -257,6 +223,7 @@ const DealCards = () => {
                     locations,
                     couponCode,
                     index,
+                    slug
                   }) => {
                     return (
                       <>
@@ -273,6 +240,7 @@ const DealCards = () => {
                             name={name}
                             NZWide={NZWide}
                             locations={locations}
+                            slug={slug}
                             width={4}
                           />
                         ) : (
@@ -288,6 +256,7 @@ const DealCards = () => {
                             NZWide={NZWide}
                             locations={locations}
                             width={4}
+                            slug={slug}
                           />
                         )}
                       </>
@@ -312,73 +281,7 @@ const DealCards = () => {
           </>
         )}
 
-        {/* {currentCard == "sale" &&
-          salesCardData.map(
-            ({
-              category,
-              imageUrl,
-              clicks,
-              productImages,
-              productType,
-              productModes,
-              stores,
-              name,
-              NZWide,
-              locations,
-              index,
-            }) => {
-              return (
-                <CommonCard
-                  key={index}
-                  category={category}
-                  imageUrl={imageUrl}
-                  clicks={clicks}
-                  productImages={productImages}
-                  productType={productType}
-                  productModes={productModes}
-                  stores={stores}
-                  name={name}
-                  NZWide={NZWide}
-                  locations={locations}
-                  width={4}
-                />
-              );
-            }
-          )}
 
-        {currentCard == "coupon" &&
-          salesCardData.map(
-            ({
-              category,
-              imageUrl,
-              clicks,
-              productImages,
-              productType,
-              productModes,
-              stores,
-              name,
-              NZWide,
-              locations,
-              index,
-            }) => {
-              return (
-                <CommonCoupon
-                  key={index}
-                  category={category}
-                  imageUrl={imageUrl}
-                  clicks={clicks}
-                  productImages={productImages}
-                  productType={productType}
-                  productModes={productModes}
-                  stores={stores}
-                  name={name}
-                  NZWide={NZWide}
-                  locations={locations}
-                  width={4}
-                />
-              );
-            }
-          )} */}
       </Box>
 
       {currentItemsLength == totalCardCount ? (
@@ -391,6 +294,7 @@ const DealCards = () => {
             width: "20rem",
             background: theme.gradient_color.button_hover_color,
             alignSelf: "center",
+            borderRadius:"10px"
           }}
         >
           <Typography

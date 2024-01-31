@@ -21,21 +21,10 @@ storeCategoryType, storeDiscountType,
 } from "../../features/storeData";
 import { getCategoryList } from "../../api/categoryApi";
 import { getData } from "../../api/homeApi";
+import { useLocation } from "react-router-dom";
 
-const storeType = {
-  all: {
-    mainTitle: "All Stores",
-    subtitle: "Find your store and grab a deal!",
-  },
 
-  online: {
-    mainTitle: "Discover stores offering deals on online shopping",
-  },
 
-  physica: {
-    mainTitle: "Discover the best discount deals in your area",
-  },
-};
 
 const StoreSearchBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -52,6 +41,7 @@ const StoreSearchBar = () => {
   const menuTwoOpen = Boolean(btnTwoanchorEl);
   const urlForDiscountType = "discount-type";
   const dispatch = useDispatch();
+  const location = useLocation();
 
 
   useEffect(() => {
@@ -104,18 +94,21 @@ const StoreSearchBar = () => {
               fontSize: theme.typography.h4.lg,
             }}
           >
-            All Stores
+           {location.pathname == "/stores" ? " All Stores" : "Discover stores offering deals on online shopping"}
+           
           </Typography>
 
-          <Typography
+            {location.pathname == "/stores" &&  <Typography
             sx={{
               color: theme.palette.common.black,
               fontSize: theme.typography.h5.md,
               mt: { xl: "0.7rem" },
             }}
           >
-            Find your store and grab a deal!
-          </Typography>
+           Find your store and grab a deal!
+           
+          </Typography>}
+         
         </Box>
 
         <Box

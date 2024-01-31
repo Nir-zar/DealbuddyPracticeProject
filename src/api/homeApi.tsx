@@ -12,7 +12,7 @@ export const getData = async (url?: string, params?: object) =>
    const data = await axios.get(`${BASE_URL}/${url}`,{
     params : {
       ...params,
-      limit:5,
+      // limit:5,
     }
    });
     return data;

@@ -277,13 +277,12 @@ const DealCategorySlider = () => {
   useEffect(() => {
     getCategoryList().then((res) => {
       setCategoryList(res.data.items);
-      console.log(res.data.items);
       
     });
   },[]);
 
 
-  console.log(categoryList);
+
   
   const navigate = useNavigate();
 

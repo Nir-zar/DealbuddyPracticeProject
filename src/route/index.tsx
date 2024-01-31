@@ -9,6 +9,7 @@ import Broadband from "../components/categories/Broadband";
 import CategoryList from "../pages/CategoryList";
 import Store from "../pages/Store";
 import OnlineStore from "../pages/OnlineStore";
+import DealInDeatail from "../pages/DealInDeatail";
 
 export const Router = () => {
   return useRoutes([
@@ -19,7 +20,7 @@ export const Router = () => {
         { element: <Home />, index: true },
         { path: "how-it-works", element: <HowItWorks /> },
         { path: "online-stores", element: <OnlineStore /> },
-        { path: "stores", element: <Store /> },
+        { path: "stores", element: <OnlineStore /> },
         { path: "deals", element: <Deal /> },
         { path: "categories", element: <CategoryList /> },
         {
@@ -30,6 +31,10 @@ export const Router = () => {
             path: "store/:storeSlug",
             children: [{ element: <Deal />, index: true }],
           },
+          {
+            path: "deals/:dealSlug",
+            children: [{element: <DealInDeatail />, index: true}]
+          }
       ],
     },
     //     {path : "categories",

@@ -4,7 +4,8 @@ import AllStore from '../components/store/AllStore'
 
 const Store = () => {
   return (
-    <><StoreSearchBar />
+    <>
+    <StoreSearchBar />
     <AllStore />
     </>
   )

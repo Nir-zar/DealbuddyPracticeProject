@@ -14,6 +14,7 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { useNavigate } from "react-router-dom";
 
 interface CommonCard {
   category: {
@@ -37,6 +38,7 @@ interface CommonCard {
     location: string;
   }[];
   width: number;
+  slug:string;
 }
 
 const CommonCard = ({
@@ -50,8 +52,13 @@ const CommonCard = ({
   name,
   NZWide,
   locations,
-  width=3
+  width=3,
+  slug
 }: CommonCard) => {
+
+const navigate = useNavigate();
+
+
   return (
     <Grid item xl={width} sx={{ ...all_center, height: "494px" }}>
       <Card
@@ -244,7 +251,7 @@ const CommonCard = ({
           </Box>
         </CardContent>
 
-        <Common_card_button button_text="View Deal" />
+        <Common_card_button slug={slug} button_text="View Deal" />
       </Card>
     </Grid>
   );

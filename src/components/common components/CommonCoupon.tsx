@@ -38,6 +38,7 @@ interface CommonCoupon {
       location: string;
     }[];
     width: number;
+    slug:string;
   }
 
 
@@ -52,7 +53,9 @@ const CommonCoupon = (
     name,
     NZWide,
     locations,
-    width=3}:CommonCoupon
+    width=3,
+    slug
+  }:CommonCoupon
 ) => {
   return (
     <Grid
