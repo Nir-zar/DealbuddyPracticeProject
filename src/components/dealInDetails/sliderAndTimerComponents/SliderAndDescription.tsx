@@ -5,7 +5,7 @@ import DealSlider from "./DealSlider";
 const SliderAndDescription = () => {
   return (
   
-      <Grid xl={8} item sx={{ height: "auto", bgcolor: "pink" }}>
+      <Grid xl={8} item sx={{ height: "auto"}}>
         <DealSlider />
       </Grid>
 

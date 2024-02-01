@@ -7,7 +7,7 @@ import DealAndStoreDetail from './DealAndStoreDetail'
 
 const DealInDetailBody = () => {
   return (
-<Box  sx={{ height:"auto",width:"1300px", display:"flex", flexDirection:"row"}}>
+<Box  sx={{ height:"auto",width:"1300px", display:"flex", flexDirection:"row", mt:{xl:"2rem"}}}>
 <SliderAndDescription />
 <DealAndStoreDetail />
 

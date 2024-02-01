@@ -2,13 +2,13 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { all_center } from "../../constant/commonStyle";
 import theme from "../../theme";
-import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { getIndividualStoreData } from "../../api/storeApi";
 import { useParams } from "react-router-dom";
 import CallIcon from "@mui/icons-material/Call";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import LanguageIcon from "@mui/icons-material/Language";
 import SendIcon from "@mui/icons-material/Send";
+import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 
 const IndividualStoreDetail = () => {
   const [individualStoreData, setIndividualStoreData] = useState([]);
@@ -209,7 +209,7 @@ const IndividualStoreDetail = () => {
         }}
       >
         <Typography
-          sx={{ fontSize:theme.typography.subtitle2.xl, }}
+          sx={{ fontSize:theme.typography.subtitle2.xl}}
         >
           {resultArray.length > 35 ? (showAllText ? `${arr1} ${arr2}` : `${arr1}...`) : (testString)}
         </Typography>
@@ -219,13 +219,14 @@ const IndividualStoreDetail = () => {
           sx={{
             fontSize: theme.typography.subtitle2.xl,
             color: theme.palette.primary.main,
+            cursor:"pointer"
           }}
         >
           {showAllText ? "Read Less" : "Read More"}
         </Typography>
       </Box>
 
-      {/* read more component ed */}
+      {/* read more component end */}
     </Box>
   );
 };

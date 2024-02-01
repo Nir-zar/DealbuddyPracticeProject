@@ -4,35 +4,17 @@ import React from 'react'
 import { useTheme } from "@mui/material/styles";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import { useSelector } from 'react-redux';
 
 const DealSlider = () => {
 
-    const images = [
-        {
-          label: "San Francisco – Oakland Bay Bridge, United States",
-          imgPath:
-            "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-        },
-        {
-          label: "Bird",
-          imgPath:
-            "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
-        },
-        {
-          label: "Bali, Indonesia",
-          imgPath:
-            "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
-        },
-        {
-          label: "Goč, Serbia",
-          imgPath:
-            "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
-        },
-      ];
+   
+
+      const sliderImages = useSelector((store)=> store.dealData.sliderImagePaths)
 
       const theme = useTheme();
       const [activeStep, setActiveStep] = React.useState(0);
-      const maxSteps = images.length;
+      const maxSteps = sliderImages.length;
     
 
       const url = "category?order%5BorderBy%5D=ASC&take=6";
@@ -51,28 +33,28 @@ const DealSlider = () => {
 
 
   return (
-    <Box sx={{ height: "32rem", width: "98%" }}>
-    <Box sx={{ width: "100%", height: "32rem" }}>
+    <Box sx={{ height: "28rem", width: "98%" }}>
+    <Box sx={{ width: "100%", height: "28rem" }}>
       <AutoPlaySwipeableViews
         sx={{ height: "90%", width: "100%" }}
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {images.map((step, index) => (
-          <div style={{ position: "relative" }} key={step.label}>
+        {sliderImages.map((data, index) => (
+          <div style={{ position: "relative" }} key={data.name}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
                 sx={{
-                  height: "32rem",
+                  height: "28.75rem",
                   display: "flex",
                   overflow: "hidden",
                   width: "100%",
                   borderRadius: "10px",
                 }}
-                src={step.imgPath}
-                alt={step.label}
+                src={data.imageUrl}
+                alt={"images"}
               />
             ) : null}
             <MobileStepper
