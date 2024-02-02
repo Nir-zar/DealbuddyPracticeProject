@@ -12,31 +12,22 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import { useNavigate } from "react-router-dom";
 
 const Store = () => {
-  const [storeData, setStoreData] = useState();
-  const [testString, setTestString] = useState("")
-
   const navigate = useNavigate();
 
+  const storeDescription = useSelector(
+    (store) => store.dealData.storeDescription
+  );
 
+  const [showAllText, setShowAllText] = useState(false);
+
+  const testString = storeDescription;
+  const resultArray = testString.split(" ");
+  const arr1 = resultArray.slice(0, 10).join(" ");
+  const arr2 = resultArray.slice(10).join(" ");
 
   const dealAndStoreAllDetails = useSelector(
     (store) => store.dealData.dealAndStoreAllDetails
   );
-
-  const resultArray = true;
-  const [showAllText, setShowAllText] = useState(resultArray ? true : false);
-  
-  useEffect(()=>{
-    if(dealAndStoreAllDetails.stores)
-   {
-    setTestString(dealAndStoreAllDetails.stores)
-   }
-  },[])  
-
-console.log(testString);
-
-
-
 
   return (
     <>
@@ -114,9 +105,10 @@ console.log(testString);
           <Typography
             sx={{ ml: "0.5rem", fontSize: theme.typography.subtitle1.xl }}
           >
-            {dealAndStoreAllDetails?.stores
-              ? dealAndStoreAllDetails?.stores[0]?.address.fillAddress
-              : "null"}
+            {dealAndStoreAllDetails?.stores &&
+             (dealAndStoreAllDetails?.stores[0]?.storeModes[0].name == "Online" ? ("Online") :
+              (dealAndStoreAllDetails?.stores[0]?.address.fillAddress)
+)}
           </Typography>
         </Box>
         {/* store deals count end */}
@@ -131,7 +123,8 @@ console.log(testString);
             flexDirection: "column",
           }}
         >
-          <Box
+
+           {dealAndStoreAllDetails?.stores[0]?.phone &&  <Box
             component={"div"}
             sx={{ height: "auto", width: "auto", display: "flex" }}
           >
@@ -143,9 +136,10 @@ console.log(testString);
                 ? dealAndStoreAllDetails?.stores[0]?.phone
                 : "null"}
             </Typography>
-          </Box>
+          </Box> }
 
-          <Box
+         
+                {dealAndStoreAllDetails?.stores[0]?.website && (  <Box
             component={"div"}
             sx={{ height: "auto", width: "auto", display: "flex" }}
           >
@@ -171,7 +165,13 @@ console.log(testString);
                   : "null"}
               </Typography>
             </Link>
-          </Box>
+          </Box>)}
+        
+
+
+
+
+
         </Box>
         {/* store phone number and website emd  */}
       </Box>
@@ -186,20 +186,17 @@ console.log(testString);
           mt: "1.3rem",
         }}
       >
-        <Typography
-          sx={{ fontSize:theme.typography.subtitle1.xl}}
-        >
-
-          {/* {resultArray.length > 35 ? (showAllText ? `${arr1} ${arr2}` : `${arr1}...`) : (testString)} */}
+        <Typography sx={{ fontSize: theme.typography.subtitle1.xl }}>
+          {resultArray.length > 10 ? showAllText ? `${arr1} ${arr2}` : `${arr1}...` : testString}
         </Typography>
 
         <Typography
-        onClick={()=>setShowAllText(!showAllText)}
+          onClick={() => setShowAllText(!showAllText)}
           sx={{
             fontSize: theme.typography.subtitle1.xl,
             color: theme.palette.primary.main,
-            cursor:"pointer",
-            mt:{xl:"0.5rem"}
+            cursor: "pointer",
+            mt: { xl: "0.5rem" },
           }}
         >
           {showAllText ? "Read Less" : "Read More"}

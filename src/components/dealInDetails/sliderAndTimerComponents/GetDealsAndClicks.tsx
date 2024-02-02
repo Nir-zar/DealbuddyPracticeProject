@@ -20,8 +20,7 @@ const GetDealsAndClicks = () => {
           (store) => store.dealData.dealAndStoreAllDetails
         );
         const { dealSlug } = useParams();
-        dealAndStoreAllDetails && console.log(dealAndStoreAllDetails?.category?.name);
-
+       
 
   return (
   <>

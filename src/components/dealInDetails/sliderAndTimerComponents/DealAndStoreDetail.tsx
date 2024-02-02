@@ -6,6 +6,7 @@ import theme from "../../../theme";
 import GetDealsAndClicks from "./GetDealsAndClicks";
 import LimitedOffer from "./LimitedOffer";
 import Store from "./Store";
+import ApplicableLocations from "./ApplicableLocations";
 
 
 
@@ -21,6 +22,9 @@ const DealAndStoreDetail = () => {
     }, 1000);
   }, []);
 
+const dealAndStoreAllDetails = useSelector((store)=> store.dealData.dealAndStoreAllDetails);
+
+console.log(dealAndStoreAllDetails);
 
 
   return (
@@ -44,6 +48,30 @@ const DealAndStoreDetail = () => {
           <LimitedOffer />
         </Box>
 
+        {dealAndStoreAllDetails?.stores && 
+        (dealAndStoreAllDetails.stores[0].showInFrontend ?    
+        (<Box
+          component={"div"}
+          sx={{
+            ...all_center,
+            height: "auto",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            border:`1px solid ${theme.palette.grey[300]}`,
+            mt:{xl:"1.5rem"},
+            borderRadius:"10px",
+            p: { xl: "2rem 0" },
+          }}
+        >
+
+         
+         <Store />
+
+
+        </Box>) : ("")) }
+      
+
         <Box
           component={"div"}
           sx={{
@@ -59,10 +87,13 @@ const DealAndStoreDetail = () => {
           }}
         >
 
-          <Store />
+          <ApplicableLocations />
 
 
         </Box>
+
+
+
       </Grid>
     </>
   );

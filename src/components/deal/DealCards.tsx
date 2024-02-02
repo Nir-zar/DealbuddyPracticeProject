@@ -13,7 +13,7 @@ import { filterData } from "../../features/filterData";
 import { filterDataByCategory } from "../../features/filterData";
 import { all_center } from "../../constant/commonStyle";
 import ShortcutSharpIcon from "@mui/icons-material/ShortcutSharp";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import IndividualStoreDetail from "./IndividualStoreDetail";
 
@@ -22,6 +22,8 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
+
+
 
 function a11yProps(index: string) {
   return {
@@ -45,8 +47,17 @@ const DealCards = () => {
   const { dealModes, discountTypes } = useSelector((store) => store.filterData);
   const { slug,storeSlug } = useParams();
 
-  const url = `deal/deals?v=1705657100045&&updateViewCount=true&t=1705657100045`;
+  const url = `deal/deals`;
   const dispatch = useDispatch();
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const searchKeyword = new URLSearchParams(location.search).get('search');
+  console.log("mmm",searchKeyword);
+
+
 
   useEffect(() => {
     const paramsForAll = {
@@ -56,6 +67,7 @@ const DealCards = () => {
       discountTypes: discountTypes,
       categorySlug: slug,
       storeSlug:storeSlug,
+      searchKeyword :searchKeyword,
     };
 
     const paramsForSaleAndCoupon = {
@@ -66,6 +78,7 @@ const DealCards = () => {
       discountTypes: discountTypes,
       categorySlug: slug,
       storeSlug:storeSlug,
+      searchKeyword :searchKeyword,
     };
 
     if(storeSlug)

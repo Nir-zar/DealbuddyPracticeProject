@@ -50,6 +50,10 @@ const filterDataSlice = createSlice({
       // state.discountTypes = action.payload.currentValue;
       // state.pageNumber = action.payload.pageNumber;
     },
+
+    setPageNumber : (state, action) =>{
+      state.pageNumber = action.payload;
+    }
   },
 });
 
@@ -58,6 +62,7 @@ export const {
   filterDataByCategory,
   filterDataByDealModes,
   filterDataByDiscountTypes,
+  setPageNumber,
 } = filterDataSlice.actions;
 
 export default filterDataSlice.reducer;

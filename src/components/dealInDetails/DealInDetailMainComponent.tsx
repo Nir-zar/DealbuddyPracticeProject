@@ -7,7 +7,8 @@ import { useParams } from 'react-router-dom'
 import { dealInDetailApiData } from '../../api/dealApi'
 import { useDispatch } from 'react-redux'
 import DealSlider from './sliderAndTimerComponents/DealSlider'
-import { dealAndStoreDetail, sliderImage } from '../../features/dealData'
+import { dealAndStoreDetail, dealProductId, sliderImage, storeDescription } from '../../features/dealData'
+import { setPageNumber } from '../../features/filterData'
 
 const DealInDetailMainComponent = () => {
 
@@ -18,18 +19,21 @@ const DealInDetailMainComponent = () => {
 
 useEffect(()=>{
 
-  if(dealSlug){
+  if(dealSlug)
+  {
     dealInDetailApiData(dealSlug).then((res)=>{
-      // res.data.productImages.map((res)=>{
-      //   console.log(res.imageUrl);
-      // });
       setDealInDEtailData(res.data);
-      dispatch(sliderImage(res.data.productImages))
-      dispatch(dealAndStoreDetail(res.data))
-
+      dispatch(sliderImage(res.data.productImages));
+      dispatch(dealAndStoreDetail(res.data));
+      dispatch(storeDescription(res.data.stores[0].description));
+      dispatch(dealProductId(res.data.id));
+      dispatch(setPageNumber(1))
     })
   }
 
+
+  console.log(dealSlug);
+  
   
 
 },[])

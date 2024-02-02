@@ -36,10 +36,7 @@ const LimitedOffer = () => {
         (store) => store.dealData.dealAndStoreAllDetails
       );
       const { dealSlug } = useParams();
-      dealAndStoreAllDetails && console.log(dealAndStoreAllDetails?.category?.name);
-    
-      console.log(dealAndStoreAllDetails);
-
+     
 
   return (
 <>

@@ -10,7 +10,12 @@ export const  getCategoryList = async()=>{
 
 export const getIndividualCategoryData = async (categorySlug:string)=>{
 
-        const data = await axios.get(`${BASE_URL}/category/slug-or-id/${categorySlug}`);
+        const data = await axios.get(`${BASE_URL}/category/slug-or-id/${categorySlug}`,{
+            params : 
+            {
+                isActive : true,
+            }
+        });
         return data;
 
 };

@@ -34,6 +34,10 @@ export const Router = () => {
           {
             path: "deals/:dealSlug",
             children: [{element: <DealInDeatail />, index: true}]
+          },
+          {
+            path :"search",
+            children :[ {element:<Deal />, index:true},  ]
           }
       ],
     },

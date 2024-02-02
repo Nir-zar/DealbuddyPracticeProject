@@ -64,11 +64,12 @@ const CommonCoupon = (
       sx={{
         ...all_center,
         height: "474px",
-        mt: "1rem",    
+        mt: "2rem",    
       }}
     >
       <Card
         sx={{
+         
           alignItems: "center",
           height: "100%",
           width: { xl: "94%" },
@@ -282,7 +283,7 @@ const CommonCoupon = (
               </Box>
 
               <Box sx={{ ml: "0.3rem" }}>
-                <Common_card_button button_text="View Deal" />
+                <Common_card_button button_text="View Deal" slug={slug} width={width} />
               </Box>
             </Box>
 

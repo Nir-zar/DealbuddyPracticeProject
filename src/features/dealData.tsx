@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   sliderImagePaths : [] as object,
   dealAndStoreAllDetails : {},
+  storeDescription : "",
+  dealProductId : "",
 };
 
 const dealDataSlice = createSlice({
@@ -17,12 +19,18 @@ const dealDataSlice = createSlice({
         state.dealAndStoreAllDetails = action.payload;
     },
 
+    storeDescription : (state, action) => {
+      state.storeDescription = action.payload;
+    },
 
+    dealProductId : (state, action) => {
+      state.dealProductId = action.payload;
+    }
    
   },
 });
 
-export const { sliderImage,dealAndStoreDetail  } =
+export const { sliderImage,dealAndStoreDetail,storeDescription, dealProductId  } =
   dealDataSlice.actions;
 
 export default dealDataSlice.reducer;

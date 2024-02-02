@@ -17,3 +17,13 @@ export const getData = async (url?: string, params?: object) =>
    });
     return data;
 }
+
+
+export const getRelatedProductData = async(params:object)=>{
+  const data = await axios.get(`${BASE_URL}/deal/similar/deals`,{
+    params : {
+      ...params
+    }
+  });
+  return data;
+}
