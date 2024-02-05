@@ -10,6 +10,7 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { useSelector } from "react-redux";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import { useNavigate } from "react-router-dom";
+import Countdown from "react-countdown";
 
 const Store = () => {
   const navigate = useNavigate();
@@ -19,15 +20,37 @@ const Store = () => {
   );
 
   const [showAllText, setShowAllText] = useState(false);
+  const [ days, days] = useState(Math.floor(4762374 / (1000 * 60 * 60 * 24)));
+  const [hours, setHours] = useState(4768475);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+
+
 
   const testString = storeDescription;
-  const resultArray = testString.split(" ");
-  const arr1 = resultArray.slice(0, 10).join(" ");
-  const arr2 = resultArray.slice(10).join(" ");
+  const resultArray = testString && testString.split(" ");
+  const arr1 = resultArray && resultArray.slice(0, 10).join(" ");
+  const arr2 = resultArray && resultArray.slice(10).join(" ");
 
   const dealAndStoreAllDetails = useSelector(
     (store) => store.dealData.dealAndStoreAllDetails
   );
+
+  
+
+useEffect(()=>{
+
+setInterval(()=>{
+  setEndDate(endDate-1)
+setSeconds(Math.floor((endDate - 1000)/1000))
+},1000)
+
+},[seconds])
+
+ 
+console.log(seconds);
+  
+  
 
   return (
     <>
@@ -176,7 +199,7 @@ const Store = () => {
         {/* store phone number and website emd  */}
       </Box>
 
-      <Box
+     {resultArray &&  <Box
         component={"div"}
         sx={{
           height: "auto",
@@ -187,7 +210,7 @@ const Store = () => {
         }}
       >
         <Typography sx={{ fontSize: theme.typography.subtitle1.xl }}>
-          {resultArray.length > 10 ? showAllText ? `${arr1} ${arr2}` : `${arr1}...` : testString}
+          {resultArray && resultArray.length > 10 ? showAllText ? `${arr1} ${arr2}` : `${arr1}...` : testString}
         </Typography>
 
         <Typography
@@ -201,7 +224,7 @@ const Store = () => {
         >
           {showAllText ? "Read Less" : "Read More"}
         </Typography>
-      </Box>
+      </Box>}
     </>
   );
 };

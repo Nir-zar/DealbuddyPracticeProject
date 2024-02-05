@@ -63,7 +63,8 @@ const Sales_section = () => {
             NZWide,
             locations,
             clicks,
-            imageUrl
+            imageUrl,
+            slug
           }) => {
             return (
              <CommonCard 
@@ -77,6 +78,7 @@ const Sales_section = () => {
              name={name}
              NZWide={NZWide}
              locations={locations}
+             slug={slug}
              />
             );
           }
