@@ -7,6 +7,8 @@ import {
   InputAdornment,
   InputLabel,
   ListItem,
+  Menu,
+  MenuItem,
   Stack,
   TextField,
   Typography,
@@ -23,10 +25,13 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import Modal from "@mui/material/Modal";
-import { Height } from "@mui/icons-material";
+import { ArrowDropDown, Height } from "@mui/icons-material";
 import SendIcon from "@mui/icons-material/Send";
 import { getData } from "../../api/homeApi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import {  useDispatch, useSelector } from "react-redux";
+import { storePageNumber } from "../../features/storeData";
 
 const style = {
   position: "absolute" as "absolute",
@@ -43,49 +48,56 @@ const style = {
 
 
 
+
+const category_style = {
+  category_list_style: {
+    height: "100%",
+    width: "auto",
+    //   bgcolor: "pink",
+    // ml:"10px"
+  },
+
+  category_font_style: {
+    fontSize: theme.typography.subtitle2.xl,
+    fontWeight: 300,
+  },
+};
+
 const Header = () => {
-  const category_style = {
-    category_list_style: {
-      height: "100%",
-      width: "auto",
-      //   bgcolor: "pink",
-      // ml:"10px"
-    },
-
-    category_font_style: {
-      fontSize: theme.typography.subtitle2.xl,
-      fontWeight: 300,
-    },
-  };
-
   const [open, setOpen] = React.useState(false);
-  const [modalData, setModalData] = useState([])
+  const [modalData, setModalData] = useState([]);
 
   const navigae = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
+  const pageNumber = useSelector((store)=> store.storeData.pageNumber)
 
-const gotoHomePage = ()=>{
-  navigae("/")
-}
 
-  const handleOpen = () =>{
+
+
+  const gotoHomePage = () => {
+    navigae("/");
+  };
+
+  const handleOpen = () => {
     setOpen(true);
-    const url = "location?v=1705562814548&where%5BquickOption%5D=true&order%5Blocation%5D=ASC&take=8";
-    
-    getData(url).then((res)=>{
-      setModalData(res.data.items)
+    const url =
+      "location?v=1705562814548&where%5BquickOption%5D=true&order%5Blocation%5D=ASC&take=8";
+
+    getData(url).then((res) => {
+      setModalData(res.data.items);
       console.log(res.data.items);
       console.log(modalData);
-      
-      
-    })
-   
-   
-  }
-  const handleClose = () => setOpen(false);
-
-
-
- 
+    });
+  };
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const openMenu = anchorEl;
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -131,7 +143,12 @@ const gotoHomePage = ()=>{
                 onClick={gotoHomePage}
                 component={"img"}
                 alt="Logo image"
-                sx={{ height: "100%", width: "100%", objectFit: "contain", cursor:"pointer" }}
+                sx={{
+                  height: "100%",
+                  width: "100%",
+                  objectFit: "contain",
+                  cursor: "pointer",
+                }}
                 src={`https://www.dealbuddy.co.nz/assets/img/logo.png?v=1`}
               ></Box>
             </Box>
@@ -193,86 +210,133 @@ const gotoHomePage = ()=>{
                       Select City / Town
                     </Typography>
                     <CloseIcon
-                    onClick={handleClose}
+                      onClick={handleClose}
                       sx={{
                         fontSize: theme.typography.h5.lg,
                         fontWeight: "700",
-                        cursor:"pointer"
+                        cursor: "pointer",
                       }}
                     />
                   </Box>
 
                   <FormControl sx={{ height: "auto", width: "100%" }}>
-                 
                     <Input
-                    placeholder="Enter city /town"
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <SearchIcon sx={{color:theme.palette.common.black}} />
-                      </InputAdornment>
-                    }
-                    disableUnderline={true}
+                      placeholder="Enter city /town"
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <SearchIcon
+                            sx={{ color: theme.palette.common.black }}
+                          />
+                        </InputAdornment>
+                      }
+                      disableUnderline={true}
                       sx={{
                         height: "3rem",
                         width: "100%",
                         m: "1rem 0rem",
                         border: `1px solid ${theme.palette.grey[400]}`,
-                        borderRadius:"10px",
-                        p:"0 1rem",
-                        textAlign:"center",
-                        fontSize:theme.typography.subtitle1.xl,
-                        display:"flex",
-                        alignItems:"center"
+                        borderRadius: "10px",
+                        p: "0 1rem",
+                        textAlign: "center",
+                        fontSize: theme.typography.subtitle1.xl,
+                        display: "flex",
+                        alignItems: "center",
                       }}
-                     
-                    >
-
-                     
-
-                     
-
-
-                    </Input>
+                    ></Input>
                   </FormControl>
 
-                  <Box sx={{height:"auto", width:'100%', display:"flex", "&:hover":{color:theme.palette.primary.main}}}>
-                    <SendIcon sx={{color:theme.palette.grey[500],"&:hover":{color:theme.palette.primary.main}}} />
-                    <Typography sx={{ml:"1rem"}}>
+                  <Box
+                    sx={{
+                      height: "auto",
+                      width: "100%",
+                      display: "flex",
+                      "&:hover": { color: theme.palette.primary.main },
+                    }}
+                  >
+                    <SendIcon
+                      sx={{
+                        color: theme.palette.grey[500],
+                        "&:hover": { color: theme.palette.primary.main },
+                      }}
+                    />
+                    <Typography sx={{ ml: "1rem" }}>
                       Current Location
                     </Typography>
                   </Box>
 
-                  <Grid container sx={{height:"auto", m:"2rem 0"}}>
-                  <Typography sx={{fontSize:theme.typography.subtitle1.xl}}>
-                  Quick Options
-                  </Typography>
+                  <Grid container sx={{ height: "auto", m: "2rem 0" }}>
+                    <Typography
+                      sx={{ fontSize: theme.typography.subtitle1.xl }}
+                    >
+                      Quick Options
+                    </Typography>
 
-                  <Box sx={{height:"auto", width:"100%", display:"flex", mt:"1rem", flexWrap:"wrap"}}>
-                  <Grid item xl={6} sx={{...all_center,height:"3.5rem", mt:"0.5rem", cursor:"pointer"}}>
-                    <Box sx={{...all_center,height:"90%", width:"90%", border:`1px solid ${theme.palette.grey[400]}`, borderRadius:"10px"}}>
-                      <Typography sx={{fontSize:theme.typography.subtitle1.xl}}>
-                        NZWide
-                      </Typography>
+                    <Box
+                      sx={{
+                        height: "auto",
+                        width: "100%",
+                        display: "flex",
+                        mt: "1rem",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <Grid
+                        item
+                        xl={6}
+                        sx={{
+                          ...all_center,
+                          height: "3.5rem",
+                          mt: "0.5rem",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            ...all_center,
+                            height: "90%",
+                            width: "90%",
+                            border: `1px solid ${theme.palette.grey[400]}`,
+                            borderRadius: "10px",
+                          }}
+                        >
+                          <Typography
+                            sx={{ fontSize: theme.typography.subtitle1.xl }}
+                          >
+                            NZWide
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      {modalData.map(({ location }) => {
+                        return (
+                          <Grid
+                            item
+                            xl={6}
+                            sx={{
+                              ...all_center,
+                              height: "3.5rem",
+                              mt: "0.5rem",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                ...all_center,
+                                height: "90%",
+                                width: "90%",
+                                border: `1px solid ${theme.palette.grey[400]}`,
+                                borderRadius: "10px",
+                              }}
+                            >
+                              <Typography
+                                sx={{ fontSize: theme.typography.subtitle1.xl }}
+                              >
+                                {location}
+                              </Typography>
+                            </Box>
+                          </Grid>
+                        );
+                      })}
                     </Box>
-                  </Grid>
-                   {modalData.map(({location})=>{
-                    return(
-                    <Grid item xl={6} sx={{...all_center,height:"3.5rem", mt:"0.5rem",cursor:"pointer"}}>
-                    <Box sx={{...all_center,height:"90%", width:"90%", border:`1px solid ${theme.palette.grey[400]}`, borderRadius:"10px"}}>
-                      <Typography sx={{fontSize:theme.typography.subtitle1.xl}}>
-                        {location}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                  ); })}
-                   
-
-                  
-
-                    
-
-                   
-                  </Box>
                   </Grid>
                 </Box>
               </Modal>
@@ -288,9 +352,8 @@ const gotoHomePage = ()=>{
                 alignItems: "center",
                 display: "flex",
                 borderRadius: "10px",
-                outline:"none",
+                outline: "none",
                 fieldset: { border: "none", outline: "none" },
-                
               }}
             >
               <SearchIcon sx={{ ml: { xl: "10px" } }} />
@@ -359,7 +422,12 @@ const gotoHomePage = ()=>{
           >
             <Box
               component={"div"}
-              sx={{ ...all_center, ...category_style.category_list_style, cursor:"pointer" }}
+              onClick={() => navigae("categories")}
+              sx={{
+                ...all_center,
+                ...category_style.category_list_style,
+                cursor: "pointer",
+              }}
             >
               <GridViewIcon />
               <Typography
@@ -371,20 +439,85 @@ const gotoHomePage = ()=>{
 
             <Box
               component={"div"}
-              sx={{ ...all_center, ...category_style.category_list_style, cursor:"pointer" }}
+              // onClick={()=>navigae("stores")}
+              sx={{
+                ...all_center,
+                ...category_style.category_list_style,
+                cursor: "pointer",
+              }}
             >
               <StorefrontOutlinedIcon />
-              <Typography
-                sx={{ ...category_style.category_font_style, ml: "10px" }}
+
+              <Button
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                sx={{
+                  color: theme.palette.common.black,
+                  fontSize: theme.typography.subtitle1.xl,
+                  "&:hover":{bgcolor:'transparent'}
+                }}
               >
-                Stores
+                 <Typography
+                sx={{ ...category_style.category_font_style, ml: "10px","&:hover":{fontWeight:800} }}
+              >
+                Store
               </Typography>
+                
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={openMenu}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    navigae("stores");
+                    dispatch(storePageNumber({pageNumber : 1}))
+                  }}
+                  sx={{ fontSize: theme.typography.subtitle2.xl }}
+                >
+                  {" "}
+                  All Store
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    navigae("online-stores");
+                    dispatch(storePageNumber({pageNumber : 1}))
+                  }}
+                  sx={{ fontSize: theme.typography.subtitle2.xl }}
+                >
+                  Online Store
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleClose();
+                    navigae("stores");
+                    dispatch(storePageNumber({pageNumber : 1}))
+                  }}
+                  sx={{ fontSize: theme.typography.subtitle2.xl }}
+                >
+                  Physical Store
+                </MenuItem>
+              </Menu>
             </Box>
 
             <Box
-            onClick={()=>navigae("deals")}
+              onClick={() => navigae("deals")}
               component={"div"}
-              sx={{ ...all_center, ...category_style.category_list_style, cursor:"pointer" }}
+              sx={{
+                ...all_center,
+                ...category_style.category_list_style,
+                cursor: "pointer",
+              }}
             >
               <LocalOfferOutlinedIcon />
               <Typography
@@ -396,7 +529,11 @@ const gotoHomePage = ()=>{
 
             <Box
               component={"div"}
-              sx={{ ...all_center, ...category_style.category_list_style, cursor:"pointer" }}
+              sx={{
+                ...all_center,
+                ...category_style.category_list_style,
+                cursor: "pointer",
+              }}
             >
               <PlaceOutlinedIcon />
               <Typography
@@ -407,9 +544,12 @@ const gotoHomePage = ()=>{
             </Box>
           </Box>
 
-          <Box component={"div"} sx={{ height: "80%", width: "auto", cursor:"pointer" }}>
+          <Box
+            component={"div"}
+            sx={{ height: "80%", width: "auto", cursor: "pointer" }}
+          >
             <Button
-            onClick={()=>navigae("how-it-works")}
+              onClick={() => navigae("how-it-works")}
               startIcon={<HelpOutlineOutlinedIcon />}
               sx={{
                 width: "auto",

@@ -228,92 +228,92 @@ const Category_and_slider = () => {
             </Box>
           </Box>
 
-          <Box sx={{ height: "32rem", width: "69%" }}>
-            <Box sx={{ width: "100%", height: "32rem" }}>
-              <AutoPlaySwipeableViews
-                sx={{ height: "90%", width: "100%" }}
-                index={activeStep}
-                onChangeIndex={handleStepChange}
-                enableMouseEvents
-              >
-                {images.map((step, index) => (
-                  <div style={{ position: "relative" }} key={step.label}>
-                    {Math.abs(activeStep - index) <= 2 ? (
-                      <Box
-                        component="img"
+            <Box sx={{ height: "32rem", width: "69%" }}>
+              <Box sx={{ width: "100%", height: "32rem" }}>
+                <AutoPlaySwipeableViews
+                  sx={{ height: "90%", width: "100%" }}
+                  index={activeStep}
+                  onChangeIndex={handleStepChange}
+                  enableMouseEvents
+                >
+                  {images.map((step, index) => (
+                    <div style={{ position: "relative" }} key={step.label}>
+                      {Math.abs(activeStep - index) <= 2 ? (
+                        <Box
+                          component="img"
+                          sx={{
+                            height: "32rem",
+                            display: "flex",
+                            overflow: "hidden",
+                            width: "100%",
+                            borderRadius: "10px",
+                          }}
+                          src={step.imgPath}
+                          alt={step.label}
+                        />
+                      ) : null}
+                      <MobileStepper
+                        variant="dots"
                         sx={{
-                          height: "32rem",
-                          display: "flex",
-                          overflow: "hidden",
-                          width: "100%",
-                          borderRadius: "10px",
+                          backgroundColor: "transparent",
+                          position: "absolute",
+                          height: "95%",
+                          top: 0,
+                          "& .MuiMobileStepper-dots": {
+                            float: "end",
+                            alignItems: "end",
+                            height: "100%",
+                          },
                         }}
-                        src={step.imgPath}
-                        alt={step.label}
+                        steps={maxSteps}
+                        activeStep={activeStep}
+                        nextButton={
+                          <Button
+                            onClick={handleNext}
+                            disabled={activeStep === maxSteps - 1}
+                          >
+                            {index == activeStep ? (
+                              <KeyboardArrowRight
+                              sx={{
+                                p: "0.1rem",
+                                borderRadius: "50%",
+                                bgcolor: "#ffffff85",
+                                color: theme.palette.common.white,
+                              }}
+                            />
+                            ) : ( <KeyboardArrowRight
+                              sx={{
+                                p: "0.1rem",
+                                borderRadius: "50%",
+                                bgcolor: "#ffffff85",
+                                color: "green",
+                              }}
+                            />)}
+                            
+                          </Button>
+                        }
+                        backButton={
+                          <Button
+                            size="small"
+                            onClick={handleBack}
+                            disabled={activeStep === 0}
+                          >
+                            <KeyboardArrowLeft
+                              sx={{
+                                p: "0.1rem",
+                                borderRadius: "50%",
+                                bgcolor: "#ffffff85",
+                                color: theme.palette.common.white,
+                              }}
+                            />
+                          </Button>
+                        }
                       />
-                    ) : null}
-                    <MobileStepper
-                      variant="dots"
-                      sx={{
-                        backgroundColor: "transparent",
-                        position: "absolute",
-                        height: "95%",
-                        top: 0,
-                        "& .MuiMobileStepper-dots": {
-                          float: "end",
-                          alignItems: "end",
-                          height: "100%",
-                        },
-                      }}
-                      steps={maxSteps}
-                      activeStep={activeStep}
-                      nextButton={
-                        <Button
-                          onClick={handleNext}
-                          disabled={activeStep === maxSteps - 1}
-                        >
-                          {index == activeStep ? (
-                            <KeyboardArrowRight
-                            sx={{
-                              p: "0.1rem",
-                              borderRadius: "50%",
-                              bgcolor: "#ffffff85",
-                              color: theme.palette.common.white,
-                            }}
-                          />
-                          ) : ( <KeyboardArrowRight
-                            sx={{
-                              p: "0.1rem",
-                              borderRadius: "50%",
-                              bgcolor: "#ffffff85",
-                              color: "green",
-                            }}
-                          />)}
-                          
-                        </Button>
-                      }
-                      backButton={
-                        <Button
-                          size="small"
-                          onClick={handleBack}
-                          disabled={activeStep === 0}
-                        >
-                          <KeyboardArrowLeft
-                            sx={{
-                              p: "0.1rem",
-                              borderRadius: "50%",
-                              bgcolor: "#ffffff85",
-                              color: theme.palette.common.white,
-                            }}
-                          />
-                        </Button>
-                      }
-                    />
-                  </div>
-                ))}
-              </AutoPlaySwipeableViews>
+                    </div>
+                  ))}
+                </AutoPlaySwipeableViews>
+              </Box>
             </Box>
-          </Box>
         </Box>
 
         <Box

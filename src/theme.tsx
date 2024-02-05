@@ -75,7 +75,6 @@ const theme = createTheme({
           margin: "0px",
           boxShadow: "none",
           backgroundColor: "none",
-          textTransform: "none",
           fontFamily: "Open Sans",
                 },
       },
@@ -109,6 +108,15 @@ const theme = createTheme({
   },
 
   typography: {
+
+    h3: {
+      md: {
+        "@media (min-width:992px)": {
+          fontSize: "32px",
+        },
+      }
+    },
+
     h4: {
       xl: {
         "@media (min-width:992px)": {
@@ -131,6 +139,11 @@ const theme = createTheme({
       lg: {
         "@media (min-width:992px)": {
           fontSize: "24px",
+        },
+      },
+      md: {
+        "@media (min-width:992px)": {
+          fontSize: "20px",
         },
       },
     },
