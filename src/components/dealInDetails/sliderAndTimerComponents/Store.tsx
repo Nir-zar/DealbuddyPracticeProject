@@ -20,10 +20,7 @@ const Store = () => {
   );
 
   const [showAllText, setShowAllText] = useState(false);
-  const [ days, days] = useState(Math.floor(4762374 / (1000 * 60 * 60 * 24)));
-  const [hours, setHours] = useState(4768475);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
+ 
 
 
 
@@ -36,19 +33,11 @@ const Store = () => {
     (store) => store.dealData.dealAndStoreAllDetails
   );
 
-  
 
-useEffect(()=>{
 
-setInterval(()=>{
-  setEndDate(endDate-1)
-setSeconds(Math.floor((endDate - 1000)/1000))
-},1000)
 
-},[seconds])
 
  
-console.log(seconds);
   
   
 
