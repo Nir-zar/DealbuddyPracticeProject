@@ -8,7 +8,7 @@ import { dealInDetailApiData } from '../../api/dealApi'
 import { useDispatch } from 'react-redux'
 import DealSlider from './sliderAndTimerComponents/DealSlider'
 import { dealAndStoreDetail, dealProductId, sliderImage, storeDescription } from '../../features/dealData'
-import { setPageNumber } from '../../features/filterData'
+import {filterData} from '../../features/filterData'
 
 const DealInDetailMainComponent = () => {
 
@@ -27,7 +27,7 @@ useEffect(()=>{
       dispatch(dealAndStoreDetail(res.data));
       dispatch(storeDescription(res.data.stores[0].description));
       dispatch(dealProductId(res.data.id));
-      dispatch(setPageNumber(1))
+      dispatch(filterData({ shortBy: "date", pageNumber: 1 }));
     })
   }
 

@@ -1,5 +1,5 @@
 import { Box, Typography, Divider } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { all_center } from '../../../constant/commonStyle'
 import theme from '../../../theme'
 import { useSelector } from 'react-redux'
@@ -37,6 +37,33 @@ const LimitedOffer = () => {
       );
       const { dealSlug } = useParams();
      
+
+
+      const [ days, SetDays] = useState(0);
+      const [hours, setHours] = useState(0)
+      const [minutes, setMinutes] = useState(0);
+      const [seconds, setSeconds] = useState(0);
+    
+      const dates = "2024-03-31T10:59:59.999Z ";
+      const getTime = ()=>{
+        const remainingTime = Date.parse(dates)-Date.now()
+        SetDays(Math.floor(remainingTime/(1000 * 60 * 60 * 24)))
+        setHours(Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)))
+        setMinutes((Math.floor(( remainingTime % (1000 * 60 * 60)) / (1000 * 60))))
+        setSeconds((Math.floor((remainingTime % (1000 * 60)) / 1000)))
+        console.log(remainingTime);
+        
+    
+      }
+    
+    
+    useEffect(()=>{
+    
+      const interval = setInterval(()=>getTime(dates),1000);
+      return ()=> clearInterval(interval);
+    
+    },[])
+
 
   return (
 <>
@@ -105,22 +132,22 @@ const LimitedOffer = () => {
             }}
           >
             <Box component={"div"} sx={{ ...counterBoxStyle }}>
-              <Typography>5</Typography>
+              <Typography>{days}</Typography>
               <Typography>Days</Typography>
             </Box>
 
             <Box component={"div"} sx={{ ...counterBoxStyle }}>
-              <Typography>12</Typography>
+              <Typography>{hours}</Typography>
               <Typography>Hours</Typography>
             </Box>
 
             <Box component={"div"} sx={{ ...counterBoxStyle }}>
-              <Typography>25</Typography>
+              <Typography>{minutes}</Typography>
               <Typography>Minutes</Typography>
             </Box>
 
             <Box component={"div"} sx={{ ...counterBoxStyle }}>
-              <Typography>22</Typography>
+              <Typography>{seconds}</Typography>
               <Typography>Seconds</Typography>
             </Box>
           </Box>
