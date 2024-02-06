@@ -2,6 +2,7 @@ import {
   Autocomplete,
   Box,
   Button,
+  CircularProgress,
   FormControl,
   Grid,
   Input,
@@ -11,6 +12,7 @@ import {
   Menu,
   MenuItem,
   OutlinedInput,
+  Popper,
   Stack,
   TextField,
   Typography,
@@ -27,15 +29,16 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import Modal from "@mui/material/Modal";
-import { ArrowDropDown, Height } from "@mui/icons-material";
+import { ArrowDropDown, Height, Label } from "@mui/icons-material";
 import SendIcon from "@mui/icons-material/Send";
 import { getData } from "../../api/homeApi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Params, useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { storePageNumber } from "../../features/storeData";
 import { dealsApiData } from "../../api/dealApi";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import axios from "axios";
 
 const style = {
   position: "absolute" as "absolute",
@@ -68,8 +71,8 @@ const Header = () => {
   const [open, setOpen] = React.useState(false);
   const [modalData, setModalData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [searchResultData, setSearchResultData] = useState()
-
+  const [searchResultData, setSearchResultData] = useState([]);
+  const [openListBox, setOpenLIstBox] = useState(false)
   const navigae = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
@@ -94,34 +97,49 @@ const Header = () => {
     null
   );
 
-
-
   const openMenu = menuAnchorEl;
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setMenuAnchorEl(event.currentTarget);
   };
 
-
-
   const handleClose = () => {
     setMenuAnchorEl(null);
   };
 
+  const BASE_URL = "https://www.dealbuddy.co.nz/api";
+  let cancelTokenSource = axios.CancelToken.source();
 
   useEffect(() => {
+
     const params = {
       searchKeyword: searchValue,
-      limit: 30,
     };
+   cancelTokenSource = axios.CancelToken.source();
+   
 
-    dealsApiData(params).then((res) => {
-      setSearchResultData(res.data);
-    });
+   dealsApiData(cancelTokenSource, params).then((res)=>{
+    setSearchResultData(res.data.items)
+   })
+
+   if(searchValue)
+   {
+    setOpenLIstBox(true)
+   }
+      
+
+      return()=>{
+        if(cancelTokenSource)
+        {
+          cancelTokenSource.cancel('Component unmounted');
+        }
+      };
+
   }, [searchValue]);
 
-  const countries = [
-    { code: 'AD', label: 'Andorra', phone: '376' },
-  ];
+  const countries = [{ code: "AD", label: "Andorra", phone: "376" }];
+
+  console.log("after cancel button click data", searchValue);
+
   return (
     <>
       <Grid
@@ -367,6 +385,7 @@ const Header = () => {
 
             <Box
               component={"div"}
+              className="abcd"
               sx={{
                 height: "80%",
                 bgcolor: "white",
@@ -377,55 +396,114 @@ const Header = () => {
                 borderRadius: "10px",
                 outline: "none",
                 fieldset: { border: "none", outline: "none" },
-                position: "relative",
+               
               }}
             >
               <SearchIcon sx={{ ml: { xl: "10px" } }} />
+           
+             
               <Autocomplete
-              freeSolo
-      id="country-select-demo"
-      sx={{ width: "24.7rem" }}
-      options={!searchResultData ? [{label:"Loading...", id:0}] : searchResultData}
-    
-      renderOption={(props,) => (
-        <Box component="li" sx={{ display:"flex", flexDirection:"row", width:"100%", justifyContent:"space-between !important",}} {...props}>
+              className="xyz"
+              value={searchValue}
+              open={openListBox}
+              disableClearable
+              onFocus={()=>{
+                if(searchValue){
+                  setOpenLIstBox(true)
+                }
+              }}
 
-        <Box component={'div'} sx={{height:"3rem", width:'15%', bgcolor:"red"}}>
-        <Box component={'img'} 
-        src={``}
-        sx={{height:"100%", width:'100%', objectFit:"contain"}}
-        />
-          </Box>
-          <Box component={'div'} sx={{height:"3rem", width:'80%', bgcolor:"pink"}}>
-          
-          </Box>
-         
-        </Box>
-      )}
-      renderInput={(params) => (
-        <TextField
-        onChange={(e)=>{
-          setSearchValue(e.target.value)
-        }}
-          {...params}
-          placeholder="Find your perfect deal."
-          inputProps={{
-            ...params.inputProps,
-            endAdornment: null
-          }}
-        />
-      )}
-      popupIcon={<ArrowDropDownIcon style={{ display: 'none' }} />}
-    />
+              PopperComponent={(props) => (
+                <Popper {...props} style={{ width: "28.75rem" }}>
+                  {props.children}
+                </Popper>
+              )}
+              onClose={()=>setOpenLIstBox(false)}
+               
+                freeSolo
+                id="country-select-demo"
+                sx={{
+                  width: "24.7rem",
+                  "MuiAutocomplete-loading": { display: "none" }, "&:ul":{background:"pink", width:"300%"}
+                }}
+                filterOptions={(options) => options}
+                options={
+                  searchResultData.length > 0
+                    ? searchResultData
+                    : [
+                        
+                      ]
+                }
+             renderOption={(props, searchResultData) => (
+               searchValue && <Box
+                 component="li"
+                 sx={{
+                   display: "flex",
+                   flexDirection: "row",
+                   width: "100%", margin:"0px",padding:"0px",
+                   justifyContent: "space-between !important",
+                 }}
+                 {...props}
+               >
+                 <Box
+                   component={"div"}
+                   sx={{ height: "3rem", width: "15%" }}
+                 >
+                   <Box
+                     component={"img"}
+                     src={searchResultData.productImages && searchResultData?.productImages?.[0]?.imageUrl}
+                     // src={`https://lockstep.io/wp-content/uploads/2022/08/Untitled-33.png`}
+                     sx={{
+                       height: "100%",
+                       width: "100%",
+                       objectFit: "cover",
+                     }}
+                   />
+                 </Box>
+                 <Box
+                   component={"div"}
+                   sx={{ height: "3rem", width: "80%", display:"flex", flexDirection:"column" }}
+                 >
+                   <Box component={'div'} sx={{height:"50%", width:"100%", display:"flex", alignItems:'end',overflow: "hidden", textOverflow: "ellipsis", }}>{searchResultData?.name}</Box>
+                   <Box component={'div'} sx={{height:"50%", width:"100%",display:"flex", alignItems:'start'}}>
+                    <Typography sx={{color:theme.palette.primary.main}}>
+                    {searchResultData.stores && searchResultData?.stores[0]?.name}
+                    </Typography>
+
+                     </Box>
+              
+
+                 </Box>
+               </Box> 
+               
+               )}
+              
+              
+              
+                renderInput={(params) => (
+                  <TextField
+                 
+
+                    onChange={(e) => {
+                      setSearchValue(e.target.value);
+                    }}
+                    {...params}
+                    placeholder="Find your perfect deal."
+                    inputProps={{
+                      ...params.inputProps,
+                      endAdornment: null,
+                    }}
+                  />
+                )}
+              
+              />
               {searchValue && (
                 <CloseIcon
                   onClick={() => setSearchValue("")}
-                  sx={{ mr: { xl: "0.5rem" } }}
+                  sx={{ mr: { xl: "0.5rem" }, cursor:"pointer" }}
                 />
               )}
             </Box>
-
-           
           </Box>
 
           <Box
