@@ -31,9 +31,7 @@ const Sales_section = () => {
     getData(url).then((res) => setSalesCardData(res.data.items));
   }, []);
 
-  const changeIcon = ()=>{
-    setFilledIcon(!filledIcon)
-  }
+ 
 
   return (
     <Grid container sx={{ ...all_center, height: "auto" }}>

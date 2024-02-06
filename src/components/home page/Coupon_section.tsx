@@ -26,7 +26,7 @@ const Coupon_section = () => {
     getData(url).then((res) => {
       setCouponData(res.data.items);
     });
-  });
+  },[]);
 
   return (
     <Grid container sx={{ ...all_center, height: "auto" }}>
