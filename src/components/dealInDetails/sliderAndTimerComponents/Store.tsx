@@ -198,8 +198,8 @@ const Store = () => {
           mt: "1.3rem",
         }}
       >
-        <Typography sx={{ fontSize: theme.typography.subtitle1.xl }}>
-          {resultArray && resultArray.length > 10 ? showAllText ? `${arr1} ${arr2}` : `${arr1}...` : testString}
+        <Typography noWrap sx={{ fontSize: theme.typography.subtitle1.xl }}>
+          {resultArray && resultArray.length > 10 ? showAllText ? `${arr1} ${arr2}` : `${arr1}` : testString}
         </Typography>
 
         <Typography

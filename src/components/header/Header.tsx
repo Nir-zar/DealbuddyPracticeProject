@@ -17,7 +17,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import theme from "../../theme";
 import { all_center } from "../../constant/commonStyle";
 import SearchIcon from "@mui/icons-material/Search";
@@ -98,15 +98,16 @@ const Header = () => {
   );
 
   const openMenu = menuAnchorEl;
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setMenuAnchorEl(event.currentTarget);
-  };
+  },[])
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setMenuAnchorEl(null);
-  };
+    setOpen(false)
+  },[])
 
-  const BASE_URL = "https://www.dealbuddy.co.nz/api";
+
   let cancelTokenSource = axios.CancelToken.source();
 
   useEffect(() => {
@@ -136,9 +137,9 @@ const Header = () => {
 
   }, [searchValue]);
 
-  const countries = [{ code: "AD", label: "Andorra", phone: "376" }];
 
-  console.log("after cancel button click data", searchValue);
+
+
 
   return (
     <>
@@ -332,6 +333,7 @@ const Header = () => {
                         }}
                       >
                         <Box
+                        onClick={handleClose}
                           sx={{
                             ...all_center,
                             height: "90%",
@@ -360,6 +362,7 @@ const Header = () => {
                             }}
                           >
                             <Box
+                             onClick={handleClose}
                               sx={{
                                 ...all_center,
                                 height: "90%",
@@ -385,7 +388,6 @@ const Header = () => {
 
             <Box
               component={"div"}
-              className="abcd"
               sx={{
                 height: "80%",
                 bgcolor: "white",
@@ -396,14 +398,12 @@ const Header = () => {
                 borderRadius: "10px",
                 outline: "none",
                 fieldset: { border: "none", outline: "none" },
-               
               }}
             >
               <SearchIcon sx={{ ml: { xl: "10px" } }} />
            
              
               <Autocomplete
-              className="xyz"
               value={searchValue}
               open={openListBox}
               disableClearable
@@ -414,7 +414,7 @@ const Header = () => {
               }}
 
               PopperComponent={(props) => (
-                <Popper {...props} style={{ width: "28.75rem" }}>
+                <Popper {...props} style={{ width: "26%",}}>
                   {props.children}
                 </Popper>
               )}
@@ -423,8 +423,7 @@ const Header = () => {
                 freeSolo
                 id="country-select-demo"
                 sx={{
-                  width: "24.7rem",
-                  "MuiAutocomplete-loading": { display: "none" }, "&:ul":{background:"pink", width:"300%"}
+                  width: "395px"
                 }}
                 filterOptions={(options) => options}
                 options={
@@ -451,8 +450,8 @@ const Header = () => {
                  >
                    <Box
                      component={"img"}
-                     src={searchResultData.productImages && searchResultData?.productImages?.[0]?.imageUrl}
-                     // src={`https://lockstep.io/wp-content/uploads/2022/08/Untitled-33.png`}
+                     src={searchResultData?.productImages?.[0]?.imageUrl}
+                   
                      sx={{
                        height: "100%",
                        width: "100%",
