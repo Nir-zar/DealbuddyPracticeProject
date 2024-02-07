@@ -7,14 +7,18 @@ import axios from "axios";
 const BASE_URL = "https://www.dealbuddy.co.nz/api";
 
 
-export const getData = async (url?: string, params?: object) =>
+export const getData = async (url?: string, params?: object, cityName?:string | null) =>
 {
    const data = await axios.get(`${BASE_URL}/${url}`,{
     params : {
       ...params,
-      // limit:5,
+    },
+    headers : {
+      "City" : cityName,
     }
    });
+   console.log(cityName);
+   
     return data;
 }
 

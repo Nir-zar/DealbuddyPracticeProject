@@ -10,6 +10,7 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { useSelector } from "react-redux";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import { useNavigate } from "react-router-dom";
+import Countdown from "react-countdown";
 
 const Store = () => {
   const navigate = useNavigate();
@@ -19,15 +20,26 @@ const Store = () => {
   );
 
   const [showAllText, setShowAllText] = useState(false);
+ 
+
+
 
   const testString = storeDescription;
-  const resultArray = testString.split(" ");
-  const arr1 = resultArray.slice(0, 10).join(" ");
-  const arr2 = resultArray.slice(10).join(" ");
+  const resultArray = testString && testString.split(" ");
+  const arr1 = resultArray && resultArray.slice(0, 10).join(" ");
+  const arr2 = resultArray && resultArray.slice(10).join(" ");
 
   const dealAndStoreAllDetails = useSelector(
     (store) => store.dealData.dealAndStoreAllDetails
   );
+
+
+
+
+
+ 
+  
+  
 
   return (
     <>
@@ -176,7 +188,7 @@ const Store = () => {
         {/* store phone number and website emd  */}
       </Box>
 
-      <Box
+     {resultArray &&  <Box
         component={"div"}
         sx={{
           height: "auto",
@@ -187,7 +199,7 @@ const Store = () => {
         }}
       >
         <Typography sx={{ fontSize: theme.typography.subtitle1.xl }}>
-          {resultArray.length > 10 ? showAllText ? `${arr1} ${arr2}` : `${arr1}...` : testString}
+          {resultArray && resultArray.length > 10 ? showAllText ? `${arr1} ${arr2}` : `${arr1}...` : testString}
         </Typography>
 
         <Typography
@@ -201,7 +213,7 @@ const Store = () => {
         >
           {showAllText ? "Read Less" : "Read More"}
         </Typography>
-      </Box>
+      </Box>}
     </>
   );
 };

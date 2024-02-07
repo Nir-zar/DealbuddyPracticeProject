@@ -1,6 +1,8 @@
 import {
+  Autocomplete,
   Box,
   Button,
+  CircularProgress,
   FormControl,
   Grid,
   Input,
@@ -9,11 +11,13 @@ import {
   ListItem,
   Menu,
   MenuItem,
+  OutlinedInput,
+  Popper,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import theme from "../../theme";
 import { all_center } from "../../constant/commonStyle";
 import SearchIcon from "@mui/icons-material/Search";
@@ -25,13 +29,16 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import Modal from "@mui/material/Modal";
-import { ArrowDropDown, Height } from "@mui/icons-material";
+import { ArrowDropDown, Height, Label } from "@mui/icons-material";
 import SendIcon from "@mui/icons-material/Send";
 import { getData } from "../../api/homeApi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Params, useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import {  useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { storePageNumber } from "../../features/storeData";
+import { dealsApiData } from "../../api/dealApi";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import axios from "axios";
 
 const style = {
   position: "absolute" as "absolute",
@@ -45,9 +52,6 @@ const style = {
   p: { xl: "1rem 2rem" },
   height: "auto",
 };
-
-
-
 
 const category_style = {
   category_list_style: {
@@ -66,14 +70,13 @@ const category_style = {
 const Header = () => {
   const [open, setOpen] = React.useState(false);
   const [modalData, setModalData] = useState([]);
-
+  const [searchValue, setSearchValue] = useState("");
+  const [searchResultData, setSearchResultData] = useState([]);
+  const [openListBox, setOpenLIstBox] = useState(false);
   const navigae = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
-  const pageNumber = useSelector((store)=> store.storeData.pageNumber)
-
-
-
+  const pageNumber = useSelector((store) => store.storeData.pageNumber);
 
   const gotoHomePage = () => {
     navigae("/");
@@ -90,14 +93,51 @@ const Header = () => {
       console.log(modalData);
     });
   };
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const openMenu = anchorEl;
+  const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(
+    null
+  );
+
+  const openMenu = menuAnchorEl;
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    setMenuAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
-    setAnchorEl(null);
+    setMenuAnchorEl(null);
+    setOpen(false);
   };
+
+  const BASE_URL = "https://www.dealbuddy.co.nz/api";
+
+  useEffect(() => {
+    const params = {
+      searchKeyword: searchValue,
+    };
+    let cancelTokenSource = axios.CancelToken.source();
+    console.log(cancelTokenSource);
+
+    dealsApiData(cancelTokenSource, params).then((res) => {
+      setSearchResultData(res.data.items);
+    });
+
+    if (searchValue) {
+      setOpenLIstBox(true);
+    }
+
+
+    return () => {
+      if (cancelTokenSource) {
+        cancelTokenSource.cancel("Component unmounted");
+        // console.log("hiii");
+      }
+    };
+  }, [searchValue]);
+
+
+    const setCityName = (cityName: string) => {
+      sessionStorage.setItem("City", cityName);
+    };
+
 
   return (
     <>
@@ -306,7 +346,7 @@ const Header = () => {
                           </Typography>
                         </Box>
                       </Grid>
-                      {modalData.map(({ location }) => {
+                      {modalData.map(({ location, quickOption }) => {
                         return (
                           <Grid
                             item
@@ -319,6 +359,11 @@ const Header = () => {
                             }}
                           >
                             <Box
+                              onClick={() =>{
+                                setOpen(false);
+                                setCityName(location)
+                                dispatch()
+                              }}
                               sx={{
                                 ...all_center,
                                 height: "90%",
@@ -330,7 +375,7 @@ const Header = () => {
                               <Typography
                                 sx={{ fontSize: theme.typography.subtitle1.xl }}
                               >
-                                {location}
+                                {quickOption && location}
                               </Typography>
                             </Box>
                           </Grid>
@@ -344,6 +389,7 @@ const Header = () => {
 
             <Box
               component={"div"}
+              className="abcd"
               sx={{
                 height: "80%",
                 bgcolor: "white",
@@ -357,18 +403,126 @@ const Header = () => {
               }}
             >
               <SearchIcon sx={{ ml: { xl: "10px" } }} />
-              <TextField
-                placeholder="Find your perfect deal"
-                sx={{
-                  height: "100%",
-                  width: "25.4rem",
-                  border: "none",
-                  // bgcolor:"blue",
-                  justifyContent: "center",
-                  fieldset: { border: "none", outline: "none" },
+
+              <Autocomplete
+                className="xyz"
+                value={searchValue}
+                open={openListBox}
+                disableClearable
+                onFocus={() => {
+                  if (searchValue) {
+                    setOpenLIstBox(true);
+                  }
                 }}
-              ></TextField>
-              <CloseIcon sx={{ mr: { xl: "0.5rem" } }} />
+                PopperComponent={(props) => (
+                  <Popper {...props} style={{ width: "28.75rem" }}>
+                    {props.children}
+                  </Popper>
+                )}
+                onClose={() => setOpenLIstBox(false)}
+                freeSolo
+                id="country-select-demo"
+                sx={{
+                  width: "24.7rem",
+                  "MuiAutocomplete-loading": { display: "none" },
+                  "&:ul": { background: "pink", width: "300%" },
+                }}
+                filterOptions={(options) => options}
+                options={searchResultData.length > 0 ? searchResultData : []}
+                renderOption={(props, searchResultData) =>
+                  searchValue && (
+                    <Box
+                      component="li"
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        width: "100%",
+                        margin: "0px",
+                        padding: "0px",
+                        justifyContent: "space-between !important",
+                      }}
+                      {...props}
+                    >
+                      <Box
+                        component={"div"}
+                        sx={{ height: "3rem", width: "15%" }}
+                      >
+                        <Box
+                          component={"img"}
+                          src={
+                            searchResultData.productImages &&
+                            searchResultData?.productImages?.[0]?.imageUrl
+                          }
+                          // src={`https://lockstep.io/wp-content/uploads/2022/08/Untitled-33.png`}
+                          sx={{
+                            height: "100%",
+                            width: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </Box>
+                      <Box
+                        component={"div"}
+                        sx={{
+                          height: "3rem",
+                          width: "80%",
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Box
+                          component={"div"}
+                          sx={{
+                            height: "50%",
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "end",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {searchResultData?.name}
+                        </Box>
+                        <Box
+                          component={"div"}
+                          sx={{
+                            height: "50%",
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "start",
+                          }}
+                        >
+                          <Typography
+                            sx={{ color: theme.palette.primary.main }}
+                          >
+                            {searchResultData.stores &&
+                              searchResultData?.stores[0]?.name}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  )
+                }
+                renderInput={(params) => (
+                  <TextField
+                    onChange={(e) => {
+                      setSearchValue(e.target.value);
+                    }}
+                    {...params}
+                    placeholder="Find your perfect deal."
+                    inputProps={{
+                      ...params.inputProps,
+                      endAdornment: null,
+                    }}
+                  />
+                )}
+              />
+              {searchValue && (
+                <CloseIcon
+                  onClick={() => setSearchValue("")}
+                  sx={{ mr: { xl: "0.5rem" }, cursor: "pointer" }}
+                />
+              )}
             </Box>
           </Box>
 
@@ -457,19 +611,22 @@ const Header = () => {
                 sx={{
                   color: theme.palette.common.black,
                   fontSize: theme.typography.subtitle1.xl,
-                  "&:hover":{bgcolor:'transparent'}
+                  "&:hover": { bgcolor: "transparent" },
                 }}
               >
-                 <Typography
-                sx={{ ...category_style.category_font_style, ml: "10px","&:hover":{fontWeight:800} }}
-              >
-                Store
-              </Typography>
-                
+                <Typography
+                  sx={{
+                    ...category_style.category_font_style,
+                    ml: "10px",
+                    "&:hover": { fontWeight: 800 },
+                  }}
+                >
+                  Store
+                </Typography>
               </Button>
               <Menu
                 id="basic-menu"
-                anchorEl={anchorEl}
+                anchorEl={menuAnchorEl}
                 open={openMenu}
                 onClose={handleClose}
                 MenuListProps={{
@@ -480,7 +637,7 @@ const Header = () => {
                   onClick={() => {
                     handleClose();
                     navigae("stores");
-                    dispatch(storePageNumber({pageNumber : 1}))
+                    dispatch(storePageNumber({ pageNumber: 1 }));
                   }}
                   sx={{ fontSize: theme.typography.subtitle2.xl }}
                 >
@@ -491,7 +648,7 @@ const Header = () => {
                   onClick={() => {
                     handleClose();
                     navigae("online-stores");
-                    dispatch(storePageNumber({pageNumber : 1}))
+                    dispatch(storePageNumber({ pageNumber: 1 }));
                   }}
                   sx={{ fontSize: theme.typography.subtitle2.xl }}
                 >
@@ -501,7 +658,7 @@ const Header = () => {
                   onClick={() => {
                     handleClose();
                     navigae("stores");
-                    dispatch(storePageNumber({pageNumber : 1}))
+                    dispatch(storePageNumber({ pageNumber: 1 }));
                   }}
                   sx={{ fontSize: theme.typography.subtitle2.xl }}
                 >

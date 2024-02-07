@@ -20,14 +20,25 @@ import { getData } from "../../api/homeApi";
 
 const Store_section = () => {
   const [storeData, setStoredata] = useState([]);
+  const [cityName, setCurrentCityName] = useState( sessionStorage.getItem("City"))
+  
   const url =
     "store/stores?v=1705477339221&take=999&isPopular=true&t=1705477339221";
-
+    // const cityName =  sessionStorage.getItem("City")
   useEffect(() => {
-    getData(url).then((res) => {
+
+    alert(cityName)
+    const params = {}
+    getData(url,params, cityName).then((res) => {
       setStoredata(res.data.items);
     });
-  }, []);
+  }, [cityName]);
+
+
+ if(cityName !== cityName)
+ {
+  alert(cityName)
+ }
 
   return (
     <Grid container sx={{ ...all_center, height: "auto" }}>
