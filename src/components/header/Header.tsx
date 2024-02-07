@@ -72,7 +72,7 @@ const Header = () => {
   const [modalData, setModalData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [searchResultData, setSearchResultData] = useState([]);
-  const [openListBox, setOpenLIstBox] = useState(false)
+  const [openListBox, setOpenLIstBox] = useState(false);
   const navigae = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
@@ -104,41 +104,40 @@ const Header = () => {
 
   const handleClose = () => {
     setMenuAnchorEl(null);
+    setOpen(false);
   };
 
   const BASE_URL = "https://www.dealbuddy.co.nz/api";
-  let cancelTokenSource = axios.CancelToken.source();
 
   useEffect(() => {
-
     const params = {
       searchKeyword: searchValue,
     };
-   cancelTokenSource = axios.CancelToken.source();
-   
+    let cancelTokenSource = axios.CancelToken.source();
+    console.log(cancelTokenSource);
 
-   dealsApiData(cancelTokenSource, params).then((res)=>{
-    setSearchResultData(res.data.items)
-   })
+    dealsApiData(cancelTokenSource, params).then((res) => {
+      setSearchResultData(res.data.items);
+    });
 
-   if(searchValue)
-   {
-    setOpenLIstBox(true)
-   }
-      
+    if (searchValue) {
+      setOpenLIstBox(true);
+    }
 
-      return()=>{
-        if(cancelTokenSource)
-        {
-          cancelTokenSource.cancel('Component unmounted');
-        }
-      };
 
+    return () => {
+      if (cancelTokenSource) {
+        cancelTokenSource.cancel("Component unmounted");
+        // console.log("hiii");
+      }
+    };
   }, [searchValue]);
 
-  const countries = [{ code: "AD", label: "Andorra", phone: "376" }];
 
-  console.log("after cancel button click data", searchValue);
+    const setCityName = (cityName: string) => {
+      sessionStorage.setItem("City", cityName);
+    };
+
 
   return (
     <>
@@ -347,7 +346,7 @@ const Header = () => {
                           </Typography>
                         </Box>
                       </Grid>
-                      {modalData.map(({ location }) => {
+                      {modalData.map(({ location, quickOption }) => {
                         return (
                           <Grid
                             item
@@ -360,6 +359,11 @@ const Header = () => {
                             }}
                           >
                             <Box
+                              onClick={() =>{
+                                setOpen(false);
+                                setCityName(location)
+                                dispatch()
+                              }}
                               sx={{
                                 ...all_center,
                                 height: "90%",
@@ -371,7 +375,7 @@ const Header = () => {
                               <Typography
                                 sx={{ fontSize: theme.typography.subtitle1.xl }}
                               >
-                                {location}
+                                {quickOption && location}
                               </Typography>
                             </Box>
                           </Grid>
@@ -396,94 +400,111 @@ const Header = () => {
                 borderRadius: "10px",
                 outline: "none",
                 fieldset: { border: "none", outline: "none" },
-               
               }}
             >
               <SearchIcon sx={{ ml: { xl: "10px" } }} />
-           
-             
-              <Autocomplete
-              className="xyz"
-              value={searchValue}
-              open={openListBox}
-              disableClearable
-              onFocus={()=>{
-                if(searchValue){
-                  setOpenLIstBox(true)
-                }
-              }}
 
-              PopperComponent={(props) => (
-                <Popper {...props} style={{ width: "28.75rem" }}>
-                  {props.children}
-                </Popper>
-              )}
-              onClose={()=>setOpenLIstBox(false)}
-               
+              <Autocomplete
+                className="xyz"
+                value={searchValue}
+                open={openListBox}
+                disableClearable
+                onFocus={() => {
+                  if (searchValue) {
+                    setOpenLIstBox(true);
+                  }
+                }}
+                PopperComponent={(props) => (
+                  <Popper {...props} style={{ width: "28.75rem" }}>
+                    {props.children}
+                  </Popper>
+                )}
+                onClose={() => setOpenLIstBox(false)}
                 freeSolo
                 id="country-select-demo"
                 sx={{
                   width: "24.7rem",
-                  "MuiAutocomplete-loading": { display: "none" }, "&:ul":{background:"pink", width:"300%"}
+                  "MuiAutocomplete-loading": { display: "none" },
+                  "&:ul": { background: "pink", width: "300%" },
                 }}
                 filterOptions={(options) => options}
-                options={
-                  searchResultData.length > 0
-                    ? searchResultData
-                    : [
-                        
-                      ]
+                options={searchResultData.length > 0 ? searchResultData : []}
+                renderOption={(props, searchResultData) =>
+                  searchValue && (
+                    <Box
+                      component="li"
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        width: "100%",
+                        margin: "0px",
+                        padding: "0px",
+                        justifyContent: "space-between !important",
+                      }}
+                      {...props}
+                    >
+                      <Box
+                        component={"div"}
+                        sx={{ height: "3rem", width: "15%" }}
+                      >
+                        <Box
+                          component={"img"}
+                          src={
+                            searchResultData.productImages &&
+                            searchResultData?.productImages?.[0]?.imageUrl
+                          }
+                          // src={`https://lockstep.io/wp-content/uploads/2022/08/Untitled-33.png`}
+                          sx={{
+                            height: "100%",
+                            width: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </Box>
+                      <Box
+                        component={"div"}
+                        sx={{
+                          height: "3rem",
+                          width: "80%",
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Box
+                          component={"div"}
+                          sx={{
+                            height: "50%",
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "end",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {searchResultData?.name}
+                        </Box>
+                        <Box
+                          component={"div"}
+                          sx={{
+                            height: "50%",
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "start",
+                          }}
+                        >
+                          <Typography
+                            sx={{ color: theme.palette.primary.main }}
+                          >
+                            {searchResultData.stores &&
+                              searchResultData?.stores[0]?.name}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  )
                 }
-             renderOption={(props, searchResultData) => (
-               searchValue && <Box
-                 component="li"
-                 sx={{
-                   display: "flex",
-                   flexDirection: "row",
-                   width: "100%", margin:"0px",padding:"0px",
-                   justifyContent: "space-between !important",
-                 }}
-                 {...props}
-               >
-                 <Box
-                   component={"div"}
-                   sx={{ height: "3rem", width: "15%" }}
-                 >
-                   <Box
-                     component={"img"}
-                     src={searchResultData.productImages && searchResultData?.productImages?.[0]?.imageUrl}
-                     // src={`https://lockstep.io/wp-content/uploads/2022/08/Untitled-33.png`}
-                     sx={{
-                       height: "100%",
-                       width: "100%",
-                       objectFit: "cover",
-                     }}
-                   />
-                 </Box>
-                 <Box
-                   component={"div"}
-                   sx={{ height: "3rem", width: "80%", display:"flex", flexDirection:"column" }}
-                 >
-                   <Box component={'div'} sx={{height:"50%", width:"100%", display:"flex", alignItems:'end',overflow: "hidden", textOverflow: "ellipsis", }}>{searchResultData?.name}</Box>
-                   <Box component={'div'} sx={{height:"50%", width:"100%",display:"flex", alignItems:'start'}}>
-                    <Typography sx={{color:theme.palette.primary.main}}>
-                    {searchResultData.stores && searchResultData?.stores[0]?.name}
-                    </Typography>
-
-                     </Box>
-              
-
-                 </Box>
-               </Box> 
-               
-               )}
-              
-              
-              
                 renderInput={(params) => (
                   <TextField
-                 
-
                     onChange={(e) => {
                       setSearchValue(e.target.value);
                     }}
@@ -495,12 +516,11 @@ const Header = () => {
                     }}
                   />
                 )}
-              
               />
               {searchValue && (
                 <CloseIcon
                   onClick={() => setSearchValue("")}
-                  sx={{ mr: { xl: "0.5rem" }, cursor:"pointer" }}
+                  sx={{ mr: { xl: "0.5rem" }, cursor: "pointer" }}
                 />
               )}
             </Box>

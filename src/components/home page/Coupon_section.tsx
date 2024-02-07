@@ -49,7 +49,6 @@ const Coupon_section = () => {
         {couponData.map(
           ({
             stores,
-            storeModes,
             category,
             name,
             locations,
@@ -57,7 +56,8 @@ const Coupon_section = () => {
             productType,
             productModes,
             NZWide,
-            clicks
+            clicks,
+            slug
           }) => {
             return (
               <Grid
@@ -292,7 +292,7 @@ const Coupon_section = () => {
                         </Box>
 
                             <Box sx={{ml:"0.3rem"}}>
-                            <Common_card_button button_text="View Deal" />
+                            <Common_card_button button_text="Show Code" slug={slug} />
                             </Box>
                         
                       </Box>

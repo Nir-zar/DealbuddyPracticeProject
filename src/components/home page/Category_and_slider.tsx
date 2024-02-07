@@ -15,9 +15,12 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import { useNavigate } from "react-router-dom";
 
 const Category_and_slider = () => {
+
   const [categoryList, setCategoryList] = useState([]);
+  const [activeStep, setActiveStep] = React.useState(0);
 
   const url = "category?order%5BorderBy%5D=ASC&take=6";
   const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -46,7 +49,8 @@ const Category_and_slider = () => {
   ];
 
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const navigate = useNavigate();
+
   const maxSteps = images.length;
 
   const handleNext = () => {
@@ -148,6 +152,7 @@ const Category_and_slider = () => {
                 return (
                   <>
                     <Box
+                      onClick={()=> navigate(`/categories/${category.slug}`)}
                       key={index}
                       sx={{
                         display: "flex",
@@ -158,6 +163,7 @@ const Category_and_slider = () => {
                         m: { xl: "0rem 0 0 1rem" },
                         alignItems: "center",
                         justifyContent: "space-between",
+                        cursor:"pointer"
                       }}
                     >
                       <Box
@@ -209,6 +215,7 @@ const Category_and_slider = () => {
             </Box>
 
             <Box
+            onClick={() => navigate("categories")}
               sx={{
                 ...all_center,
                 width: "100%",
@@ -218,6 +225,7 @@ const Category_and_slider = () => {
             >
               <Typography
                 sx={{
+                  cursor:"pointer",
                   fontSize: theme.typography.subtitle1.xl,
                   color: theme.palette.primary.main,
                   fontWeight: 700,
