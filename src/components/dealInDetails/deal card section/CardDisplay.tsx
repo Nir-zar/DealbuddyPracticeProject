@@ -10,6 +10,7 @@ const CardDisplay = () => {
 const [cardData, setCardData] = useState([])
 
 const productId = useSelector((store)=> store.dealData.dealProductId);
+const currentCityName = useSelector((store)=> store.filterData.currentCity)
 
 useEffect(()=>{
 
@@ -20,13 +21,13 @@ useEffect(()=>{
 
     if(productId)
     {
-        getRelatedProductData(params).then((res)=>{
+        getRelatedProductData(params,currentCityName).then((res)=>{
             setCardData(res.data);
         })
     }
 
 
-},[productId])
+},[productId, currentCityName])
 
   return (
   <Grid container sx={{height:'auto'}}>

@@ -41,6 +41,7 @@ const OnlineStoreComp = () => {
   const location = useLocation();
 
 
+    const currentCityName = useSelector((store)=> store.filterData.currentCity)
 
   useEffect(() => {
     const params = {
@@ -54,7 +55,7 @@ const OnlineStoreComp = () => {
     };
 
     if (pageNumber == 1) {
-      getStoreData(params).then((res) => {
+      getStoreData(params, currentCityName).then((res) => {
         setLoading(true)
         setCurrentItemsLength(res.data.items.length)
         setCurrentResponseTotalCount(res.data.total)
@@ -63,7 +64,7 @@ const OnlineStoreComp = () => {
         setLoading(false)
       });
     } else {
-      getStoreData(params).then((res) => {
+      getStoreData(params, currentCityName).then((res) => {
         setLoading(true)
         setCurrentItemsLength(currentItemsLength + res.data.items.length);
         setCurrentResponseTotalCount(res.data.total);
@@ -73,7 +74,7 @@ const OnlineStoreComp = () => {
         setLoading(false)
       });
     }
-  }, [pageNumber, storeDiscountType, storeCategoryType,location.pathname]);
+  }, [pageNumber, storeDiscountType, storeCategoryType,location.pathname, currentCityName]);
 
   
 

@@ -8,7 +8,11 @@ import {
   Input,
   InputAdornment,
   InputLabel,
+  List,
   ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Menu,
   MenuItem,
   OutlinedInput,
@@ -17,7 +21,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import theme from "../../theme";
 import { all_center } from "../../constant/commonStyle";
 import SearchIcon from "@mui/icons-material/Search";
@@ -39,6 +43,8 @@ import { storePageNumber } from "../../features/storeData";
 import { dealsApiData } from "../../api/dealApi";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import axios from "axios";
+import { setCurrentCity } from "../../features/filterData";
+import { getAllCityOption, getQuickOption } from "../../api/location_api";
 
 const style = {
   position: "absolute" as "absolute",
@@ -70,76 +76,107 @@ const category_style = {
 const Header = () => {
   const [open, setOpen] = React.useState(false);
   const [modalData, setModalData] = useState([]);
+  const [searchCityData, setSearchCityData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [searchResultData, setSearchResultData] = useState([]);
-  const [openListBox, setOpenLIstBox] = useState(false)
-  const navigae = useNavigate();
-  const params = useParams();
-  const dispatch = useDispatch();
-  const pageNumber = useSelector((store) => store.storeData.pageNumber);
-
-  const gotoHomePage = () => {
-    navigae("/");
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-    const url =
-      "location?v=1705562814548&where%5BquickOption%5D=true&order%5Blocation%5D=ASC&take=8";
-
-    getData(url).then((res) => {
-      setModalData(res.data.items);
-      console.log(res.data.items);
-      console.log(modalData);
-    });
-  };
+  const [openListBox, setOpenLIstBox] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(
     null
   );
+  const [currentLength, setCurrentLength] = useState(0);
+
+  const navigae = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
+
+  const pageNumber = useSelector((store) => store.storeData.pageNumber);
+  const currentCityName = useSelector((store) => store.filterData.currentCity);
 
   const openMenu = menuAnchorEl;
-  const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setMenuAnchorEl(event.currentTarget);
-  },[])
+
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setMenuAnchorEl(event.currentTarget);
+    },
+    []
+  );
 
   const handleClose = useCallback(() => {
     setMenuAnchorEl(null);
-    setOpen(false)
+    setSearchCityData([])
+    setOpen(false);
+  }, []);
+
+  const gotoHomePage = useCallback(() => {
+    navigae("/");
+  }, []);
+
+
+  const quickOption = useCallback(()=>{
+
+    setOpen(true);
+    const params = {
+      where: { quickOption: true },
+    };
+    getQuickOption(params).then((res) => {
+      setModalData(res.data.items);
+    });
+
+    console.log("nnn");
+    
   },[])
 
+  const handleSearchKeyword = (citysearchValue: string) => {
+    
+
+    const searchKeyword = {
+      searchKeyword: citysearchValue,
+      take:30
+    };
+    setOpen(true);
+    console.log(params);
+
+
+    if (citysearchValue.length > 0) {
+      getAllCityOption(searchKeyword).then((res) => {
+        setSearchCityData(res.data.items);
+        console.log(res.data.items);
+      });
+      setCurrentLength(citysearchValue.length);
+    }
+    else{
+      setSearchCityData([]);
+    }
+
+    console.log(Boolean(citysearchValue.length));
+  };
 
   let cancelTokenSource = axios.CancelToken.source();
 
   useEffect(() => {
-
     const params = {
       searchKeyword: searchValue,
     };
-   cancelTokenSource = axios.CancelToken.source();
-   
+    cancelTokenSource = axios.CancelToken.source();
 
-   dealsApiData(cancelTokenSource, params).then((res)=>{
-    setSearchResultData(res.data.items)
-   })
+    dealsApiData(cancelTokenSource, params).then((res) => {
+      setSearchResultData(res.data.items);
+    });
 
-   if(searchValue)
-   {
-    setOpenLIstBox(true)
-   }
-      
+    if (searchValue) {
+      setOpenLIstBox(true);
+    }
 
-      return()=>{
-        if(cancelTokenSource)
-        {
-          cancelTokenSource.cancel('Component unmounted');
-        }
-      };
-
+    return () => {
+      if (cancelTokenSource) {
+        cancelTokenSource.cancel("Component unmounted");
+      }
+    };
   }, [searchValue]);
 
-
-
-
+  const setCityName = (cityName: string) => {
+    sessionStorage.setItem("City", cityName);
+  };
 
   return (
     <>
@@ -204,13 +241,13 @@ const Header = () => {
               }}
             >
               <Button
-                onClick={handleOpen}
+                onClick={quickOption}
                 startIcon={
                   <PlaceOutlinedIcon sx={{ ml: "0.5rem" }} fontSize="large" />
                 }
                 endIcon={
                   <KeyboardArrowDownOutlinedIcon
-                    sx={{ ml: "1.8rem", color: theme.palette.common.black }}
+                    sx={{ ml: "1rem", color: theme.palette.common.black }}
                   />
                 }
                 sx={{
@@ -226,11 +263,12 @@ const Header = () => {
                 }}
               >
                 <Typography sx={{ color: theme.palette.common.black }}>
-                  NZ Wide
+                  {currentCityName ? currentCityName : "NZ Wide"}
                 </Typography>
               </Button>
 
               <Modal
+             
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -263,6 +301,7 @@ const Header = () => {
 
                   <FormControl sx={{ height: "auto", width: "100%" }}>
                     <Input
+                      onChange={(e) => handleSearchKeyword(e.target.value)}
                       placeholder="Enter city /town"
                       endAdornment={
                         <InputAdornment position="end">
@@ -285,6 +324,35 @@ const Header = () => {
                         alignItems: "center",
                       }}
                     ></Input>
+
+                  
+                      <List
+                        disablePadding
+                        sx={{ maxHeight: "400px", width: "100%", overflowY:"scroll" }}
+                      >
+                        {searchCityData.map((data) => {
+                          return (
+                            <ListItem 
+                            onClick={() => {
+                              setOpen(false);
+                              setCityName(data.location);
+                              dispatch(setCurrentCity(data.location));
+                              handleClose;
+                            }}
+                            disablePadding>
+                              <ListItemButton>
+                                <ListItemIcon>
+                                  <PlaceOutlinedIcon
+                                    sx={{ color: theme.palette.primary.main }}
+                                  />
+                                </ListItemIcon>
+                                <ListItemText primary={data.location} />
+                              </ListItemButton>
+                            </ListItem>
+                          );
+                        })}
+                      </List>
+                   
                   </FormControl>
 
                   <Box
@@ -333,7 +401,12 @@ const Header = () => {
                         }}
                       >
                         <Box
-                        onClick={handleClose}
+                          onClick={() => {
+                            setOpen(false);
+                            setCityName("");
+                            dispatch(setCurrentCity(""));
+                            handleClose;
+                          }}
                           sx={{
                             ...all_center,
                             height: "90%",
@@ -362,7 +435,12 @@ const Header = () => {
                             }}
                           >
                             <Box
-                             onClick={handleClose}
+                              onClick={() => {
+                                setOpen(false);
+                                setCityName(location);
+                                dispatch(setCurrentCity(location));
+                                handleClose;
+                              }}
                               sx={{
                                 ...all_center,
                                 height: "90%",
@@ -401,88 +479,101 @@ const Header = () => {
               }}
             >
               <SearchIcon sx={{ ml: { xl: "10px" } }} />
-           
-             
-              <Autocomplete
-              value={searchValue}
-              open={openListBox}
-              disableClearable
-              onFocus={()=>{
-                if(searchValue){
-                  setOpenLIstBox(true)
-                }
-              }}
 
-              PopperComponent={(props) => (
-                <Popper {...props} style={{ width: "26%",}}>
-                  {props.children}
-                </Popper>
-              )}
-              onClose={()=>setOpenLIstBox(false)}
-               
+              <Autocomplete
+                value={searchValue}
+                open={openListBox}
+                disableClearable
+                onFocus={() => {
+                  if (searchValue) {
+                    setOpenLIstBox(true);
+                  }
+                }}
+                PopperComponent={(props) => (
+                  <Popper {...props} style={{ width: "26%" }}>
+                    {props.children}
+                  </Popper>
+                )}
+                onClose={() => setOpenLIstBox(false)}
                 freeSolo
                 id="country-select-demo"
                 sx={{
-                  width: "395px"
+                  width: "395px",
                 }}
                 filterOptions={(options) => options}
-                options={
-                  searchResultData.length > 0
-                    ? searchResultData
-                    : [
-                        
-                      ]
+                options={searchResultData.length > 0 ? searchResultData : []}
+                renderOption={(props, searchResultData) =>
+                  searchValue && (
+                    <Box
+                      component="li"
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        width: "100%",
+                        margin: "0px",
+                        padding: "0px",
+                        justifyContent: "space-between !important",
+                      }}
+                      {...props}
+                    >
+                      <Box
+                        component={"div"}
+                        sx={{ height: "3rem", width: "15%" }}
+                      >
+                        <Box
+                          component={"img"}
+                          src={searchResultData?.productImages?.[0]?.imageUrl}
+                          sx={{
+                            height: "100%",
+                            width: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      </Box>
+                      <Box
+                        component={"div"}
+                        sx={{
+                          height: "3rem",
+                          width: "80%",
+                          display: "flex",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Box
+                          component={"div"}
+                          sx={{
+                            height: "50%",
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "end",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {searchResultData?.name}
+                        </Box>
+                        <Box
+                          component={"div"}
+                          sx={{
+                            height: "50%",
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "start",
+                          }}
+                        >
+                          <Typography
+                            sx={{ color: theme.palette.primary.main }}
+                          >
+                            {searchResultData.stores &&
+                              searchResultData?.stores[0]?.name}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  )
                 }
-             renderOption={(props, searchResultData) => (
-               searchValue && <Box
-                 component="li"
-                 sx={{
-                   display: "flex",
-                   flexDirection: "row",
-                   width: "100%", margin:"0px",padding:"0px",
-                   justifyContent: "space-between !important",
-                 }}
-                 {...props}
-               >
-                 <Box
-                   component={"div"}
-                   sx={{ height: "3rem", width: "15%" }}
-                 >
-                   <Box
-                     component={"img"}
-                     src={searchResultData?.productImages?.[0]?.imageUrl}
-                   
-                     sx={{
-                       height: "100%",
-                       width: "100%",
-                       objectFit: "cover",
-                     }}
-                   />
-                 </Box>
-                 <Box
-                   component={"div"}
-                   sx={{ height: "3rem", width: "80%", display:"flex", flexDirection:"column" }}
-                 >
-                   <Box component={'div'} sx={{height:"50%", width:"100%", display:"flex", alignItems:'end',overflow: "hidden", textOverflow: "ellipsis", }}>{searchResultData?.name}</Box>
-                   <Box component={'div'} sx={{height:"50%", width:"100%",display:"flex", alignItems:'start'}}>
-                    <Typography sx={{color:theme.palette.primary.main}}>
-                    {searchResultData.stores && searchResultData?.stores[0]?.name}
-                    </Typography>
-
-                     </Box>
-              
-
-                 </Box>
-               </Box> 
-               
-               )}
-              
-              
-              
                 renderInput={(params) => (
                   <TextField
-                 
-
                     onChange={(e) => {
                       setSearchValue(e.target.value);
                     }}
@@ -494,12 +585,11 @@ const Header = () => {
                     }}
                   />
                 )}
-              
               />
               {searchValue && (
                 <CloseIcon
                   onClick={() => setSearchValue("")}
-                  sx={{ mr: { xl: "0.5rem" }, cursor:"pointer" }}
+                  sx={{ mr: { xl: "0.5rem" }, cursor: "pointer" }}
                 />
               )}
             </Box>

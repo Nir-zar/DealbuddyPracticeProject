@@ -16,17 +16,21 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import { getData } from "../../api/homeApi";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { useSelector } from "react-redux";
 
 const Coupon_section = () => {
   const [couponData, setCouponData] = useState([]);
   const url =
     "deal/deals?v=1705473406628&limit=999&page=1&productType=coupon&shortBy=clicks&isPopular=true&updateViewCount=true&t=1705473406628";
 
+    const currentCityName = useSelector((store) => store.filterData.currentCity);
+
   useEffect(() => {
-    getData(url).then((res) => {
+    const params = {};
+      getData(url, params, currentCityName).then((res) => {
       setCouponData(res.data.items);
     });
-  },[]);
+  },[currentCityName]);
 
   return (
     <Grid container sx={{ ...all_center, height: "auto" }}>
@@ -292,7 +296,7 @@ const Coupon_section = () => {
                         </Box>
 
                             <Box sx={{ml:"0.3rem"}}>
-                            <Common_card_button button_text="View Deal" />
+                            <Common_card_button button_text="Show Code" />
                             </Box>
                         
                       </Box>

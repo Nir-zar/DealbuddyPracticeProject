@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import { useNavigate } from "react-router-dom";
 import Countdown from "react-countdown";
+import { Fullscreen } from "@mui/icons-material";
 
 const Store = () => {
   const navigate = useNavigate();
@@ -20,26 +21,15 @@ const Store = () => {
   );
 
   const [showAllText, setShowAllText] = useState(false);
- 
-
-
 
   const testString = storeDescription;
   const resultArray = testString && testString.split(" ");
-  const arr1 = resultArray && resultArray.slice(0, 10).join(" ");
-  const arr2 = resultArray && resultArray.slice(10).join(" ");
+  const arr1 = resultArray && resultArray.slice(0, 20).join(" ");
+  const arr2 = resultArray && resultArray.slice(20).join(" ");
 
   const dealAndStoreAllDetails = useSelector(
     (store) => store.dealData.dealAndStoreAllDetails
   );
-
-
-
-
-
- 
-  
-  
 
   return (
     <>
@@ -118,9 +108,9 @@ const Store = () => {
             sx={{ ml: "0.5rem", fontSize: theme.typography.subtitle1.xl }}
           >
             {dealAndStoreAllDetails?.stores &&
-             (dealAndStoreAllDetails?.stores[0]?.storeModes[0].name == "Online" ? ("Online") :
-              (dealAndStoreAllDetails?.stores[0]?.address.fillAddress)
-)}
+              (dealAndStoreAllDetails?.stores[0]?.storeModes[0].name == "Online"
+                ? "Online"
+                : dealAndStoreAllDetails?.stores[0]?.address.fillAddress)}
           </Typography>
         </Box>
         {/* store deals count end */}
@@ -135,85 +125,97 @@ const Store = () => {
             flexDirection: "column",
           }}
         >
-
-           {dealAndStoreAllDetails?.stores[0]?.phone &&  <Box
-            component={"div"}
-            sx={{ height: "auto", width: "auto", display: "flex" }}
-          >
-            <CallIcon sx={{ color: theme.palette.primary.main }} />
-            <Typography
-              sx={{ ml: "0.5rem", fontSize: theme.typography.subtitle1.xl }}
+          {dealAndStoreAllDetails?.stores[0]?.phone && (
+            <Box
+              component={"div"}
+              sx={{ height: "auto", width: "auto", display: "flex" }}
             >
-              {dealAndStoreAllDetails?.stores
-                ? dealAndStoreAllDetails?.stores[0]?.phone
-                : "null"}
-            </Typography>
-          </Box> }
-
-         
-                {dealAndStoreAllDetails?.stores[0]?.website && (  <Box
-            component={"div"}
-            sx={{ height: "auto", width: "auto", display: "flex" }}
-          >
-            <LanguageIcon sx={{ color: theme.palette.primary.main }} />
-            <Link
-              target="_blank"
-              underline="none"
-              color="inherit"
-              href="https://www.escapist.co.nz"
-            >
+              <CallIcon sx={{ color: theme.palette.primary.main }} />
               <Typography
-                sx={{
-                  ml: "0.5rem",
-                  fontSize: theme.typography.subtitle1.xl,
-                  "&:hover": {
-                    color: theme.palette.primary.main,
-                    cursor: "pointer",
-                  },
-                }}
+                sx={{ ml: "0.5rem", fontSize: theme.typography.subtitle1.xl }}
               >
                 {dealAndStoreAllDetails?.stores
-                  ? dealAndStoreAllDetails?.stores[0]?.website
+                  ? dealAndStoreAllDetails?.stores[0]?.phone
                   : "null"}
               </Typography>
-            </Link>
-          </Box>)}
-        
+            </Box>
+          )}
 
-
-
-
-
+          {dealAndStoreAllDetails?.stores[0]?.website && (
+            <Box
+              component={"div"}
+              sx={{ height: "auto", width: "auto", display: "flex" }}
+            >
+              <LanguageIcon sx={{ color: theme.palette.primary.main }} />
+              <Link
+                target="_blank"
+                underline="none"
+                color="inherit"
+                href="https://www.escapist.co.nz"
+              >
+                <Typography
+                  sx={{
+                    ml: "0.5rem",
+                    fontSize: theme.typography.subtitle1.xl,
+                    "&:hover": {
+                      color: theme.palette.primary.main,
+                      cursor: "pointer",
+                    },
+                  }}
+                >
+                  {dealAndStoreAllDetails?.stores
+                    ? dealAndStoreAllDetails?.stores[0]?.website
+                    : "null"}
+                </Typography>
+              </Link>
+            </Box>
+          )}
         </Box>
         {/* store phone number and website emd  */}
       </Box>
 
-     {resultArray &&  <Box
-        component={"div"}
-        sx={{
-          height: "auto",
-          width: "90%",
-          display: "flex",
-          flexDirection: "column",
-          mt: "1.3rem",
-        }}
-      >
-        <Typography noWrap sx={{ fontSize: theme.typography.subtitle1.xl }}>
-          {resultArray && resultArray.length > 10 ? showAllText ? `${arr1} ${arr2}` : `${arr1}` : testString}
-        </Typography>
-
-        <Typography
-          onClick={() => setShowAllText(!showAllText)}
+      {resultArray && (
+        <Box
+          component={"div"}
           sx={{
-            fontSize: theme.typography.subtitle1.xl,
-            color: theme.palette.primary.main,
-            cursor: "pointer",
-            mt: { xl: "0.5rem" },
+            height: "auto",
+            width: "90%",
+            display: "flex",
+            flexDirection: "column",
+            mt: "1.3rem",
           }}
         >
-          {showAllText ? "Read Less" : "Read More"}
-        </Typography>
-      </Box>}
+          <Typography
+            sx={{
+              fontSize: theme.typography.subtitle1.xl,
+              display:"-webkit-box",
+              WebkitBoxOrient:"vertical",
+              WebkitLineClamp: showAllText ? 10 : 2,
+              textOverflow: "ellipsis",
+              overflow: 'hidden', 
+             
+            }}
+          >
+            {resultArray && resultArray.length > 10
+              ? showAllText
+                ? `${arr1} ${arr2}`
+                : `${arr1}`
+              : testString}
+          </Typography>
+
+          <Typography
+            onClick={() => setShowAllText(!showAllText)}
+            sx={{
+              fontSize: theme.typography.subtitle1.xl,
+              color: theme.palette.primary.main,
+              cursor: "pointer",
+              mt: { xl: "0.5rem" },
+            }}
+          >
+            {showAllText ? "Read Less" : "Read More"}
+          </Typography>
+        </Box>
+      )}
     </>
   );
 };
