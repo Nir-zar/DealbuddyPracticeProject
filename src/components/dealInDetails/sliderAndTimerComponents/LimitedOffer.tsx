@@ -1,47 +1,71 @@
-import { Box, Typography, Divider } from '@mui/material'
-import React from 'react'
-import { all_center } from '../../../constant/commonStyle'
-import theme from '../../../theme'
-import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { BiLogoGmail } from 'react-icons/bi'
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa6'
+import { Box, Typography, Divider } from "@mui/material";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { all_center } from "../../../constant/commonStyle";
+import theme from "../../../theme";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { BiLogoGmail } from "react-icons/bi";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaLinkedinIn,
+  FaWhatsapp,
+} from "react-icons/fa6";
 import { RiMailSendLine } from "react-icons/ri";
 
-
 const counterBoxStyle = {
-    height: "70px",
-    width: "70px",
-    bgcolor: theme.palette.grey[100],
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  };
-  
-  const socialMediaBoxStyyle = {
-    height: "2.25rem",
-    width: "2.25rem",
-    borderRadius: "50%",
-    ...all_center
-  };
-  
+  height: "70px",
+  width: "70px",
+  bgcolor: theme.palette.grey[100],
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+};
 
-
-
+const socialMediaBoxStyyle = {
+  height: "2.25rem",
+  width: "2.25rem",
+  borderRadius: "50%",
+  ...all_center,
+};
 
 const LimitedOffer = () => {
+  const dealAndStoreAllDetails = useSelector(
+    (store) => store.dealData.dealAndStoreAllDetails
+  );
 
-    const dealAndStoreAllDetails = useSelector(
-        (store) => store.dealData.dealAndStoreAllDetails
-      );
-      const { dealSlug } = useParams();
-     
+  const dates = useMemo(() => {
+    const endDates = dealAndStoreAllDetails && dealAndStoreAllDetails?.endDate;
+
+    return endDates;
+  }, [dealAndStoreAllDetails]);
+
+
+
+  const [days, SetDays] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+
+  const getTime = useCallback(() => {
+    const remainingTime = Date.parse(dates) - Date.now();
+    SetDays(Math.floor(remainingTime / (1000 * 60 * 60 * 24)));
+    setHours(
+      Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    );
+    setMinutes(Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60)));
+    setSeconds(Math.floor((remainingTime % (1000 * 60)) / 1000));
+  }, [dates]);
+
+  useEffect(() => {
+    const interval = setInterval(() => getTime(dates), 1000);
+    return () => clearInterval(interval);
+  }, [dealAndStoreAllDetails]);
 
   return (
-<>
-
-<Box
+    <>
+      <Box
         gap={0.5}
         sx={{
           ...all_center,
@@ -105,22 +129,22 @@ const LimitedOffer = () => {
             }}
           >
             <Box component={"div"} sx={{ ...counterBoxStyle }}>
-              <Typography>5</Typography>
+              <Typography>{days}</Typography>
               <Typography>Days</Typography>
             </Box>
 
             <Box component={"div"} sx={{ ...counterBoxStyle }}>
-              <Typography>12</Typography>
+              <Typography>{hours}</Typography>
               <Typography>Hours</Typography>
             </Box>
 
             <Box component={"div"} sx={{ ...counterBoxStyle }}>
-              <Typography>25</Typography>
+              <Typography>{minutes}</Typography>
               <Typography>Minutes</Typography>
             </Box>
 
             <Box component={"div"} sx={{ ...counterBoxStyle }}>
-              <Typography>22</Typography>
+              <Typography>{seconds}</Typography>
               <Typography>Seconds</Typography>
             </Box>
           </Box>
@@ -147,38 +171,52 @@ const LimitedOffer = () => {
             width: "80%",
             display: "flex",
             justifyContent: "space-evenly",
-            pb:"2rem"
+            pb: "2rem",
           }}
         >
           <Box
             component={"div"}
             sx={{ ...socialMediaBoxStyyle, bgcolor: "#4267B2" }}
-          > <FaFacebookF color={theme.palette.common.white} /> </Box>
+          >
+            {" "}
+            <FaFacebookF color={theme.palette.common.white} />{" "}
+          </Box>
 
           <Box
             component={"div"}
             sx={{ ...socialMediaBoxStyyle, bgcolor: "#00acee" }}
-          > <FaTwitter color={theme.palette.common.white} /> </Box>
+          >
+            {" "}
+            <FaTwitter color={theme.palette.common.white} />{" "}
+          </Box>
 
-<Box
+          <Box
             component={"div"}
             sx={{ ...socialMediaBoxStyyle, bgcolor: "#006fa6" }}
-          > <FaLinkedinIn color={theme.palette.common.white} /> </Box>
+          >
+            {" "}
+            <FaLinkedinIn color={theme.palette.common.white} />{" "}
+          </Box>
 
-<Box
+          <Box
             component={"div"}
             sx={{ ...socialMediaBoxStyyle, bgcolor: "#FF961C" }}
-          > <RiMailSendLine color={theme.palette.common.white} /> </Box>
+          >
+            {" "}
+            <RiMailSendLine color={theme.palette.common.white} />{" "}
+          </Box>
 
-<Box
+          <Box
             component={"div"}
             sx={{ ...socialMediaBoxStyyle, bgcolor: "#25D366" }}
-          > <FaWhatsapp color={theme.palette.common.white} /> </Box>
+          >
+            {" "}
+            <FaWhatsapp color={theme.palette.common.white} />{" "}
+          </Box>
         </Box>
       </Box>
+    </>
+  );
+};
 
-</>
-  )
-}
-
-export default LimitedOffer
+export default LimitedOffer;
