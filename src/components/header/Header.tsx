@@ -326,32 +326,7 @@ const Header = () => {
                     ></Input>
 
                   
-                      <List
-                        disablePadding
-                        sx={{ maxHeight: "400px", width: "100%", overflowY:"scroll" }}
-                      >
-                        {searchCityData.map((data) => {
-                          return (
-                            <ListItem 
-                            onClick={() => {
-                              setOpen(false);
-                              setCityName(data.location);
-                              dispatch(setCurrentCity(data.location));
-                              handleClose;
-                            }}
-                            disablePadding>
-                              <ListItemButton>
-                                <ListItemIcon>
-                                  <PlaceOutlinedIcon
-                                    sx={{ color: theme.palette.primary.main }}
-                                  />
-                                </ListItemIcon>
-                                <ListItemText primary={data.location} />
-                              </ListItemButton>
-                            </ListItem>
-                          );
-                        })}
-                      </List>
+                    
                    
                   </FormControl>
 
@@ -360,18 +335,48 @@ const Header = () => {
                       height: "auto",
                       width: "100%",
                       display: "flex",
-                      "&:hover": { color: theme.palette.primary.main },
+                      flexDirection:"column"
                     }}
                   >
-                    <SendIcon
+                   <Box sx={{height:"auto", display:"flex", flexDirection:"row", }}> 
+                   <SendIcon
                       sx={{
                         color: theme.palette.grey[500],
                         "&:hover": { color: theme.palette.primary.main },
                       }}
                     />
-                    <Typography sx={{ ml: "1rem" }}>
+                    <Typography sx={{ ml: "1rem", "&:hover": { color: theme.palette.primary.main },  }}>
                       Current Location
                     </Typography>
+                   </Box>
+
+
+                    <List
+                        disablePadding
+                        sx={{ maxHeight: "400px", width: "100%", overflowY:"scroll" }}
+                      >
+                        {searchCityData.map((data) => {
+                          return (
+                            <ListItem 
+                            sx={{ "&:hover": { color: theme.palette.primary.main },  }}
+                            onClick={() => {
+                              setOpen(false);
+                              setCityName(data.location);
+                              dispatch(setCurrentCity(data.location));
+                              handleClose;
+                            }}
+                            disablePadding>
+                              <ListItemButton sx={{color:'inherit'}}>
+                                <ListItemIcon sx={{color:'inherit'}}>
+                                  <PlaceOutlinedIcon sx={{color:'inherit'}} />
+                                </ListItemIcon>
+                                <ListItemText primary={data.location} />
+                              </ListItemButton>
+                            </ListItem>
+                          );
+                        })}
+                      </List>
+                    
                   </Box>
 
                   <Grid container sx={{ height: "auto", m: "2rem 0" }}>
