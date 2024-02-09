@@ -38,55 +38,56 @@ const Sales_section = () => {
  
 
   return (
-    <Grid container sx={{ ...all_center, height: "auto" }}>
-      <Category_section_title title="Popular Sales" />
+    salesCardData.length > 0 &&    <Grid container sx={{ ...all_center, height: "auto" }}>
+    <Category_section_title title="Popular Sales" />
 
-      <Box
-        sx={{
-          alignItems: "center",
-          height: "auto",
-          width: "1300px",
-          //   bgcolor: theme.palette.primary.light,
-          borderRadius: "10px",
-          mt: "2rem",
-          display: "flex",
-          justifyContent: "start",
-          flexWrap: "wrap",
-        }}
-      >
-        {salesCardData.map(
-          ({
-            category,
-            productImages,
-            productType,
-            productModes,
-            name,
-            stores,
-            NZWide,
-            locations,
-            clicks,
-            imageUrl,
-            slug
-          }) => {
-            return (
-             <CommonCard 
-             category={category}
-             imageUrl={imageUrl}
-             clicks={clicks}
-             productImages={productImages}
-             productType={productType}
-             productModes={productModes}
-             stores={stores}
-             name={name}
-             NZWide={NZWide}
-             locations={locations}
-             slug={slug}
-             />
-            );
-          }
-        )}
-      </Box>
-    </Grid>
+    <Box
+      sx={{
+        alignItems: "center",
+        height: "auto",
+        width: "1300px",
+        //   bgcolor: theme.palette.primary.light,
+        borderRadius: "10px",
+        mt: "2rem",
+        display: "flex",
+        justifyContent: "start",
+        flexWrap: "wrap",
+      }}
+    >
+      {salesCardData.map(
+        ({
+          category,
+          productImages,
+          productType,
+          productModes,
+          name,
+          stores,
+          NZWide,
+          locations,
+          clicks,
+          imageUrl,
+          slug
+        }) => {
+          return (
+           <CommonCard 
+           category={category}
+           imageUrl={imageUrl}
+           clicks={clicks}
+           productImages={productImages}
+           productType={productType}
+           productModes={productModes}
+           stores={stores}
+           name={name}
+           NZWide={NZWide}
+           locations={locations}
+           slug={slug}
+           />
+          );
+        }
+      )}
+    </Box>
+  </Grid>
+  
   );
 };
 

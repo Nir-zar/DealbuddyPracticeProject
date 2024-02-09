@@ -147,9 +147,15 @@ const Header = () => {
     };
     cancelTokenSource = axios.CancelToken.source();
 
+   if(searchValue.length > 0)
+   {
     dealsApiData(cancelTokenSource, params).then((res) => {
       setSearchResultData(res.data.items);
     });
+   }
+   else {
+    setSearchResultData([]);
+   }
 
     if (searchValue) {
       setOpenLIstBox(true);
@@ -512,7 +518,8 @@ const Header = () => {
                   }
                 }}
                 PopperComponent={(props) => (
-                  <Popper {...props} style={{ width: "26%" }}>
+
+                searchValue &&  <Popper {...props} style={{ width: "24%" }}>
                     {props.children}
                   </Popper>
                 )}
@@ -748,7 +755,7 @@ const Header = () => {
                 <MenuItem
                   onClick={() => {
                     handleClose();
-                    navigae("stores");
+                    navigae("physical-stores");
                     dispatch(storePageNumber({ pageNumber: 1 }));
                   }}
                   sx={{ fontSize: theme.typography.subtitle2.xl }}
