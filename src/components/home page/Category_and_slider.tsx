@@ -63,7 +63,6 @@ const Category_and_slider = () => {
 
   useEffect(() => {
     getData(url).then((res) => {
-      console.log(res.data.items);
       setCategoryList(res.data.items);
       return;
     });

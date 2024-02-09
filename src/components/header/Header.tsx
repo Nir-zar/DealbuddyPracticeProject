@@ -28,7 +28,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import GridViewIcon from "@mui/icons-material/GridView";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
@@ -104,7 +104,7 @@ const Header = () => {
 
   const handleClose = useCallback(() => {
     setMenuAnchorEl(null);
-    setSearchCityData([])
+    setSearchCityData([]);
     setOpen(false);
   }, []);
 
@@ -112,9 +112,7 @@ const Header = () => {
     navigae("/");
   }, []);
 
-
-  const quickOption = useCallback(()=>{
-
+  const quickOption = useCallback(() => {
     setOpen(true);
     const params = {
       where: { quickOption: true },
@@ -122,34 +120,23 @@ const Header = () => {
     getQuickOption(params).then((res) => {
       setModalData(res.data.items);
     });
-
-    console.log("nnn");
-    
-  },[])
+  }, []);
 
   const handleSearchKeyword = (citysearchValue: string) => {
-    
-
     const searchKeyword = {
       searchKeyword: citysearchValue,
-      take:30
+      take: 30,
     };
     setOpen(true);
-    console.log(params);
-
 
     if (citysearchValue.length > 0) {
       getAllCityOption(searchKeyword).then((res) => {
         setSearchCityData(res.data.items);
-        console.log(res.data.items);
       });
       setCurrentLength(citysearchValue.length);
-    }
-    else{
+    } else {
       setSearchCityData([]);
     }
-
-    console.log(Boolean(citysearchValue.length));
   };
 
   let cancelTokenSource = axios.CancelToken.source();
@@ -246,18 +233,29 @@ const Header = () => {
                 startIcon={
                   <PlaceOutlinedIcon sx={{ ml: "0.5rem" }} fontSize="large" />
                 }
-                endIcon={open ?  <KeyboardArrowUpIcon
-                  sx={{ ml: "0.5rem",mr:"0.5rem", color: theme.palette.common.black }}
-                />
-                :
-                  <KeyboardArrowDownOutlinedIcon
-                    sx={{ ml: "0.5rem",mr:"0.5rem", color: theme.palette.common.black }}
-                  />
+                endIcon={
+                  open ? (
+                    <KeyboardArrowUpIcon
+                      sx={{
+                        ml: "0.5rem",
+                        mr: "0.5rem",
+                        color: theme.palette.common.black,
+                      }}
+                    />
+                  ) : (
+                    <KeyboardArrowDownOutlinedIcon
+                      sx={{
+                        ml: "0.5rem",
+                        mr: "0.5rem",
+                        color: theme.palette.common.black,
+                      }}
+                    />
+                  )
                 }
                 sx={{
                   height: "100%",
                   width: "auto",
-                  minWidth:"10rem",
+                  minWidth: "10rem",
                   bgcolor: "white",
                   display: "flex",
                   justifyContent: "space-around",
@@ -267,14 +265,14 @@ const Header = () => {
                   },
                 }}
               >
-                <Typography sx={{ color: theme.palette.common.black, minWidth:"4rem" }}>
+                <Typography
+                  sx={{ color: theme.palette.common.black, minWidth: "4rem" }}
+                >
                   {currentCityName ? currentCityName : "NZ Wide"}
-               
                 </Typography>
               </Button>
 
               <Modal
-             
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -330,10 +328,6 @@ const Header = () => {
                         alignItems: "center",
                       }}
                     ></Input>
-
-                  
-                    
-                   
                   </FormControl>
 
                   <Box
@@ -341,48 +335,65 @@ const Header = () => {
                       height: "auto",
                       width: "100%",
                       display: "flex",
-                      flexDirection:"column"
+                      flexDirection: "column",
                     }}
                   >
-                   <Box sx={{height:"auto", display:"flex", flexDirection:"row", }}> 
-                   <SendIcon
+                    <Box
                       sx={{
-                        color: theme.palette.grey[500],
-                        "&:hover": { color: theme.palette.primary.main },
+                        height: "auto",
+                        display: "flex",
+                        flexDirection: "row",
                       }}
-                    />
-                    <Typography sx={{ ml: "1rem", "&:hover": { color: theme.palette.primary.main },  }}>
-                      Current Location
-                    </Typography>
-                   </Box>
-
+                    >
+                      <SendIcon
+                        sx={{
+                          color: theme.palette.grey[500],
+                          "&:hover": { color: theme.palette.primary.main },
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          ml: "1rem",
+                          "&:hover": { color: theme.palette.primary.main },
+                        }}
+                      >
+                        Current Location
+                      </Typography>
+                    </Box>
 
                     <List
-                        disablePadding
-                        sx={{ maxHeight: "400px", width: "100%", overflowY:"scroll", '::-webkit-scrollbar ':{display:'none'} }}
-                      >
-                        {searchCityData.map((data) => {
-                          return (
-                            <ListItem 
-                            sx={{ "&:hover": { color: theme.palette.primary.main },  }}
+                      disablePadding
+                      sx={{
+                        maxHeight: "400px",
+                        width: "100%",
+                        overflowY: "scroll",
+                        "::-webkit-scrollbar ": { display: "none" },
+                      }}
+                    >
+                      {searchCityData.map((data) => {
+                        return (
+                          <ListItem
+                            sx={{
+                              "&:hover": { color: theme.palette.primary.main },
+                            }}
                             onClick={() => {
                               setOpen(false);
                               setCityName(data.location);
                               dispatch(setCurrentCity(data.location));
                               handleClose;
                             }}
-                            disablePadding>
-                              <ListItemButton sx={{color:'inherit'}}>
-                                <ListItemIcon sx={{color:'inherit'}}>
-                                  <PlaceOutlinedIcon sx={{color:'inherit'}} />
-                                </ListItemIcon>
-                                <ListItemText primary={data.location} />
-                              </ListItemButton>
-                            </ListItem>
-                          );
-                        })}
-                      </List>
-                    
+                            disablePadding
+                          >
+                            <ListItemButton sx={{ color: "inherit" }}>
+                              <ListItemIcon sx={{ color: "inherit" }}>
+                                <PlaceOutlinedIcon sx={{ color: "inherit" }} />
+                              </ListItemIcon>
+                              <ListItemText primary={data.location} />
+                            </ListItemButton>
+                          </ListItem>
+                        );
+                      })}
+                    </List>
                   </Box>
 
                   <Grid container sx={{ height: "auto", m: "2rem 0" }}>

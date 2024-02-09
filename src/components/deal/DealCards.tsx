@@ -55,7 +55,7 @@ const DealCards = () => {
   const location = useLocation();
 
   const searchKeyword = new URLSearchParams(location.search).get('search');
-  console.log("mmm",searchKeyword);
+
 
   const currentCityName = useSelector((store)=> store.filterData.currentCity)
 
@@ -83,10 +83,7 @@ const DealCards = () => {
       limit: 36
     };
 
-    if(storeSlug)
-    {
-      console.log(storeSlug);
-    }
+  
 
     if (pageNumber == 1) {
       setLoading(true);
@@ -137,7 +134,7 @@ const DealCards = () => {
     }
   };
 
-  console.log(salesCardData);
+
   
 
   return (

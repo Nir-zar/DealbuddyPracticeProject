@@ -17,7 +17,7 @@ const DealDescription = () => {
   const location = useLocation();
 
   const myParam = new URLSearchParams(location.search).get('myParam');
-  console.log("mmm",myParam);
+
   
 
   useEffect(() => {

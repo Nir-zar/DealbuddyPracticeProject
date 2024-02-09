@@ -68,7 +68,6 @@ const AllStore = () => {
         setLoading(true)
         setCurrentItemsLength(res.data.items.length)
         setCurrentResponseTotalCount(res.data.total)
-        console.log(res.data.items);
         setStoredata(res.data.items);
         setCurrentDataLength(res.data.items.length)
         setLoading(false)

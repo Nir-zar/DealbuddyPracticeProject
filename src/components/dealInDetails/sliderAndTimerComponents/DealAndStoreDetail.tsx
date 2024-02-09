@@ -24,7 +24,7 @@ const DealAndStoreDetail = () => {
 
 const dealAndStoreAllDetails = useSelector((store)=> store.dealData.dealAndStoreAllDetails);
 
-console.log(dealAndStoreAllDetails);
+
 
 
   return (
