@@ -28,6 +28,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import GridViewIcon from "@mui/icons-material/GridView";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
@@ -245,25 +246,30 @@ const Header = () => {
                 startIcon={
                   <PlaceOutlinedIcon sx={{ ml: "0.5rem" }} fontSize="large" />
                 }
-                endIcon={
+                endIcon={open ?  <KeyboardArrowUpIcon
+                  sx={{ ml: "0.5rem",mr:"0.5rem", color: theme.palette.common.black }}
+                />
+                :
                   <KeyboardArrowDownOutlinedIcon
-                    sx={{ ml: "1rem", color: theme.palette.common.black }}
+                    sx={{ ml: "0.5rem",mr:"0.5rem", color: theme.palette.common.black }}
                   />
                 }
                 sx={{
                   height: "100%",
-                  width: "10rem",
+                  width: "auto",
+                  minWidth:"10rem",
                   bgcolor: "white",
                   display: "flex",
-                  justifyContent: "start",
+                  justifyContent: "space-around",
                   borderRadius: "0.5rem",
                   "&:hover": {
                     bgcolor: theme.palette.common.white,
                   },
                 }}
               >
-                <Typography sx={{ color: theme.palette.common.black }}>
+                <Typography sx={{ color: theme.palette.common.black, minWidth:"4rem" }}>
                   {currentCityName ? currentCityName : "NZ Wide"}
+               
                 </Typography>
               </Button>
 
@@ -353,7 +359,7 @@ const Header = () => {
 
                     <List
                         disablePadding
-                        sx={{ maxHeight: "400px", width: "100%", overflowY:"scroll" }}
+                        sx={{ maxHeight: "400px", width: "100%", overflowY:"scroll", '::-webkit-scrollbar ':{display:'none'} }}
                       >
                         {searchCityData.map((data) => {
                           return (
