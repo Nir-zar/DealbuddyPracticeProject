@@ -20,7 +20,7 @@ import {
   import { getData } from "../../api/homeApi";
   import { getStoreData } from "../../api/storeApi";
   import { useSelector, useDispatch } from "react-redux";
-  import { storePageNumber } from "../../features/storeData";
+  import { PhysicalStoreType, storePageNumber } from "../../features/storeData";
   import { useLocation, useNavigate } from "react-router-dom";
 import MyComponent from "./MyComponent";
   
@@ -61,6 +61,7 @@ import MyComponent from "./MyComponent";
           setCurrentItemsLength(res.data.items.length)
           setCurrentResponseTotalCount(res.data.total)
           setStoredata(res.data.items);
+          dispatch(PhysicalStoreType(res.data))
           setCurrentDataLength(res.data.items.length)
           setLoading(false)
         });
@@ -128,6 +129,7 @@ import MyComponent from "./MyComponent";
                         <Box component={'div'} sx={{height:"100%", width:"100%", display:"flex",overflowY: "scroll", flexDirection:"column"}}>
                         {storeData.map(
                 ({ imageUrl, name, address, slug }) => {
+                 
                   return (
                    
                       <Card
