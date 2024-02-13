@@ -11,24 +11,18 @@ import {
 import React, { useEffect, useState } from "react";
 import { all_center } from "../../constant/commonStyle";
 import theme from "../../theme";
-import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import SendIcon from "@mui/icons-material/Send";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
-import Banner from "../common components/Banner";
-import Category_section_title from "../common components/CategorySection_title";
-import { getData } from "../../api/homeApi";
 import { getStoreData } from "../../api/storeApi";
 import { useSelector, useDispatch } from "react-redux";
-import { PhysicalStoreType, storePageNumber } from "../../features/storeData";
+import { PhysicalStoreType,  } from "../../features/storeData";
 import { useLocation, useNavigate } from "react-router-dom";
 import MyComponent from "./MyComponent";
 
 const PhysicalStoreComp = () => {
   const [storeData, setStoredata] = useState([]);
   const [currentDataLength, setCurrentDataLength] = useState();
-  const [currentItemsLength, setCurrentItemsLength] = useState(0);
-  const [currentResponseTotalCount, setCurrentResponseTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const pageNumber = useSelector((store) => store.storeData.pageNumber);
@@ -65,29 +59,17 @@ const PhysicalStoreComp = () => {
       isMapView: true,
     };
 
-    if (pageNumber == 1) {
+ 
       getStoreData(params, currentCityName).then((res) => {
         setLoading(true);
-        setCurrentItemsLength(res.data.items.length);
-        setCurrentResponseTotalCount(res.data.total);
         setStoredata(res.data.items);
         dispatch(PhysicalStoreType(res.data));
         setCurrentDataLength(res.data.items.length);
         setLoading(false);
       });
-    } else {
-      getStoreData(params, currentCityName).then((res) => {
-        setLoading(true);
-        setCurrentItemsLength(currentItemsLength + res.data.items.length);
-        setCurrentResponseTotalCount(res.data.total);
-        setCurrentDataLength(res.data.items.length);
-        const nextPageData = res.data.items;
-        setStoredata(storeData.concat(nextPageData));
-        setLoading(false);
-      });
-    }
+    
   }, [
-    pageNumber,
+
     storeDiscountType,
     storeCategoryType,
     location.pathname,
