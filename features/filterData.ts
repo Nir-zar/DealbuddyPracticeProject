@@ -8,12 +8,6 @@ const initialState = {
   discountTypes: [] as string[],
   currentCardItemValue: 0,
   currentCity : sessionStorage.getItem("City"),
-  bounds : 
-   { northEast : {},
-    southWest : {}  
-  }
-
-  ,
 };
 
 const filterDataSlice = createSlice({
@@ -23,6 +17,7 @@ const filterDataSlice = createSlice({
     filterData: (state, action) => {
       state.shortBy = action.payload.shortBy;
       state.pageNumber = action.payload.pageNumber;
+
     },
 
     filterDataByCategory: (state, action) => {
@@ -63,12 +58,6 @@ const filterDataSlice = createSlice({
     setCurrentCity : (state, action) =>{
       state.currentCity = action.payload;
     },
-    setNorthEastBounds : (state, action) => {
-      state.bounds.northEast = action.payload;
-    },
-    setSouthWestBounds : (state, action) => {
-      state.bounds.southWest = action.payload;
-    }
   },
 });
 
@@ -78,10 +67,7 @@ export const {
   filterDataByDealModes,
   filterDataByDiscountTypes,
   setPageNumber,
-  setCurrentCity,
-  setNorthEastBounds,
-  setSouthWestBounds
-
+  setCurrentCity
 } = filterDataSlice.actions;
 
 export default filterDataSlice.reducer;

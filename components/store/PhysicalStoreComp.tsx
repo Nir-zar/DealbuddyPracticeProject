@@ -37,9 +37,6 @@ import MyComponent from "./MyComponent";
   
     const pageNumber = useSelector((store) => store.storeData.pageNumber);
     const {storeDiscountType, storeCategoryType} = useSelector((store)=> store.storeData);
-    const latestBounds = useSelector((store)=> store.filterData.bounds)
-
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
@@ -48,27 +45,14 @@ import MyComponent from "./MyComponent";
       const currentCityName = useSelector((store)=> store.filterData.currentCity)
   
     useEffect(() => {
-
-        console.log("latest bounds",latestBounds);
-        
-
       const params = {
         take: 20,
         page: pageNumber,
         skip: 0,
         searchKeyword: "",
-        storeMode: location.pathname == "/online-stores" ? "Online" : "In Store" ,
+        storeMode: location.pathname == "/online-stores" ? "Online" : "" ,
         discountTypeId : storeDiscountType,
         categoryId : storeCategoryType,
-        NorthEast : {
-          lng :latestBounds.northEast.lng,
-          lat : latestBounds.northEast.lat
-        },
-        SouthWest : {
-          lng : latestBounds.southWest.lng,
-          lat : latestBounds.southWest.lat,
-        },
-        isMapView : true
       };
   
       if (pageNumber == 1) {
@@ -92,7 +76,7 @@ import MyComponent from "./MyComponent";
           setLoading(false)
         });
       }
-    }, [pageNumber, storeDiscountType, storeCategoryType,location.pathname, currentCityName, latestBounds.northEast]);
+    }, [pageNumber, storeDiscountType, storeCategoryType,location.pathname, currentCityName]);
   
     
   
