@@ -1,119 +1,118 @@
 import {
-    Grid,
-    Box,
-    Typography,
-    Button,
-    Card,
-    CardMedia,
-    CardContent,
-    CircularProgress,
-  } from "@mui/material";
-  import React, { useEffect, useState } from "react";
-  import { all_center } from "../../constant/commonStyle";
-  import theme from "../../theme";
-  import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
-  import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
-  import SendIcon from "@mui/icons-material/Send";
-  import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
-  import Banner from "../common components/Banner";
-  import Category_section_title from "../common components/CategorySection_title";
-  import { getData } from "../../api/homeApi";
-  import { getStoreData } from "../../api/storeApi";
-  import { useSelector, useDispatch } from "react-redux";
-  import { PhysicalStoreType, storePageNumber } from "../../features/storeData";
-  import { useLocation, useNavigate } from "react-router-dom";
+  Grid,
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardMedia,
+  CardContent,
+  CircularProgress,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { all_center } from "../../constant/commonStyle";
+import theme from "../../theme";
+import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
+import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
+import SendIcon from "@mui/icons-material/Send";
+import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
+import Banner from "../common components/Banner";
+import Category_section_title from "../common components/CategorySection_title";
+import { getData } from "../../api/homeApi";
+import { getStoreData } from "../../api/storeApi";
+import { useSelector, useDispatch } from "react-redux";
+import { PhysicalStoreType, storePageNumber } from "../../features/storeData";
+import { useLocation, useNavigate } from "react-router-dom";
 import MyComponent from "./MyComponent";
-  
-  const PhysicalStoreComp = () => {
-    const [storeData, setStoredata] = useState([]);
-    const [currentDataLength, setCurrentDataLength] = useState();
-    const [currentItemsLength, setCurrentItemsLength] = useState(0);
-    const [currentResponseTotalCount, setCurrentResponseTotalCount] = useState(0);
-    const [loading, setLoading] = useState(true)
-  
-  
-  
-  
-  
-    const pageNumber = useSelector((store) => store.storeData.pageNumber);
-    const {storeDiscountType, storeCategoryType} = useSelector((store)=> store.storeData);
-    const latestBounds = useSelector((store)=> store.filterData.bounds)
+
+const PhysicalStoreComp = () => {
+  const [storeData, setStoredata] = useState([]);
+  const [currentDataLength, setCurrentDataLength] = useState();
+  const [currentItemsLength, setCurrentItemsLength] = useState(0);
+  const [currentResponseTotalCount, setCurrentResponseTotalCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  const pageNumber = useSelector((store) => store.storeData.pageNumber);
+  const { storeDiscountType, storeCategoryType } = useSelector(
+    (store) => store.storeData
+  );
+  const latestBounds = useSelector((store) => store.filterData.bounds);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const currentCityName = useSelector((store) => store.filterData.currentCity);
+
+  useEffect(() => {
 
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const location = useLocation();
-  
-  
-      const currentCityName = useSelector((store)=> store.filterData.currentCity)
-  
-    useEffect(() => {
+    const params = {
+      take: 20,
+      page: pageNumber,
+      skip: 0,
+      searchKeyword: "",
+      storeMode: location.pathname == "/online-stores" ? "Online" : "In Store",
+      discountTypeId: storeDiscountType,
+      categoryId: storeCategoryType,
+      NorthEast: {
+        lng: latestBounds.northEast.lng,
+        lat: latestBounds.northEast.lat,
+      },
+      SouthWest: {
+        lng: latestBounds.southWest.lng,
+        lat: latestBounds.southWest.lat,
+      },
+      isMapView: true,
+    };
 
-        console.log("latest bounds",latestBounds);
-        
+    if (pageNumber == 1) {
+      getStoreData(params, currentCityName).then((res) => {
+        setLoading(true);
+        setCurrentItemsLength(res.data.items.length);
+        setCurrentResponseTotalCount(res.data.total);
+        setStoredata(res.data.items);
+        dispatch(PhysicalStoreType(res.data));
+        setCurrentDataLength(res.data.items.length);
+        setLoading(false);
+      });
+    } else {
+      getStoreData(params, currentCityName).then((res) => {
+        setLoading(true);
+        setCurrentItemsLength(currentItemsLength + res.data.items.length);
+        setCurrentResponseTotalCount(res.data.total);
+        setCurrentDataLength(res.data.items.length);
+        const nextPageData = res.data.items;
+        setStoredata(storeData.concat(nextPageData));
+        setLoading(false);
+      });
+    }
+  }, [
+    pageNumber,
+    storeDiscountType,
+    storeCategoryType,
+    location.pathname,
+    currentCityName,
+    latestBounds.northEast,
+  ]);
 
-      const params = {
-        take: 20,
-        page: pageNumber,
-        skip: 0,
-        searchKeyword: "",
-        storeMode: location.pathname == "/online-stores" ? "Online" : "In Store" ,
-        discountTypeId : storeDiscountType,
-        categoryId : storeCategoryType,
-        NorthEast : {
-          lng :latestBounds.northEast.lng,
-          lat : latestBounds.northEast.lat
-        },
-        SouthWest : {
-          lng : latestBounds.southWest.lng,
-          lat : latestBounds.southWest.lat,
-        },
-        isMapView : true
-      };
-  
-      if (pageNumber == 1) {
-        getStoreData(params, currentCityName).then((res) => {
-          setLoading(true)
-          setCurrentItemsLength(res.data.items.length)
-          setCurrentResponseTotalCount(res.data.total)
-          setStoredata(res.data.items);
-          dispatch(PhysicalStoreType(res.data))
-          setCurrentDataLength(res.data.items.length)
-          setLoading(false)
-        });
-      } else {
-        getStoreData(params, currentCityName).then((res) => {
-          setLoading(true)
-          setCurrentItemsLength(currentItemsLength + res.data.items.length);
-          setCurrentResponseTotalCount(res.data.total);
-          setCurrentDataLength(res.data.items.length)
-          const nextPageData = res.data.items;
-          setStoredata(storeData.concat(nextPageData));
-          setLoading(false)
-        });
-      }
-    }, [pageNumber, storeDiscountType, storeCategoryType,location.pathname, currentCityName, latestBounds.northEast]);
-  
-    
-  
-    return (
-      <Grid container sx={{ ...all_center, height: "auto" }}>
-        <Box
-          sx={{
-            alignItems: "start",
-            height: "auto",
-            width: "1300px",
-            //   bgcolor: theme.palette.primary.light,
-            borderRadius: "10px",
-            mb: "5rem",
-            display: "flex",
-            justifyContent: "start",
-            flexWrap: "wrap",
-            flexDirection:"row"
-          }}
-        >
-          {loading ? (<>
-          
+  return (
+    <Grid container sx={{ ...all_center, height: "auto" }}>
+      <Box
+        sx={{
+          alignItems: "start",
+          height: "auto",
+          width: "1300px",
+          //   bgcolor: theme.palette.primary.light,
+          borderRadius: "10px",
+          mb: "5rem",
+          display: "flex",
+          justifyContent: "start",
+          flexWrap: "wrap",
+          flexDirection: "row",
+        }}
+      >
+        {loading ? (
+          <>
             <Box
               sx={{
                 mt: "6rem",
@@ -122,34 +121,40 @@ import MyComponent from "./MyComponent";
                 display: "flex",
                 alignItems: "center",
                 flexDirection: "column",
-              
               }}
             >
               <CircularProgress />
               <Typography sx={{ mt: "1rem" }}>Loading......</Typography>
             </Box>
-  
-          </>) : 
-          
-          (
-  
-            currentDataLength !== 0 &&
-          
-              (<>
-               <Grid
-                      item
-                      gap={2}
-                      xl={4}
-                      sx={{ display:"flex",height: "600px", mt: "2rem", flexDirection:"column", }}
-                    >
-                        <Box component={'div'} sx={{height:"100%", width:"100%", display:"flex",overflowY: "scroll", flexDirection:"column"}}>
-                        {storeData.map(
-                ({ imageUrl, name, address, slug }) => {
-                 
-                  return (
-                   
+          </>
+        ) : (
+          currentDataLength !== 0 && (
+            <>
+              <Grid
+                item
+                gap={2}
+                xl={4}
+                sx={{
+                  display: "flex",
+                  height: "600px",
+                  mt: "2rem",
+                  flexDirection: "column",
+                }}
+              >
+                <Box
+                  component={"div"}
+                  sx={{
+                    height: "100%",
+                    width: "100%",
+                    display: "flex",
+                    overflowY: "scroll",
+                    flexDirection: "column",
+                  }}
+                >
+                  {storeData.map(({ imageUrl, name, address, slug }) => {
+                    return (
                       <Card
-                      onClick={()=>navigate(`/store/${slug}`)}
+                        onClick={() => navigate(`/store/${slug}`)}
                         sx={{
                           alignItems: "center",
                           height: "auto",
@@ -159,8 +164,8 @@ import MyComponent from "./MyComponent";
                           flexDirection: "row",
                           borderRadius: "10px",
                           mt: "1rem",
-                          cursor:"pointer",
-                          flexShrink:0
+                          cursor: "pointer",
+                          flexShrink: 0,
                         }}
                       >
                         <CardMedia
@@ -170,11 +175,11 @@ import MyComponent from "./MyComponent";
                           sx={{
                             height: { xl: "45%" },
                             width: { xl: "25%" },
-      
+
                             m: "1rem",
                           }}
                         ></CardMedia>
-      
+
                         <CardContent
                           sx={{
                             width: { xl: "252px" },
@@ -194,7 +199,7 @@ import MyComponent from "./MyComponent";
                           >
                             {name}
                           </Typography>
-      
+
                           <Box
                             sx={{
                               height: "auto",
@@ -218,7 +223,7 @@ import MyComponent from "./MyComponent";
                                 : "Online Store"}
                             </Typography>
                           </Box>
-      
+
                           <Box
                             sx={{
                               height: "auto",
@@ -239,7 +244,7 @@ import MyComponent from "./MyComponent";
                               1 active deal
                             </Typography>
                           </Box>
-      
+
                           <Box
                             sx={{
                               height: "auto",
@@ -256,7 +261,6 @@ import MyComponent from "./MyComponent";
                               alignSelf: "end",
                               height: "full",
                               width: "auto",
-                              // bgcolor: "red",
                               flexDirection: "column",
                             }}
                           >
@@ -275,42 +279,30 @@ import MyComponent from "./MyComponent";
                               <SendIcon />
                             </Box>
                           </Grid>
-                        ) : 
-                        
-                        (
+                        ) : (
                           <></>
                         )}
                       </Card>
-                   
-                  );
-                }
-              )}
-                        </Box>
-               
-               </Grid>
-                
-                <Grid item xl={8} sx={{height:"600px",border:"1px solid grey", mt:"32px"}}>
-                <Box component={'div'} sx={{height:"100%", width:"100%"}}>
-                <MyComponent />
+                    );
+                  })}
                 </Box>
-                    </Grid>
-              
-          
-              
-              </>) 
-              
-            
-  
-  
-          )}
-  
-  
-  
-  
-        </Box>
-      </Grid>
-    );
-  };
-  
-  export default PhysicalStoreComp;
-  
+              </Grid>
+
+              <Grid
+                item
+                xl={8}
+                sx={{ height: "600px", border: "1px solid grey", mt: "32px" }}
+              >
+                <Box component={"div"} sx={{ height: "100%", width: "100%" }}>
+                  <MyComponent />
+                </Box>
+              </Grid>
+            </>
+          )
+        )}
+      </Box>
+    </Grid>
+  );
+};
+
+export default PhysicalStoreComp;

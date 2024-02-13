@@ -1,14 +1,17 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
+import React, {  useState, useRef } from "react";
 import {
   GoogleMap,
   useJsApiLoader,
   MarkerF,
   InfoWindowF,
 } from "@react-google-maps/api";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
-import { UseDispatch } from "react-redux";
-import filterData, { setNorthEastBounds, setSouthWestBounds } from "../../features/filterData";
+import  {
+  setNorthEastBounds,
+  setSouthWestBounds,
+} from "../../features/filterData";
 
 const containerStyle = {
   width: "100%",
@@ -22,20 +25,19 @@ function MyComponent() {
   const [zoom, setZoom] = useState(1);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [labelPosition, setLabelPosition] = useState();
-  const [bounds, setBounds] = useState({
+
+  const bounds = {
     north: -34.0,
     south: -47.0,
     east: 179.0,
     west: 166.0,
-  });
+  };
 
   const storeData = useSelector((store) => store.storeData.physicalStoreData);
-  const newBounds = useSelector( (store)=> store.filterData.bounds )
 
   const mapRef = useRef();
   const dispatch = useDispatch();
-
-
+  const navigate = useNavigate();
 
   setTimeout(() => {
     setLoading(false);
@@ -46,16 +48,12 @@ function MyComponent() {
     const map = mapRef.current;
     if (map) {
       const bounds = map.getBounds();
-    
 
       const northEast = bounds.getNorthEast().toJSON();
       const southWest = bounds.getSouthWest().toJSON();
 
-      dispatch(setNorthEastBounds(northEast))
-      dispatch(setSouthWestBounds(southWest))
-      console.log("northEast", northEast);
-      console.log("sothWest", southWest);
-      
+      dispatch(setNorthEastBounds(northEast));
+      dispatch(setSouthWestBounds(southWest));
     }
   };
 
@@ -104,7 +102,7 @@ function MyComponent() {
           );
         })}
 
-      {selectedMarker?.id ? (
+      {selectedMarker ? (
         <InfoWindowF
           key={selectedMarker.id}
           position={labelPosition}
@@ -113,7 +111,9 @@ function MyComponent() {
           <Box
             gap={1}
             component={"div"}
-            sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+            sx={{ display: "flex", flexDirection: "row", 
+            alignItems: "center", cursor:"pointer" }}
+            onClick={()=>navigate(`/store/${selectedMarker.slug}`)}
           >
             <Box
               component={"img"}
