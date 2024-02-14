@@ -9,7 +9,7 @@ import {
     CircularProgress,
   } from "@mui/material";
   import React, { useEffect, useState } from "react";
-  import { all_center } from "../../constant/commonStyle";
+  import { allCenter } from "../../constant/commonStyle";
   import theme from "../../theme";
   import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
   import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -81,7 +81,7 @@ import MyComponent from "./MyComponent";
     
   
     return (
-      <Grid container sx={{ ...all_center, height: "auto" }}>
+      <Grid container sx={{ ...allCenter, height: "auto" }}>
         <Box
           sx={{
             alignItems: "start",
@@ -246,7 +246,7 @@ import MyComponent from "./MyComponent";
                           >
                             <Box
                               sx={{
-                                ...all_center,
+                                ...allCenter,
                                 m: "0.7rem",
                                 height: { xl: "42px" },
                                 width: { xl: "45px" },

@@ -1,13 +1,9 @@
-import { Navigate, useRoutes, useLocation } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import Layout from "../pages/Layout";
 import Home from "../pages/Home";
-import Category from "../pages/CategoryList";
 import HowItWorks from "../pages/HowItWorks";
 import Deal from "../pages/Deal";
-import Travel from "../components/categories/Travel";
-import Broadband from "../components/categories/Broadband";
 import CategoryList from "../pages/CategoryList";
-import Store from "../pages/Store";
 import OnlineStore from "../pages/OnlineStore";
 import DealInDeatail from "../pages/DealInDeatail";
 import PhysicalStore from "../pages/PhysicalStore";
@@ -30,17 +26,17 @@ export const Router = () => {
           children: [{ element: <Deal />, index: true }],
         },
         {
-            path: "store/:storeSlug",
-            children: [{ element: <Deal />, index: true }],
-          },
-          {
-            path: "deals/:dealSlug",
-            children: [{element: <DealInDeatail />, index: true}]
-          },
-          {
-            path :"search",
-            children :[ {element:<Deal />, index:true},  ]
-          }
+          path: "store/:storeSlug",
+          children: [{ element: <Deal />, index: true }],
+        },
+        {
+          path: "deals/:dealSlug",
+          children: [{ element: <DealInDeatail />, index: true }],
+        },
+        {
+          path: "search",
+          children: [{ element: <Deal />, index: true }],
+        },
       ],
     },
     //     {path : "categories",

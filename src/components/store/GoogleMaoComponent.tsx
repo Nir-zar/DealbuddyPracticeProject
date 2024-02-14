@@ -20,7 +20,7 @@ const containerStyle = {
 
 const mapCenter = { lat: -41.0, lng: 174.0 };
 
-function MyComponent() {
+function GoogleMaoComponent() {
   const [loading, setLoading] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -133,4 +133,4 @@ function MyComponent() {
   );
 }
 
-export default React.memo(MyComponent);
+export default React.memo(GoogleMaoComponent);

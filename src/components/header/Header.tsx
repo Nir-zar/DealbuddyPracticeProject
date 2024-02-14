@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import theme from "../../theme";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -45,7 +45,7 @@ import { dealsApiData } from "../../api/dealApi";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import axios from "axios";
 import { setCurrentCity } from "../../features/filterData";
-import { getAllCityOption, getQuickOption } from "../../api/location_api";
+import { getAllCityOption, getQuickOption } from "../../api/locationApi";
 
 const style = {
   position: "absolute" as "absolute",
@@ -177,7 +177,7 @@ const Header = () => {
       <Grid
         container
         sx={{
-          ...all_center,
+          ...allCenter,
           bgcolor: theme.palette.primary.main,
           height: "72px",
           py: "10px",
@@ -422,7 +422,7 @@ const Header = () => {
                         item
                         xl={6}
                         sx={{
-                          ...all_center,
+                          ...allCenter,
                           height: "3.5rem",
                           mt: "0.5rem",
                           cursor: "pointer",
@@ -436,7 +436,7 @@ const Header = () => {
                             handleClose;
                           }}
                           sx={{
-                            ...all_center,
+                            ...allCenter,
                             height: "90%",
                             width: "90%",
                             border: `1px solid ${theme.palette.grey[400]}`,
@@ -456,7 +456,7 @@ const Header = () => {
                             item
                             xl={6}
                             sx={{
-                              ...all_center,
+                              ...allCenter,
                               height: "3.5rem",
                               mt: "0.5rem",
                               cursor: "pointer",
@@ -470,7 +470,7 @@ const Header = () => {
                                 handleClose;
                               }}
                               sx={{
-                                ...all_center,
+                                ...allCenter,
                                 height: "90%",
                                 width: "90%",
                                 border: `1px solid ${theme.palette.grey[400]}`,
@@ -626,7 +626,7 @@ const Header = () => {
 
           <Box
             sx={{
-              ...all_center,
+              ...allCenter,
               height: { xl: "80%" },
               bgcolor: "transparent",
               border: `1px solid ${theme.palette.common.white}`,
@@ -648,7 +648,7 @@ const Header = () => {
           </Box>
         </Grid>
       </Grid>
-      <Grid container sx={{ ...all_center, height: { xl: "3.25rem" } }}>
+      <Grid container sx={{ ...allCenter, height: { xl: "3.25rem" } }}>
         <Grid
           item
           sx={{
@@ -676,7 +676,7 @@ const Header = () => {
               component={"div"}
               onClick={() => navigae("categories")}
               sx={{
-                ...all_center,
+                ...allCenter,
                 ...category_style.category_list_style,
                 cursor: "pointer",
               }}
@@ -693,7 +693,7 @@ const Header = () => {
               component={"div"}
               // onClick={()=>navigae("stores")}
               sx={{
-                ...all_center,
+                ...allCenter,
                 ...category_style.category_list_style,
                 cursor: "pointer",
               }}
@@ -769,7 +769,7 @@ const Header = () => {
               onClick={() => navigae("deals")}
               component={"div"}
               sx={{
-                ...all_center,
+                ...allCenter,
                 ...category_style.category_list_style,
                 cursor: "pointer",
               }}
@@ -786,7 +786,7 @@ const Header = () => {
               onClick={()=> navigae("physical-stores")}
               component={"div"}
               sx={{
-                ...all_center,
+                ...allCenter,
                 ...category_style.category_list_style,
                 cursor: "pointer",
               }}

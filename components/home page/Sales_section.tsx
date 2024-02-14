@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -38,7 +38,7 @@ const Sales_section = () => {
  
 
   return (
-    salesCardData.length > 0 &&    <Grid container sx={{ ...all_center, height: "auto" }}>
+    salesCardData.length > 0 &&    <Grid container sx={{ ...allCenter, height: "auto" }}>
     <Category_section_title title="Popular Sales" />
 
     <Box

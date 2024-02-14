@@ -22,10 +22,10 @@ const bounds = {
   west: 166.0, // Westernmost point
 };
 
-function MyComponent() {
+function GoogleMapComponent() {
   const [loading, setLoading] = useState(false);
   const [zoom, setZoom] = useState(1);
-  const [selectedMarker, setSelectedMarker] = useState(null)
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const [labelPosition, setLabelPosition] = useState();
 
   const storeData = useSelector((store) => store.storeData.physicalStoreData);
@@ -41,11 +41,6 @@ function MyComponent() {
     setZoom(2);
   }, 1000);
 
-  const [map, setMap] = React.useState(null);
-
-  console.log(labelPosition);
-
-
   const onLoad = React.useCallback(function callback(map) {
     // This is just an example of getting and using the map instance!!! don't just blindly copy!
     const bounds = new window.google.maps.LatLngBounds(mapCenter);
@@ -53,7 +48,6 @@ function MyComponent() {
 
     map.setZoom(map);
   }, []);
-
 
   return isLoaded ? (
     <GoogleMap
@@ -71,19 +65,17 @@ function MyComponent() {
       {!loading &&
         storeData?.items &&
         storeData?.items?.map((data) => {
-
-
           const position = {
             lat: data?.address?.latitude,
             lng: data?.address?.longitude,
           };
-          return ( 
+          return (
             <MarkerF
               key={data.id}
               position={position}
-              onClick={()=>{
-                setSelectedMarker(data)
-                setLabelPosition(position)
+              onClick={() => {
+                setSelectedMarker(data);
+                setLabelPosition(position);
               }}
               icon={{
                 url: "https://www.dealbuddy.co.nz/assets/img/marker.svg",
@@ -92,31 +84,33 @@ function MyComponent() {
           );
         })}
 
-        {selectedMarker?.id ?  
-       
-       ( <InfoWindowF 
-        key={selectedMarker.id} 
-        position={labelPosition} 
-        onCloseClick={()=> setSelectedMarker(null)}
-        > 
-        <Box gap={1} component={'div'} sx={{display:"flex", flexDirection:"row", alignItems:"center"}}>
-        <Box component={'img'} 
-        src={selectedMarker.imageUrl}
-        sx={{height:"40px", width:"40px"}} />
-          
-        <Typography>
-          {selectedMarker.name}
-        </Typography>
-        </Box>
+      {selectedMarker?.id ? (
+        <InfoWindowF
+          key={selectedMarker.id}
+          position={labelPosition}
+          onCloseClick={() => setSelectedMarker(null)}
+        >
+          <Box
+            gap={1}
+            component={"div"}
+            sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+          >
+            <Box
+              component={"img"}
+              src={selectedMarker.imageUrl}
+              sx={{ height: "40px", width: "40px" }}
+            />
 
-
- </InfoWindowF>) : (<></>)}
-
-     
+            <Typography>{selectedMarker.name}</Typography>
+          </Box>
+        </InfoWindowF>
+      ) : (
+        <></>
+      )}
     </GoogleMap>
   ) : (
     <></>
   );
 }
 
-export default React.memo(MyComponent);
+export default React.memo(GoogleMapComponent);

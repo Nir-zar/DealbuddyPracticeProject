@@ -9,7 +9,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -79,7 +79,7 @@ const OnlineStoreComp = () => {
   
 
   return (
-    <Grid container sx={{ ...all_center, height: "auto" }}>
+    <Grid container sx={{ ...allCenter, height: "auto" }}>
       <Box
         sx={{
           alignItems: "center",
@@ -124,7 +124,7 @@ const OnlineStoreComp = () => {
                   <Grid
                     item
                     xl={4}
-                    sx={{ ...all_center, height: "auto", mt: "2rem" }}
+                    sx={{ ...allCenter, height: "auto", mt: "2rem" }}
                   >
                     <Card
                     onClick={()=>navigate(`/store/${slug}`)}
@@ -239,7 +239,7 @@ const OnlineStoreComp = () => {
                         >
                           <Box
                             sx={{
-                              ...all_center,
+                              ...allCenter,
                               m: "0.7rem",
                               height: { xl: "42px" },
                               width: { xl: "45px" },
@@ -265,7 +265,7 @@ const OnlineStoreComp = () => {
     
               {currentItemsLength == currentResponseTotalCount ? (<></>) : (<><Box
               component={"div"}
-              sx={{ ...all_center, height: "7rem", width: "100%" }}
+              sx={{ ...allCenter, height: "7rem", width: "100%" }}
             >
               <Button
               onClick={()=>dispatch(storePageNumber({pageNumber : pageNumber + 1}))}
@@ -293,7 +293,7 @@ const OnlineStoreComp = () => {
             : 
             
             (<>
-            <Grid xl={12} sx={{...all_center, height:{xl:"10rem"}}}>
+            <Grid xl={12} sx={{...allCenter, height:{xl:"10rem"}}}>
               <Typography sx={{fontSize:theme.typography.h5.lg, fontWeight:'500'}}>
                 No store available
               </Typography>

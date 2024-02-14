@@ -7,12 +7,11 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
-import Common_card_button from "../common components/CommonCardButton";
 import { getData } from "../../api/homeApi";
 
-const Ads_section = () => {
+const AdsSection = () => {
 
 const url = "sponsored-ads?v=1703163820228&take=12"
 const [adsData, setAdsData] = useState([])
@@ -26,7 +25,7 @@ getData(url).then((res)=>{
 },[])
 
   return (
-    <Grid container sx={{ ...all_center, height: "auto", bgcolor:theme.palette.success.main, mt:"3rem" }}>
+    <Grid container sx={{ ...allCenter, height: "auto", bgcolor:theme.palette.success.main, mt:"3rem" }}>
       <Box
         sx={{
           alignItems: "center",
@@ -62,7 +61,7 @@ getData(url).then((res)=>{
         >
           {adsData.map(({imageUrl,shortDescription, title}) => {
             return (
-              <Grid xl={3} sx={{ ...all_center, height: "auto" }}>
+              <Grid xl={3} sx={{ ...allCenter, height: "auto" }}>
                 <Card
                   sx={{
                     alignItems: "center",
@@ -135,4 +134,4 @@ getData(url).then((res)=>{
   );
 };
 
-export default Ads_section;
+export default AdsSection;

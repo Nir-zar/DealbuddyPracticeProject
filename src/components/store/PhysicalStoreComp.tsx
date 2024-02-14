@@ -9,7 +9,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import SendIcon from "@mui/icons-material/Send";
@@ -18,7 +18,7 @@ import { getStoreData } from "../../api/storeApi";
 import { useSelector, useDispatch } from "react-redux";
 import { PhysicalStoreType,  } from "../../features/storeData";
 import { useLocation, useNavigate } from "react-router-dom";
-import MyComponent from "./MyComponent";
+import MyComponent from "./GoogleMaoComponent";
 
 const PhysicalStoreComp = () => {
   const [storeData, setStoredata] = useState([]);
@@ -78,7 +78,7 @@ const PhysicalStoreComp = () => {
   ]);
 
   return (
-    <Grid container sx={{ ...all_center, height: "auto" }}>
+    <Grid container sx={{ ...allCenter, height: "auto" }}>
       <Box
         sx={{
           alignItems: "start",
@@ -248,7 +248,7 @@ const PhysicalStoreComp = () => {
                           >
                             <Box
                               sx={{
-                                ...all_center,
+                                ...allCenter,
                                 m: "0.7rem",
                                 height: { xl: "42px" },
                                 width: { xl: "45px" },

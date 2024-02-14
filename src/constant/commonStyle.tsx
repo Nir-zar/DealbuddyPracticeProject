@@ -1,4 +1,4 @@
-export const all_center = {
+export const allCenter = {
     display:'flex',
     alignItems :"center",
     justifyContent :"center"

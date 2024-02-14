@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import theme from "../../theme";
 import { filterData } from "../../features/filterData";
 import { filterDataByCategory } from "../../features/filterData";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import ShortcutSharpIcon from "@mui/icons-material/ShortcutSharp";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -22,8 +22,6 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
-
-
 
 function a11yProps(index: string) {
   return {
@@ -40,24 +38,21 @@ const DealCards = () => {
   const [currentItemsLength, setCurrentItemsLength] = useState(0);
   const [totalCardCount, setTotalCardCount] = useState(0);
 
-
   const valueNew = useSelector((store) => store.filterData.shortBy);
   const pageNumber = useSelector((store) => store.filterData.pageNumber);
   const productCategory = useSelector((store) => store.filterData.productType);
   const { dealModes, discountTypes } = useSelector((store) => store.filterData);
-  const { slug,storeSlug } = useParams();
+  const { slug, storeSlug } = useParams();
 
   const url = `deal/deals`;
   const dispatch = useDispatch();
 
-
   const navigate = useNavigate();
   const location = useLocation();
 
-  const searchKeyword = new URLSearchParams(location.search).get('search');
+  const searchKeyword = new URLSearchParams(location.search).get("search");
 
-
-  const currentCityName = useSelector((store)=> store.filterData.currentCity)
+  const currentCityName = useSelector((store) => store.filterData.currentCity);
 
   useEffect(() => {
     const paramsForAll = {
@@ -66,9 +61,9 @@ const DealCards = () => {
       dealModes: dealModes,
       discountTypes: discountTypes,
       categorySlug: slug,
-      storeSlug:storeSlug,
-      searchKeyword :searchKeyword,
-      limit: 36
+      storeSlug: storeSlug,
+      searchKeyword: searchKeyword,
+      limit: 36,
     };
 
     const paramsForSaleAndCoupon = {
@@ -78,18 +73,18 @@ const DealCards = () => {
       dealModes: dealModes,
       discountTypes: discountTypes,
       categorySlug: slug,
-      storeSlug:storeSlug,
-      searchKeyword :searchKeyword,
-      limit: 36
+      storeSlug: storeSlug,
+      searchKeyword: searchKeyword,
+      limit: 36,
     };
-
-  
 
     if (pageNumber == 1) {
       setLoading(true);
       getData(
         url,
-        productCategory == "all" ? paramsForAll : paramsForSaleAndCoupon,currentCityName).then((res) => {
+        productCategory == "all" ? paramsForAll : paramsForSaleAndCoupon,
+        currentCityName
+      ).then((res) => {
         setCurrentItemsLength(res.data.items.length);
         setTotalCardCount(res.data.total);
         setSalesCardData(res.data.items);
@@ -104,7 +99,9 @@ const DealCards = () => {
     } else {
       getData(
         url,
-        productCategory == "all" ? paramsForAll : paramsForSaleAndCoupon, currentCityName).then((res) => {
+        productCategory == "all" ? paramsForAll : paramsForSaleAndCoupon,
+        currentCityName
+      ).then((res) => {
         setCurrentItemsLength(currentItemsLength + res.data.items.length);
         setTotalCardCount(res.data.total);
         const newPageData = res.data.items;
@@ -117,10 +114,17 @@ const DealCards = () => {
         setLoading(false);
       });
     }
-   
 
     return;
-  }, [valueNew, pageNumber, productCategory, dealModes, discountTypes, slug,currentCityName]);
+  }, [
+    valueNew,
+    pageNumber,
+    productCategory,
+    dealModes,
+    discountTypes,
+    slug,
+    currentCityName,
+  ]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -134,9 +138,6 @@ const DealCards = () => {
     }
   };
 
-
-  
-
   return (
     <Box
       component={"div"}
@@ -148,10 +149,8 @@ const DealCards = () => {
         overflowY: "scoll",
       }}
     >
-      <Box sx={{ width: "100%", }}>
-
-      {storeSlug && <IndividualStoreDetail />}
-      
+      <Box sx={{ width: "100%" }}>
+        {storeSlug && <IndividualStoreDetail />}
 
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
@@ -233,7 +232,7 @@ const DealCards = () => {
                     locations,
                     couponCode,
                     index,
-                    slug
+                    slug,
                   }) => {
                     return (
                       <>
@@ -290,26 +289,24 @@ const DealCards = () => {
             )}
           </>
         )}
-
-
       </Box>
 
       {currentItemsLength == totalCardCount ? (
         <Box
           gap={2}
           sx={{
-            ...all_center,
+            ...allCenter,
             mt: "1rem",
             height: "2.5rem",
             width: "20rem",
             background: theme.gradient_color.button_hover_color,
             alignSelf: "center",
-            borderRadius:"10px"
+            borderRadius: "10px",
           }}
         >
           <Typography
             sx={{
-              ...all_center,
+              ...allCenter,
               height: "100%",
               width: "auto",
               background: theme.gradient_color.button_hover_color,

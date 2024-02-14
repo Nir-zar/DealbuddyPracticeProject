@@ -1,6 +1,6 @@
 import { Box, Typography, Button, Divider } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { all_center } from '../../../constant/commonStyle'
+import { allCenter } from '../../../constant/commonStyle'
 import theme from '../../../theme'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -27,7 +27,7 @@ const GetDealsAndClicks = () => {
         <Box
         component={"div"}
         sx={{
-          ...all_center,
+          ...allCenter,
           height: "auto",
           width: "80%",
           mx: "auto",

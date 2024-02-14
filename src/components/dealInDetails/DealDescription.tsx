@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import theme from "../../theme";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -29,7 +29,7 @@ const DealDescription = () => {
   return (
     <Box
       sx={{
-        ...all_center,
+        ...allCenter,
         height: "auto",
         width: "98%",
         mt: { xl: "3rem" },

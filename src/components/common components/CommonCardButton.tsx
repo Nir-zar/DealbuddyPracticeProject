@@ -10,7 +10,7 @@ interface Button_title {
 }
 
 
-const Common_card_button = ({button_text,slug, width}:Button_title) => {
+const CommonCardButton = ({button_text,slug, width}:Button_title) => {
 
 const navigate = useNavigate();
 
@@ -37,4 +37,4 @@ const buttonWidth = width == 6 ? "100%" : "262px"
   )
 }
 
-export default Common_card_button
+export default CommonCardButton

@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import theme from "../../theme";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -147,15 +147,13 @@ const Header = () => {
     };
     cancelTokenSource = axios.CancelToken.source();
 
-   if(searchValue.length > 0)
-   {
-    dealsApiData(cancelTokenSource, params).then((res) => {
-      setSearchResultData(res.data.items);
-    });
-   }
-   else {
-    setSearchResultData([]);
-   }
+    if (searchValue.length > 0) {
+      dealsApiData(cancelTokenSource, params).then((res) => {
+        setSearchResultData(res.data.items);
+      });
+    } else {
+      setSearchResultData([]);
+    }
 
     if (searchValue) {
       setOpenLIstBox(true);
@@ -177,7 +175,7 @@ const Header = () => {
       <Grid
         container
         sx={{
-          ...all_center,
+          ...allCenter,
           bgcolor: theme.palette.primary.main,
           height: "72px",
           py: "10px",
@@ -422,7 +420,7 @@ const Header = () => {
                         item
                         xl={6}
                         sx={{
-                          ...all_center,
+                          ...allCenter,
                           height: "3.5rem",
                           mt: "0.5rem",
                           cursor: "pointer",
@@ -436,7 +434,7 @@ const Header = () => {
                             handleClose;
                           }}
                           sx={{
-                            ...all_center,
+                            ...allCenter,
                             height: "90%",
                             width: "90%",
                             border: `1px solid ${theme.palette.grey[400]}`,
@@ -456,7 +454,7 @@ const Header = () => {
                             item
                             xl={6}
                             sx={{
-                              ...all_center,
+                              ...allCenter,
                               height: "3.5rem",
                               mt: "0.5rem",
                               cursor: "pointer",
@@ -470,7 +468,7 @@ const Header = () => {
                                 handleClose;
                               }}
                               sx={{
-                                ...all_center,
+                                ...allCenter,
                                 height: "90%",
                                 width: "90%",
                                 border: `1px solid ${theme.palette.grey[400]}`,
@@ -517,12 +515,13 @@ const Header = () => {
                     setOpenLIstBox(true);
                   }
                 }}
-                PopperComponent={(props) => (
-
-                searchValue &&  <Popper {...props} style={{ width: "24%" }}>
-                    {props.children}
-                  </Popper>
-                )}
+                PopperComponent={(props) =>
+                  searchValue && (
+                    <Popper {...props} style={{ width: "24%" }}>
+                      {props.children}
+                    </Popper>
+                  )
+                }
                 onClose={() => setOpenLIstBox(false)}
                 freeSolo
                 id="country-select-demo"
@@ -626,7 +625,7 @@ const Header = () => {
 
           <Box
             sx={{
-              ...all_center,
+              ...allCenter,
               height: { xl: "80%" },
               bgcolor: "transparent",
               border: `1px solid ${theme.palette.common.white}`,
@@ -648,7 +647,7 @@ const Header = () => {
           </Box>
         </Grid>
       </Grid>
-      <Grid container sx={{ ...all_center, height: { xl: "3.25rem" } }}>
+      <Grid container sx={{ ...allCenter, height: { xl: "3.25rem" } }}>
         <Grid
           item
           sx={{
@@ -676,7 +675,7 @@ const Header = () => {
               component={"div"}
               onClick={() => navigae("categories")}
               sx={{
-                ...all_center,
+                ...allCenter,
                 ...category_style.category_list_style,
                 cursor: "pointer",
               }}
@@ -693,7 +692,7 @@ const Header = () => {
               component={"div"}
               // onClick={()=>navigae("stores")}
               sx={{
-                ...all_center,
+                ...allCenter,
                 ...category_style.category_list_style,
                 cursor: "pointer",
               }}
@@ -769,7 +768,7 @@ const Header = () => {
               onClick={() => navigae("deals")}
               component={"div"}
               sx={{
-                ...all_center,
+                ...allCenter,
                 ...category_style.category_list_style,
                 cursor: "pointer",
               }}
@@ -785,7 +784,7 @@ const Header = () => {
             <Box
               component={"div"}
               sx={{
-                ...all_center,
+                ...allCenter,
                 ...category_style.category_list_style,
                 cursor: "pointer",
               }}

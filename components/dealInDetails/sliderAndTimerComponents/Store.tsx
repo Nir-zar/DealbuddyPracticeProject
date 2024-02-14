@@ -1,6 +1,6 @@
 import { Box, Typography, Divider, Link } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../../constant/commonStyle";
+import { allCenter } from "../../../constant/commonStyle";
 import theme from "../../../theme";
 import CallIcon from "@mui/icons-material/Call";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
@@ -36,7 +36,7 @@ const Store = () => {
       <Box
         component={"div"}
         sx={{
-          ...all_center,
+          ...allCenter,
           height: "auto",
           width: "90%",
           flexDirection: "column",
@@ -188,12 +188,11 @@ const Store = () => {
           <Typography
             sx={{
               fontSize: theme.typography.subtitle1.xl,
-              display:"-webkit-box",
-              WebkitBoxOrient:"vertical",
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
               WebkitLineClamp: showAllText ? 10 : 2,
               textOverflow: "ellipsis",
-              overflow: 'hidden', 
-             
+              overflow: "hidden",
             }}
           >
             {resultArray && resultArray.length > 10

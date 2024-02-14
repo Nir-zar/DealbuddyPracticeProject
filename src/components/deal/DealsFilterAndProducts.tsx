@@ -1,12 +1,12 @@
 import { Box, Grid } from '@mui/material'
 import React from 'react'
-import { all_center } from '../../constant/commonStyle'
+import { allCenter } from '../../constant/commonStyle'
 import FilterDeals from './FilterDeals'
 import DealCards from './DealCards'
 
 const DealsFilterAndProducts = () => {
   return (
-<Grid container sx={{...all_center, height:"auto"}}>
+<Grid container sx={{...allCenter, height:"auto"}}>
 
 <Box component={'div'}
 sx={{height:"auto", width:"1300px", display:"flex", justifyContent:"space-between"}}

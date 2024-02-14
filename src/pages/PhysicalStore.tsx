@@ -1,14 +1,14 @@
-import React from 'react'
-import StoreSearchBar from '../components/store/storeSearchBar'
-import PhysicalStoreComp from '../components/store/PhysicalStoreComp'
+import React from "react";
+import StoreSearchBar from "../components/store/storeSearchBar";
+import PhysicalStoreComp from "../components/store/PhysicalStoreComp";
 
 const PhysicalStore = () => {
   return (
-   <>
+    <>
       <StoreSearchBar />
-   <PhysicalStoreComp />
-   </>
-  )
-}
+      <PhysicalStoreComp />
+    </>
+  );
+};
 
-export default PhysicalStore
+export default PhysicalStore;

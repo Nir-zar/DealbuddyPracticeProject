@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import theme from "../../theme";
 import { filterData } from "../../features/filterData";
 import { filterDataByCategory } from "../../features/filterData";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import ShortcutSharpIcon from "@mui/icons-material/ShortcutSharp";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -298,7 +298,7 @@ const DealCards = () => {
         <Box
           gap={2}
           sx={{
-            ...all_center,
+            ...allCenter,
             mt: "1rem",
             height: "2.5rem",
             width: "20rem",
@@ -309,7 +309,7 @@ const DealCards = () => {
         >
           <Typography
             sx={{
-              ...all_center,
+              ...allCenter,
               height: "100%",
               width: "auto",
               background: theme.gradient_color.button_hover_color,

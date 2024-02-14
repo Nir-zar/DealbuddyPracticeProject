@@ -1,6 +1,6 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import ShortcutSharpIcon from "@mui/icons-material/ShortcutSharp";
 
 import ChevronRightSharpIcon from "@mui/icons-material/ChevronRightSharp";
@@ -16,7 +16,7 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 
-const Category_and_slider = () => {
+const CategoryAndSlider = () => {
   const [categoryList, setCategoryList] = useState([]);
 
   const url = "category?order%5BorderBy%5D=ASC&take=6";
@@ -73,7 +73,7 @@ const Category_and_slider = () => {
       <Grid
         container
         sx={{
-          ...all_center,
+          ...allCenter,
           height: "1.5rem",
           bgcolor: theme.palette.common.white,
           mt: "1rem",
@@ -83,7 +83,7 @@ const Category_and_slider = () => {
           gap={2}
           item
           sx={{
-            ...all_center,
+            ...allCenter,
             width: { xl: "1300px" },
             bgcolor: theme.palette.secondary.main,
             height: "100%",
@@ -96,7 +96,7 @@ const Category_and_slider = () => {
           <ShortcutSharpIcon />
         </Grid>
       </Grid>
-      <Grid container sx={{ ...all_center, height: "auto" }}>
+      <Grid container sx={{ ...allCenter, height: "auto" }}>
         <Box sx={{ width: { xl: "1300px" }, p: "40px 0px", height: "auto" }}>
           <Typography sx={{ fontSize: theme.typography.h4.lg }}>
             Find the best deal and coupons near you
@@ -170,7 +170,7 @@ const Category_and_slider = () => {
                       >
                         <Box
                           sx={{
-                            ...all_center,
+                            ...allCenter,
                             height: "100%",
                             width: "36px",
                             bgcolor: theme.palette.primary.main,
@@ -209,7 +209,7 @@ const Category_and_slider = () => {
 
             <Box
               sx={{
-                ...all_center,
+                ...allCenter,
                 width: "100%",
                 height: "auto",
                 p: "20px 0 0 0",
@@ -326,7 +326,7 @@ const Category_and_slider = () => {
         >
           <Box
             sx={{
-              ...all_center,
+              ...allCenter,
               height: "200px",
               position: "relative",
               width: "616px",
@@ -345,7 +345,7 @@ const Category_and_slider = () => {
                 top: 0,
                 left: 0,
                 backgroundColor: "#0000008f",
-                ...all_center,
+                ...allCenter,
                 color: theme.palette.common.white,
                 display: "flex",
                 flexDirection: "column",
@@ -365,7 +365,7 @@ const Category_and_slider = () => {
 
           <Box
             sx={{
-              ...all_center,
+              ...allCenter,
               height: "200px",
               position: "relative",
               width: "616px",
@@ -384,7 +384,7 @@ const Category_and_slider = () => {
                 top: 0,
                 left: 0,
                 backgroundColor: "#0000008f",
-                ...all_center,
+                ...allCenter,
                 color: theme.palette.common.white,
                 display: "flex",
                 flexDirection: "column",
@@ -407,4 +407,4 @@ const Category_and_slider = () => {
   );
 };
 
-export default Category_and_slider;
+export default CategoryAndSlider;

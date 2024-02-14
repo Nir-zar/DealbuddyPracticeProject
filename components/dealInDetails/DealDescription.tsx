@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import theme from "../../theme";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -10,15 +10,11 @@ const DealDescription = () => {
     (store) => store.dealData.dealAndStoreAllDetails
   );
 
-
-
   const description = dealAndStoreAllDetails?.description;
   const navigate = useNavigate();
   const location = useLocation();
 
-  const myParam = new URLSearchParams(location.search).get('myParam');
-
-  
+  const myParam = new URLSearchParams(location.search).get("myParam");
 
   useEffect(() => {
     if (description) {
@@ -29,7 +25,7 @@ const DealDescription = () => {
   return (
     <Box
       sx={{
-        ...all_center,
+        ...allCenter,
         height: "auto",
         width: "98%",
         mt: { xl: "3rem" },
@@ -44,7 +40,7 @@ const DealDescription = () => {
           width: "90%",
           display: "flex",
           flexDirection: "column",
-          mt:{xl:"2rem"}
+          mt: { xl: "2rem" },
         }}
       >
         <Typography
@@ -99,28 +95,33 @@ const DealDescription = () => {
               flexWrap: "wrap",
             }}
           >
-           {dealAndStoreAllDetails?.tags && dealAndStoreAllDetails?.tags.map((data)=>{
-            return(
-                <Box
-                onClick={()=> navigate({pathname:"/search", search:`?search=${data.name}`})}
-                component={"div"}
-                sx={{
-                  height: "auto",
-                  width: "auto",
-                  mt: "1.5rem",
-                  p: { xl: "0.2rem 0.7rem" },
-                  bgcolor: theme.palette.grey[100],
-                  borderRadius: "10px",
-                  fontWeight: 700,
-                }}
-              >
-                <Typography sx={{ fontSize: theme.typography.caption.xl }}>
-                  {data.name}
-                </Typography>
-              </Box>
-            );
-           })}
-           
+            {dealAndStoreAllDetails?.tags &&
+              dealAndStoreAllDetails?.tags.map((data) => {
+                return (
+                  <Box
+                    onClick={() =>
+                      navigate({
+                        pathname: "/search",
+                        search: `?search=${data.name}`,
+                      })
+                    }
+                    component={"div"}
+                    sx={{
+                      height: "auto",
+                      width: "auto",
+                      mt: "1.5rem",
+                      p: { xl: "0.2rem 0.7rem" },
+                      bgcolor: theme.palette.grey[100],
+                      borderRadius: "10px",
+                      fontWeight: 700,
+                    }}
+                  >
+                    <Typography sx={{ fontSize: theme.typography.caption.xl }}>
+                      {data.name}
+                    </Typography>
+                  </Box>
+                );
+              })}
           </Box>
         </Box>
       </Box>

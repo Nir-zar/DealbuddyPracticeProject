@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Grid, Typography, colors } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../../constant/commonStyle";
+import { allCenter } from "../../../constant/commonStyle";
 import { useSelector } from "react-redux";
 import theme from "../../../theme";
 import GetDealsAndClicks from "./GetDealsAndClicks";
@@ -53,7 +53,7 @@ const dealAndStoreAllDetails = useSelector((store)=> store.dealData.dealAndStore
         (<Box
           component={"div"}
           sx={{
-            ...all_center,
+            ...allCenter,
             height: "auto",
             width: "100%",
             display: "flex",
@@ -75,7 +75,7 @@ const dealAndStoreAllDetails = useSelector((store)=> store.dealData.dealAndStore
         <Box
           component={"div"}
           sx={{
-            ...all_center,
+            ...allCenter,
             height: "auto",
             width: "100%",
             display: "flex",

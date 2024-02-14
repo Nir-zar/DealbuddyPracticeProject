@@ -1,6 +1,6 @@
 import { Box, Typography, Divider } from "@mui/material";
 import React from "react";
-import { all_center } from "../../../constant/commonStyle";
+import { allCenter } from "../../../constant/commonStyle";
 import theme from "../../../theme";
 import { useSelector } from "react-redux";
 
@@ -17,7 +17,7 @@ const ApplicableLocations = () => {
       <Box
         component={"div"}
         sx={{
-          ...all_center,
+          ...allCenter,
           height: "auto",
           width: "90%",
           flexDirection: "column",

@@ -8,7 +8,7 @@ import {
   CardContent,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -37,7 +37,7 @@ const Store_section = () => {
 
   return (
     storeData.length > 0 && (
-      <Grid container sx={{ ...all_center, height: "auto" }}>
+      <Grid container sx={{ ...allCenter, height: "auto" }}>
         <Category_section_title title="Popular Stores" />
         <Box
           sx={{
@@ -58,7 +58,7 @@ const Store_section = () => {
                 <Grid
                   item
                   xl={4}
-                  sx={{ ...all_center, height: "auto", mt: "2rem" }}
+                  sx={{ ...allCenter, height: "auto", mt: "2rem" }}
                 >
                   <Card
                     sx={{
@@ -172,7 +172,7 @@ const Store_section = () => {
                       >
                         <Box
                           sx={{
-                            ...all_center,
+                            ...allCenter,
                             m: "0.7rem",
                             height: { xl: "42px" },
                             width: { xl: "45px" },

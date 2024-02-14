@@ -1,6 +1,6 @@
 import { Box, Typography, Divider } from "@mui/material";
 import React from "react";
-import { all_center } from "../../../constant/commonStyle";
+import { allCenter } from "../../../constant/commonStyle";
 import theme from "../../../theme";
 import { useSelector } from "react-redux";
 
@@ -9,15 +9,12 @@ const ApplicableLocations = () => {
     (store) => store.dealData.dealAndStoreAllDetails
   );
 
-
-  
-
   return (
     <>
       <Box
         component={"div"}
         sx={{
-          ...all_center,
+          ...allCenter,
           height: "auto",
           width: "90%",
           flexDirection: "column",
@@ -43,11 +40,10 @@ const ApplicableLocations = () => {
             width: "100%",
             display: "flex",
             flexDirection: "row",
-            flexWrap:"wrap"
+            flexWrap: "wrap",
           }}
         >
-       
-<Box
+          <Box
             component={"div"}
             sx={{
               height: "auto",
@@ -56,15 +52,16 @@ const ApplicableLocations = () => {
               p: { xl: "0.2rem 0.7rem" },
               bgcolor: theme.palette.grey[100],
               borderRadius: "10px",
-              fontWeight:700
+              fontWeight: 700,
             }}
           >
-            <Typography sx={{fontSize:theme.typography.caption.xl}}>
-              {dealAndStoreAllDetails?.locations && (dealAndStoreAllDetails?.NZWide ? ("NZ Wide") : (dealAndStoreAllDetails?.locations[0]?.location))
-               }
+            <Typography sx={{ fontSize: theme.typography.caption.xl }}>
+              {dealAndStoreAllDetails?.locations &&
+                (dealAndStoreAllDetails?.NZWide
+                  ? "NZ Wide"
+                  : dealAndStoreAllDetails?.locations[0]?.location)}
             </Typography>
           </Box>
-          
         </Box>
       </Box>
     </>

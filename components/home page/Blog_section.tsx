@@ -8,7 +8,7 @@ import {
   CardContent,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import Banner from "../common components/Banner";
 import Category_section_title from "../common components/CategorySection_title";
@@ -28,7 +28,7 @@ const Blog_section = () => {
 
   return (
     <>
-      <Grid container sx={{ ...all_center, height: "auto" }}>
+      <Grid container sx={{ ...allCenter, height: "auto" }}>
         <Category_section_title title="Blogs" />
 
         <Box
@@ -41,12 +41,20 @@ const Blog_section = () => {
             display: "flex",
             justifyContent: "start",
             flexWrap: "wrap",
-            
           }}
         >
           {blogData.map(({ imageUrl, title, sortDescription }) => {
             return (
-              <Grid item xl={3} sx={{ display:"flex",alignItems:"center", justifyContent:"center", height: "494px", }}>
+              <Grid
+                item
+                xl={3}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "494px",
+                }}
+              >
                 <Card
                   sx={{
                     alignItems: "center",
@@ -57,7 +65,6 @@ const Blog_section = () => {
                     display: "flex",
                     flexDirection: "column",
                     borderRadius: "10px",
-                    
                   }}
                 >
                   <CardMedia
@@ -106,8 +113,8 @@ const Blog_section = () => {
                           color: theme.palette.grey[500],
                           overflow: "hidden",
                           height: "auto",
-                          display:"-webkit-box",
-                          WebkitBoxOrient:"vertical",
+                          display: "-webkit-box",
+                          WebkitBoxOrient: "vertical",
                           WebkitLineClamp: 3,
                           textOverflow: "ellipsis",
                         }}
@@ -128,7 +135,7 @@ const Blog_section = () => {
       <Grid
         container
         sx={{
-          ...all_center,
+          ...allCenter,
           height: "1.5rem",
           bgcolor: theme.palette.common.white,
           mt: "1rem",
@@ -139,7 +146,7 @@ const Blog_section = () => {
           gap={2}
           item
           sx={{
-            ...all_center,
+            ...allCenter,
             width: { xl: "1300px" },
             // bgcolor: theme.palette.secondary.main,
             height: "3rem",

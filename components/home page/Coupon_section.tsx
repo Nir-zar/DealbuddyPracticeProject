@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import Category_section_title from "../common components/CategorySection_title";
 import Common_card_button from "../common components/CommonCardButton";
@@ -33,7 +33,7 @@ const Coupon_section = () => {
   },[currentCityName]);
 
   return (
- couponData.length > 0 &&    <Grid container sx={{ ...all_center, height: "auto" }}>
+ couponData.length > 0 &&    <Grid container sx={{ ...allCenter, height: "auto" }}>
  <Category_section_title title="Popular Coupons" />
 
  <Box
@@ -68,7 +68,7 @@ const Coupon_section = () => {
            item
            xl={3}
            sx={{
-             ...all_center,
+             ...allCenter,
              height: "474px",
              mt: "1.5rem",
            }}
@@ -93,7 +93,7 @@ const Coupon_section = () => {
              <Box
                component={"div"}
                sx={{
-                 ...all_center,
+                 ...allCenter,
                  position: "absolute",
                  bgcolor: "#000000b8",
                  height: "36px",
@@ -138,7 +138,7 @@ const Coupon_section = () => {
                component={"div"}
                
                sx={{
-                 ...all_center,  
+                 ...allCenter,  
                  height: "2rem",
                  width: "100%",
                  bgcolor: "#000000b8",

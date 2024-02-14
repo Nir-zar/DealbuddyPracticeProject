@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import { Box, Grid, Typography } from "@mui/material";
 import Slider from "react-slick";
 import { Height } from "@mui/icons-material";
@@ -312,7 +312,7 @@ const DealCategorySlider = () => {
   
 
   return (
-    <Grid sx={{ ...all_center }}>
+    <Grid sx={{ ...allCenter }}>
       <Box
         component={"div"}
         sx={{
@@ -354,7 +354,7 @@ const DealCategorySlider = () => {
                 >
                   <Box
                     sx={{
-                      ...all_center,
+                      ...allCenter,
                       height: "auto",
                       width: "70%",
                       p: "20px",
@@ -369,7 +369,7 @@ const DealCategorySlider = () => {
                     <Box
                       component={"div"}
                       sx={{
-                        ...all_center,
+                        ...allCenter,
                         height: "60px",
                         width: "60px",
                         borderRadius: "10px",
@@ -383,7 +383,7 @@ const DealCategorySlider = () => {
                         sx={{ height: "26px", width: "26px" }}
                       ></Box>
                     </Box>
-                    <Typography sx={{...all_center, textAlign:"center","&:hover":{color:theme.palette.primary.main}}}>
+                    <Typography sx={{...allCenter, textAlign:"center","&:hover":{color:theme.palette.primary.main}}}>
                       {data?.name}
                     </Typography>
                   </Box>

@@ -7,14 +7,14 @@ import {
   CardContent,
 } from "@mui/material";
 import React from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
-import Common_card_button from "./CommonCardButton";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { useNavigate } from "react-router-dom";
+import CommonCardButton from "./CommonCardButton";
 
 interface CommonCard {
   category: {
@@ -60,7 +60,7 @@ const navigate = useNavigate();
 
 
   return (
-    <Grid item xl={width} sx={{ ...all_center, height: "494px" }}>
+    <Grid item xl={width} sx={{ ...allCenter, height: "494px" }}>
       <Card
         sx={{
           alignItems: "center",
@@ -82,7 +82,7 @@ const navigate = useNavigate();
         <Box
           component={"div"}
           sx={{
-            ...all_center,
+            ...allCenter,
             position: "absolute",
             bgcolor: "#000000b8",
             height: "36px",
@@ -126,7 +126,7 @@ const navigate = useNavigate();
           className="showClicks"
           component={"div"}
           sx={{
-            ...all_center,
+            ...allCenter,
             height: "2rem",
             width: "100%",
             bgcolor: "#000000b8",
@@ -251,7 +251,7 @@ const navigate = useNavigate();
           </Box>
         </CardContent>
 
-        <Common_card_button slug={slug} button_text="View Deal" />
+        <CommonCardButton slug={slug} button_text="View Deal" />
       </Card>
     </Grid>
   );

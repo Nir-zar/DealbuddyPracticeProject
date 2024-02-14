@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import { getIndividualStoreData } from "../../api/storeApi";
 import { useParams } from "react-router-dom";
@@ -17,12 +17,9 @@ const IndividualStoreDetail = () => {
   const { storeSlug } = useParams();
 
   useEffect(() => {
-
-
     if (storeSlug) {
       getIndividualStoreData(storeSlug).then((res) => {
         setIndividualStoreData(res.data);
-
       });
     }
   }, [storeSlug]);
@@ -33,12 +30,11 @@ const IndividualStoreDetail = () => {
   const arr1 = resultArray.slice(0, 35).join(" ");
   const arr2 = resultArray.slice(35).join(" ");
 
-
   return (
     <Box
       component={"div"}
       sx={{
-        ...all_center,
+        ...allCenter,
         height: "auto",
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: "10px",
@@ -179,7 +175,7 @@ const IndividualStoreDetail = () => {
           <Box
             component={"div"}
             sx={{
-              ...all_center,
+              ...allCenter,
               height: "40px",
               width: "40px",
               display: "flex",
@@ -208,18 +204,20 @@ const IndividualStoreDetail = () => {
           mt: "0.5rem",
         }}
       >
-        <Typography
-          sx={{ fontSize:theme.typography.subtitle2.xl}}
-        >
-          {resultArray.length > 35 ? (showAllText ? `${arr1} ${arr2}` : `${arr1}...`) : (testString)}
+        <Typography sx={{ fontSize: theme.typography.subtitle2.xl }}>
+          {resultArray.length > 35
+            ? showAllText
+              ? `${arr1} ${arr2}`
+              : `${arr1}...`
+            : testString}
         </Typography>
 
         <Typography
-        onClick={()=>setShowAllText(!showAllText)}
+          onClick={() => setShowAllText(!showAllText)}
           sx={{
             fontSize: theme.typography.subtitle2.xl,
             color: theme.palette.primary.main,
-            cursor:"pointer"
+            cursor: "pointer",
           }}
         >
           {showAllText ? "Read Less" : "Read More"}
