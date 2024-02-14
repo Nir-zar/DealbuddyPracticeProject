@@ -291,11 +291,7 @@ const DealCategorySlider = () => {
     infinite: true,
     slidesToShow: 6,
     swipeToSlide: true,
-    afterChange: function (index: number) {
-      console.log(
-        `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
-      );
-    },
+  
     nextArrow: (
       <Box>
         <Box className="next-slick-arrow" sx={{ ...prevNextButtonStyle }}>

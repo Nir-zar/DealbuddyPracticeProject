@@ -37,7 +37,6 @@ const LimitedOffer = () => {
 
   const dates = useMemo(() => {
     const endDates = dealAndStoreAllDetails && dealAndStoreAllDetails?.endDate;
-
     return endDates;
   }, [dealAndStoreAllDetails]);
 

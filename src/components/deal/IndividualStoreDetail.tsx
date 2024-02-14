@@ -17,12 +17,12 @@ const IndividualStoreDetail = () => {
   const { storeSlug } = useParams();
 
   useEffect(() => {
-    console.log(storeSlug);
+
 
     if (storeSlug) {
       getIndividualStoreData(storeSlug).then((res) => {
         setIndividualStoreData(res.data);
-        console.log(res.data);
+
       });
     }
   }, [storeSlug]);

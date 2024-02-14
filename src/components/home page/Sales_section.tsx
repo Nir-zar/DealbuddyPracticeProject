@@ -20,16 +20,20 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import { getData } from "../../api/homeApi";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommonCard from "../common components/CommonCard";
+import { useSelector } from "react-redux";
 
 const Sales_section = () => {
   const [salesCardData, setSalesCardData] = useState([]);
-  const [filledIcon, setFilledIcon] = useState(false);
+
   const url =
     "deal/deals?v=1705405228343&limit=999&page=1&productType=sale&shortBy=clicks&isPopular=true&updateViewCount=true&t=1705405228343";
 
-  useEffect(() => {
-    getData(url).then((res) => setSalesCardData(res.data.items));
-  }, []);
+    const currentCityName = useSelector((store) => store.filterData.currentCity);
+
+    useEffect(() => {
+      const params = {};
+      getData(url, params, currentCityName).then((res) => setSalesCardData(res.data.items));
+  }, [currentCityName]);
 
  
 

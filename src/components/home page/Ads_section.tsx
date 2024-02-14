@@ -20,7 +20,7 @@ const [adsData, setAdsData] = useState([])
 useEffect(()=>{
 getData(url).then((res)=>{
   setAdsData(res.data.items)
-  // console.log(res.data.items);
+
   
 })
 },[])

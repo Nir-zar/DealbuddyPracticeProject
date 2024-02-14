@@ -9,7 +9,7 @@ const ApplicableLocations = () => {
     (store) => store.dealData.dealAndStoreAllDetails
   );
 
-  console.log(Boolean(dealAndStoreAllDetails.locations));
+
   
 
   return (

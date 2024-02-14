@@ -55,9 +55,9 @@ const DealCards = () => {
   const location = useLocation();
 
   const searchKeyword = new URLSearchParams(location.search).get('search');
-  console.log("mmm",searchKeyword);
 
 
+  const currentCityName = useSelector((store)=> store.filterData.currentCity)
 
   useEffect(() => {
     const paramsForAll = {
@@ -68,6 +68,7 @@ const DealCards = () => {
       categorySlug: slug,
       storeSlug:storeSlug,
       searchKeyword :searchKeyword,
+      limit: 36
     };
 
     const paramsForSaleAndCoupon = {
@@ -79,19 +80,16 @@ const DealCards = () => {
       categorySlug: slug,
       storeSlug:storeSlug,
       searchKeyword :searchKeyword,
+      limit: 36
     };
 
-    if(storeSlug)
-    {
-      console.log(storeSlug);
-    }
+  
 
     if (pageNumber == 1) {
       setLoading(true);
       getData(
         url,
-        productCategory == "all" ? paramsForAll : paramsForSaleAndCoupon
-      ).then((res) => {
+        productCategory == "all" ? paramsForAll : paramsForSaleAndCoupon,currentCityName).then((res) => {
         setCurrentItemsLength(res.data.items.length);
         setTotalCardCount(res.data.total);
         setSalesCardData(res.data.items);
@@ -106,8 +104,7 @@ const DealCards = () => {
     } else {
       getData(
         url,
-        productCategory == "all" ? paramsForAll : paramsForSaleAndCoupon
-      ).then((res) => {
+        productCategory == "all" ? paramsForAll : paramsForSaleAndCoupon, currentCityName).then((res) => {
         setCurrentItemsLength(currentItemsLength + res.data.items.length);
         setTotalCardCount(res.data.total);
         const newPageData = res.data.items;
@@ -123,7 +120,7 @@ const DealCards = () => {
    
 
     return;
-  }, [valueNew, pageNumber, productCategory, dealModes, discountTypes, slug,]);
+  }, [valueNew, pageNumber, productCategory, dealModes, discountTypes, slug,currentCityName]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -137,7 +134,7 @@ const DealCards = () => {
     }
   };
 
-  console.log(salesCardData);
+
   
 
   return (

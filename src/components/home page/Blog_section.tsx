@@ -104,14 +104,12 @@ const Blog_section = () => {
                           // ml: "0.7rem",
                           fontSize: theme.typography.subtitle2.xl,
                           color: theme.palette.grey[500],
-                          WebkitLineClamp: 3,
-                          textOverflow: "ellipsis",
-                         
                           overflow: "hidden",
                           height: "auto",
-                         
                           display:"-webkit-box",
-                          WebkitBoxOrient:"vertical"
+                          WebkitBoxOrient:"vertical",
+                          WebkitLineClamp: 3,
+                          textOverflow: "ellipsis",
                         }}
                       >
                         {sortDescription}
