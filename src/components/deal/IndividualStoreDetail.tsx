@@ -17,12 +17,9 @@ const IndividualStoreDetail = () => {
   const { storeSlug } = useParams();
 
   useEffect(() => {
-    console.log(storeSlug);
-
     if (storeSlug) {
       getIndividualStoreData(storeSlug).then((res) => {
         setIndividualStoreData(res.data);
-        console.log(res.data);
       });
     }
   }, [storeSlug]);
@@ -32,7 +29,6 @@ const IndividualStoreDetail = () => {
   const resultArray = testString.split(" ");
   const arr1 = resultArray.slice(0, 35).join(" ");
   const arr2 = resultArray.slice(35).join(" ");
-
 
   return (
     <Box
@@ -208,18 +204,20 @@ const IndividualStoreDetail = () => {
           mt: "0.5rem",
         }}
       >
-        <Typography
-          sx={{ fontSize:theme.typography.subtitle2.xl}}
-        >
-          {resultArray.length > 35 ? (showAllText ? `${arr1} ${arr2}` : `${arr1}...`) : (testString)}
+        <Typography sx={{ fontSize: theme.typography.subtitle2.xl }}>
+          {resultArray.length > 35
+            ? showAllText
+              ? `${arr1} ${arr2}`
+              : `${arr1}...`
+            : testString}
         </Typography>
 
         <Typography
-        onClick={()=>setShowAllText(!showAllText)}
+          onClick={() => setShowAllText(!showAllText)}
           sx={{
             fontSize: theme.typography.subtitle2.xl,
             color: theme.palette.primary.main,
-            cursor:"pointer"
+            cursor: "pointer",
           }}
         >
           {showAllText ? "Read Less" : "Read More"}

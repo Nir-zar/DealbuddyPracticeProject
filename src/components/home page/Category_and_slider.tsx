@@ -18,7 +18,6 @@ import { autoPlay } from "react-swipeable-views-utils";
 import { useNavigate } from "react-router-dom";
 
 const Category_and_slider = () => {
-
   const [categoryList, setCategoryList] = useState([]);
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -67,7 +66,6 @@ const Category_and_slider = () => {
 
   useEffect(() => {
     getData(url).then((res) => {
-      console.log(res.data.items);
       setCategoryList(res.data.items);
       return;
     });
@@ -152,7 +150,7 @@ const Category_and_slider = () => {
                 return (
                   <>
                     <Box
-                      onClick={()=> navigate(`/categories/${category.slug}`)}
+                      onClick={() => navigate(`/categories/${category.slug}`)}
                       key={index}
                       sx={{
                         display: "flex",
@@ -163,7 +161,7 @@ const Category_and_slider = () => {
                         m: { xl: "0rem 0 0 1rem" },
                         alignItems: "center",
                         justifyContent: "space-between",
-                        cursor:"pointer"
+                        cursor: "pointer",
                       }}
                     >
                       <Box
@@ -215,7 +213,7 @@ const Category_and_slider = () => {
             </Box>
 
             <Box
-            onClick={() => navigate("categories")}
+              onClick={() => navigate("categories")}
               sx={{
                 ...all_center,
                 width: "100%",
@@ -225,7 +223,7 @@ const Category_and_slider = () => {
             >
               <Typography
                 sx={{
-                  cursor:"pointer",
+                  cursor: "pointer",
                   fontSize: theme.typography.subtitle1.xl,
                   color: theme.palette.primary.main,
                   fontWeight: 700,
@@ -236,52 +234,52 @@ const Category_and_slider = () => {
             </Box>
           </Box>
 
-            <Box sx={{ height: "32rem", width: "69%" }}>
-              <Box sx={{ width: "100%", height: "32rem" }}>
-                <AutoPlaySwipeableViews
-                  sx={{ height: "90%", width: "100%" }}
-                  index={activeStep}
-                  onChangeIndex={handleStepChange}
-                  enableMouseEvents
-                >
-                  {images.map((step, index) => (
-                    <div style={{ position: "relative" }} key={step.label}>
-                      {Math.abs(activeStep - index) <= 2 ? (
-                        <Box
-                          component="img"
-                          sx={{
-                            height: "32rem",
-                            display: "flex",
-                            overflow: "hidden",
-                            width: "100%",
-                            borderRadius: "10px",
-                          }}
-                          src={step.imgPath}
-                          alt={step.label}
-                        />
-                      ) : null}
-                      <MobileStepper
-                        variant="dots"
+          <Box sx={{ height: "32rem", width: "69%" }}>
+            <Box sx={{ width: "100%", height: "32rem" }}>
+              <AutoPlaySwipeableViews
+                sx={{ height: "90%", width: "100%" }}
+                index={activeStep}
+                onChangeIndex={handleStepChange}
+                enableMouseEvents
+              >
+                {images.map((step, index) => (
+                  <div style={{ position: "relative" }} key={step.label}>
+                    {Math.abs(activeStep - index) <= 2 ? (
+                      <Box
+                        component="img"
                         sx={{
-                          backgroundColor: "transparent",
-                          position: "absolute",
-                          height: "95%",
-                          top: 0,
-                          "& .MuiMobileStepper-dots": {
-                            float: "end",
-                            alignItems: "end",
-                            height: "100%",
-                          },
+                          height: "32rem",
+                          display: "flex",
+                          overflow: "hidden",
+                          width: "100%",
+                          borderRadius: "10px",
                         }}
-                        steps={maxSteps}
-                        activeStep={activeStep}
-                        nextButton={
-                          <Button
-                            onClick={handleNext}
-                            disabled={activeStep === maxSteps - 1}
-                          >
-                            {index == activeStep ? (
-                              <KeyboardArrowRight
+                        src={step.imgPath}
+                        alt={step.label}
+                      />
+                    ) : null}
+                    <MobileStepper
+                      variant="dots"
+                      sx={{
+                        backgroundColor: "transparent",
+                        position: "absolute",
+                        height: "95%",
+                        top: 0,
+                        "& .MuiMobileStepper-dots": {
+                          float: "end",
+                          alignItems: "end",
+                          height: "100%",
+                        },
+                      }}
+                      steps={maxSteps}
+                      activeStep={activeStep}
+                      nextButton={
+                        <Button
+                          onClick={handleNext}
+                          disabled={activeStep === maxSteps - 1}
+                        >
+                          {index == activeStep ? (
+                            <KeyboardArrowRight
                               sx={{
                                 p: "0.1rem",
                                 borderRadius: "50%",
@@ -289,39 +287,40 @@ const Category_and_slider = () => {
                                 color: theme.palette.common.white,
                               }}
                             />
-                            ) : ( <KeyboardArrowRight
+                          ) : (
+                            <KeyboardArrowRight
                               sx={{
                                 p: "0.1rem",
                                 borderRadius: "50%",
                                 bgcolor: "#ffffff85",
                                 color: "green",
                               }}
-                            />)}
-                            
-                          </Button>
-                        }
-                        backButton={
-                          <Button
-                            size="small"
-                            onClick={handleBack}
-                            disabled={activeStep === 0}
-                          >
-                            <KeyboardArrowLeft
-                              sx={{
-                                p: "0.1rem",
-                                borderRadius: "50%",
-                                bgcolor: "#ffffff85",
-                                color: theme.palette.common.white,
-                              }}
                             />
-                          </Button>
-                        }
-                      />
-                    </div>
-                  ))}
-                </AutoPlaySwipeableViews>
-              </Box>
+                          )}
+                        </Button>
+                      }
+                      backButton={
+                        <Button
+                          size="small"
+                          onClick={handleBack}
+                          disabled={activeStep === 0}
+                        >
+                          <KeyboardArrowLeft
+                            sx={{
+                              p: "0.1rem",
+                              borderRadius: "50%",
+                              bgcolor: "#ffffff85",
+                              color: theme.palette.common.white,
+                            }}
+                          />
+                        </Button>
+                      }
+                    />
+                  </div>
+                ))}
+              </AutoPlaySwipeableViews>
             </Box>
+          </Box>
         </Box>
 
         <Box

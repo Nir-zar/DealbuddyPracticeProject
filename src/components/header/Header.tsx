@@ -89,8 +89,6 @@ const Header = () => {
 
     getData(url).then((res) => {
       setModalData(res.data.items);
-      console.log(res.data.items);
-      console.log(modalData);
     });
   };
   const [menuAnchorEl, setMenuAnchorEl] = React.useState<null | HTMLElement>(
@@ -114,7 +112,6 @@ const Header = () => {
       searchKeyword: searchValue,
     };
     let cancelTokenSource = axios.CancelToken.source();
-    console.log(cancelTokenSource);
 
     dealsApiData(cancelTokenSource, params).then((res) => {
       setSearchResultData(res.data.items);
@@ -124,20 +121,17 @@ const Header = () => {
       setOpenLIstBox(true);
     }
 
-
     return () => {
       if (cancelTokenSource) {
         cancelTokenSource.cancel("Component unmounted");
-        // console.log("hiii");
+
       }
     };
   }, [searchValue]);
 
-
-    const setCityName = (cityName: string) => {
-      sessionStorage.setItem("City", cityName);
-    };
-
+  const setCityName = (cityName: string) => {
+    sessionStorage.setItem("City", cityName);
+  };
 
   return (
     <>
@@ -359,10 +353,10 @@ const Header = () => {
                             }}
                           >
                             <Box
-                              onClick={() =>{
+                              onClick={() => {
                                 setOpen(false);
-                                setCityName(location)
-                                dispatch()
+                                setCityName(location);
+                                dispatch();
                               }}
                               sx={{
                                 ...all_center,

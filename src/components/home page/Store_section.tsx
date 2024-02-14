@@ -27,7 +27,6 @@ const Store_section = () => {
     // const cityName =  sessionStorage.getItem("City")
   useEffect(() => {
 
-    alert(cityName)
     const params = {}
     getData(url,params, cityName).then((res) => {
       setStoredata(res.data.items);
@@ -35,10 +34,7 @@ const Store_section = () => {
   }, [cityName]);
 
 
- if(cityName !== cityName)
- {
-  alert(cityName)
- }
+ 
 
   return (
     <Grid container sx={{ ...all_center, height: "auto" }}>

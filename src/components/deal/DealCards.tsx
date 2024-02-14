@@ -23,8 +23,6 @@ interface TabPanelProps {
   value: number;
 }
 
-
-
 function a11yProps(index: string) {
   return {
     id: `simple-tab-${index}`,
@@ -40,24 +38,19 @@ const DealCards = () => {
   const [currentItemsLength, setCurrentItemsLength] = useState(0);
   const [totalCardCount, setTotalCardCount] = useState(0);
 
-
   const valueNew = useSelector((store) => store.filterData.shortBy);
   const pageNumber = useSelector((store) => store.filterData.pageNumber);
   const productCategory = useSelector((store) => store.filterData.productType);
   const { dealModes, discountTypes } = useSelector((store) => store.filterData);
-  const { slug,storeSlug } = useParams();
+  const { slug, storeSlug } = useParams();
 
   const url = `deal/deals`;
   const dispatch = useDispatch();
 
-
   const navigate = useNavigate();
   const location = useLocation();
 
-  const searchKeyword = new URLSearchParams(location.search).get('search');
-  console.log("mmm",searchKeyword);
-
-
+  const searchKeyword = new URLSearchParams(location.search).get("search");
 
   useEffect(() => {
     const paramsForAll = {
@@ -66,8 +59,8 @@ const DealCards = () => {
       dealModes: dealModes,
       discountTypes: discountTypes,
       categorySlug: slug,
-      storeSlug:storeSlug,
-      searchKeyword :searchKeyword,
+      storeSlug: storeSlug,
+      searchKeyword: searchKeyword,
     };
 
     const paramsForSaleAndCoupon = {
@@ -77,14 +70,9 @@ const DealCards = () => {
       dealModes: dealModes,
       discountTypes: discountTypes,
       categorySlug: slug,
-      storeSlug:storeSlug,
-      searchKeyword :searchKeyword,
+      storeSlug: storeSlug,
+      searchKeyword: searchKeyword,
     };
-
-    if(storeSlug)
-    {
-      console.log(storeSlug);
-    }
 
     if (pageNumber == 1) {
       setLoading(true);
@@ -120,10 +108,9 @@ const DealCards = () => {
         setLoading(false);
       });
     }
-   
 
     return;
-  }, [valueNew, pageNumber, productCategory, dealModes, discountTypes, slug,]);
+  }, [valueNew, pageNumber, productCategory, dealModes, discountTypes, slug]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -137,9 +124,6 @@ const DealCards = () => {
     }
   };
 
-  console.log(salesCardData);
-  
-
   return (
     <Box
       component={"div"}
@@ -151,10 +135,8 @@ const DealCards = () => {
         overflowY: "scoll",
       }}
     >
-      <Box sx={{ width: "100%", }}>
-
-      {storeSlug && <IndividualStoreDetail />}
-      
+      <Box sx={{ width: "100%" }}>
+        {storeSlug && <IndividualStoreDetail />}
 
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
@@ -236,7 +218,7 @@ const DealCards = () => {
                     locations,
                     couponCode,
                     index,
-                    slug
+                    slug,
                   }) => {
                     return (
                       <>
@@ -293,8 +275,6 @@ const DealCards = () => {
             )}
           </>
         )}
-
-
       </Box>
 
       {currentItemsLength == totalCardCount ? (
@@ -307,7 +287,7 @@ const DealCards = () => {
             width: "20rem",
             background: theme.gradient_color.button_hover_color,
             alignSelf: "center",
-            borderRadius:"10px"
+            borderRadius: "10px",
           }}
         >
           <Typography

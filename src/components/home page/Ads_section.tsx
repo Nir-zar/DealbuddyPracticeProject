@@ -13,20 +13,25 @@ import Common_card_button from "../common components/CommonCardButton";
 import { getData } from "../../api/homeApi";
 
 const Ads_section = () => {
+  const url = "sponsored-ads?v=1703163820228&take=12";
+  const [adsData, setAdsData] = useState([]);
 
-const url = "sponsored-ads?v=1703163820228&take=12"
-const [adsData, setAdsData] = useState([])
-
-useEffect(()=>{
-getData(url).then((res)=>{
-  setAdsData(res.data.items)
-  // console.log(res.data.items);
-  
-})
-},[])
+  useEffect(() => {
+    getData(url).then((res) => {
+      setAdsData(res.data.items);
+    });
+  }, []);
 
   return (
-    <Grid container sx={{ ...all_center, height: "auto", bgcolor:theme.palette.success.main, mt:"3rem" }}>
+    <Grid
+      container
+      sx={{
+        ...all_center,
+        height: "auto",
+        bgcolor: theme.palette.success.main,
+        mt: "3rem",
+      }}
+    >
       <Box
         sx={{
           alignItems: "center",
@@ -60,7 +65,7 @@ getData(url).then((res)=>{
             flexWrap: "wrap",
           }}
         >
-          {adsData.map(({imageUrl,shortDescription, title}) => {
+          {adsData.map(({ imageUrl, shortDescription, title }) => {
             return (
               <Grid xl={3} sx={{ ...all_center, height: "auto" }}>
                 <Card
@@ -91,7 +96,7 @@ getData(url).then((res)=>{
                       width: { xl: "252px" },
                       height: "auto",
                       mt: "1rem",
-                    //   bgcolor: "pink",
+                      //   bgcolor: "pink",
                       padding: "0px",
                     }}
                   >
@@ -121,7 +126,7 @@ getData(url).then((res)=>{
                           fontWeight: 300,
                         }}
                       >
-                       {shortDescription}
+                        {shortDescription}
                       </Typography>
                     </Box>
                   </CardContent>

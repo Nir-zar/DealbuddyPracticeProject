@@ -8,11 +8,6 @@ import LimitedOffer from "./LimitedOffer";
 import Store from "./Store";
 import ApplicableLocations from "./ApplicableLocations";
 
-
-
-
-
-
 const DealAndStoreDetail = () => {
   const [timer, setTimer] = useState(true);
 
@@ -22,10 +17,9 @@ const DealAndStoreDetail = () => {
     }, 1000);
   }, []);
 
-const dealAndStoreAllDetails = useSelector((store)=> store.dealData.dealAndStoreAllDetails);
-
-console.log(dealAndStoreAllDetails);
-
+  const dealAndStoreAllDetails = useSelector(
+    (store) => store.dealData.dealAndStoreAllDetails
+  );
 
   return (
     <>
@@ -48,29 +42,27 @@ console.log(dealAndStoreAllDetails);
           <LimitedOffer />
         </Box>
 
-        {dealAndStoreAllDetails?.stores && 
-        (dealAndStoreAllDetails.stores[0].showInFrontend ?    
-        (<Box
-          component={"div"}
-          sx={{
-            ...all_center,
-            height: "auto",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            border:`1px solid ${theme.palette.grey[300]}`,
-            mt:{xl:"1.5rem"},
-            borderRadius:"10px",
-            p: { xl: "2rem 0" },
-          }}
-        >
-
-         
-         <Store />
-
-
-        </Box>) : ("")) }
-      
+        {dealAndStoreAllDetails?.stores &&
+          (dealAndStoreAllDetails.stores[0].showInFrontend ? (
+            <Box
+              component={"div"}
+              sx={{
+                ...all_center,
+                height: "auto",
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                border: `1px solid ${theme.palette.grey[300]}`,
+                mt: { xl: "1.5rem" },
+                borderRadius: "10px",
+                p: { xl: "2rem 0" },
+              }}
+            >
+              <Store />
+            </Box>
+          ) : (
+            ""
+          ))}
 
         <Box
           component={"div"}
@@ -80,20 +72,14 @@ console.log(dealAndStoreAllDetails);
             width: "100%",
             display: "flex",
             flexDirection: "column",
-            border:`1px solid ${theme.palette.grey[300]}`,
-            mt:{xl:"1.5rem"},
-            borderRadius:"10px",
+            border: `1px solid ${theme.palette.grey[300]}`,
+            mt: { xl: "1.5rem" },
+            borderRadius: "10px",
             p: { xl: "2rem 0" },
           }}
         >
-
           <ApplicableLocations />
-
-
         </Box>
-
-
-
       </Grid>
     </>
   );
