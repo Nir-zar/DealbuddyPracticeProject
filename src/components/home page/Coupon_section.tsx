@@ -10,13 +10,13 @@ import React, { useEffect, useState } from "react";
 import { all_center } from "../../constant/commonStyle";
 import theme from "../../theme";
 import Category_section_title from "../common components/CategorySection_title";
-import Common_card_button from "../common components/CommonCardButton";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
 import { getData } from "../../api/homeApi";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { useSelector } from "react-redux";
+import CommonCardButton from "../common components/CommonCardButton";
 
 const Coupon_section = () => {
   const [couponData, setCouponData] = useState([]);
@@ -296,7 +296,7 @@ const Coupon_section = () => {
                         </Box>
 
                             <Box sx={{ml:"0.3rem"}}>
-                            <Common_card_button button_text="Show Code" />
+                            <CommonCardButton button_text="Show Code" />
                             </Box>
                         
                       </Box>
