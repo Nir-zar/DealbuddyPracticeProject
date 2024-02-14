@@ -9,9 +9,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
-import Category_section_title from "../common components/CategorySection_title";
 import { getData } from "../../api/homeApi";
 import CommonCardButton from "../common components/CommonCardButton";
+import CategorySectionTitle from "../common components/CategorySectionTitle";
 
 const BlogSection = () => {
   const [blogData, setBlogData] = useState([]);
@@ -26,7 +26,7 @@ const BlogSection = () => {
   return (
     <>
       <Grid container sx={{ ...allCenter, height: "auto" }}>
-        <Category_section_title title="Blogs" />
+        <CategorySectionTitle title="Blogs" />
 
         <Box
           sx={{
@@ -38,12 +38,20 @@ const BlogSection = () => {
             display: "flex",
             justifyContent: "start",
             flexWrap: "wrap",
-            
           }}
         >
           {blogData.map(({ imageUrl, title, sortDescription }) => {
             return (
-              <Grid item xl={3} sx={{ display:"flex",alignItems:"center", justifyContent:"center", height: "494px", }}>
+              <Grid
+                item
+                xl={3}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "494px",
+                }}
+              >
                 <Card
                   sx={{
                     alignItems: "center",
@@ -54,7 +62,6 @@ const BlogSection = () => {
                     display: "flex",
                     flexDirection: "column",
                     borderRadius: "10px",
-                    
                   }}
                 >
                   <CardMedia
@@ -103,8 +110,8 @@ const BlogSection = () => {
                           color: theme.palette.grey[500],
                           overflow: "hidden",
                           height: "auto",
-                          display:"-webkit-box",
-                          WebkitBoxOrient:"vertical",
+                          display: "-webkit-box",
+                          WebkitBoxOrient: "vertical",
                           WebkitLineClamp: 3,
                           textOverflow: "ellipsis",
                         }}

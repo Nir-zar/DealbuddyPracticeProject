@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
-import Category_section_title from "../common components/CategorySection_title";
+import CategorySectionTitle from "../common components/CategorySectionTitle";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import DateRangeOutlinedIcon from "@mui/icons-material/DateRangeOutlined";
@@ -34,7 +34,7 @@ const CouponSection = () => {
 
   return (
  couponData.length > 0 &&    <Grid container sx={{ ...allCenter, height: "auto" }}>
- <Category_section_title title="Popular Coupons" />
+ <CategorySectionTitle title="Popular Coupons" />
 
  <Box
    sx={{
@@ -61,7 +61,8 @@ const CouponSection = () => {
        productType,
        productModes,
        NZWide,
-       clicks
+       clicks,
+       slug
      }) => {
        return (
          <Grid
@@ -247,7 +248,7 @@ const CouponSection = () => {
                              fontSize: theme.typography.subtitle2.xl,
                            }}
                          >
-                           {stores[0].name}
+                           {stores[0]?.name}
                          </Typography>
                        </Box>
                      </>
@@ -296,7 +297,7 @@ const CouponSection = () => {
                    </Box>
 
                        <Box sx={{ml:"0.3rem"}}>
-                       <CommonCardButton button_text="Show Code" />
+                       <CommonCardButton button_text="Show Code" slug={slug}  />
                        </Box>
                    
                  </Box>

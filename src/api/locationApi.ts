@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = "https://www.dealbuddy.co.nz/api";
+const BASE_URL = "http://localhost:3000/api";
 const url ="location?v=1705562814548&order%5Blocation%5D=ASC";
 
 

@@ -105,6 +105,9 @@ const theme = createTheme({
     success: {
       main: "#F6FDFA",
     },
+    grey : {
+      500 : ""
+    }
   },
 
   typography: {
@@ -176,6 +179,7 @@ const theme = createTheme({
       xl: {
         "@media (min-width:992px)": {
           fontSize: "12px",
+          
         },
       },
     },

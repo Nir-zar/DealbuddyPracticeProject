@@ -108,9 +108,9 @@ const Store = () => {
             sx={{ ml: "0.5rem", fontSize: theme.typography.subtitle1.xl }}
           >
             {dealAndStoreAllDetails?.stores &&
-              (dealAndStoreAllDetails?.stores[0]?.storeModes[0].name == "Online"
+              (dealAndStoreAllDetails?.stores[0]?.storeModes[0]?.name == "Online"
                 ? "Online"
-                : dealAndStoreAllDetails?.stores[0]?.address.fillAddress)}
+                : dealAndStoreAllDetails?.stores[0]?.address?.fillAddress)}
           </Typography>
         </Box>
         {/* store deals count end */}

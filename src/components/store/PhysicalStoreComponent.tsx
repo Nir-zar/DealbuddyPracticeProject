@@ -6,7 +6,6 @@ import {
   Card,
   CardMedia,
   CardContent,
-  CircularProgress,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { allCenter } from "../../constant/commonStyle";
@@ -16,11 +15,12 @@ import SendIcon from "@mui/icons-material/Send";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import { getStoreData } from "../../api/storeApi";
 import { useSelector, useDispatch } from "react-redux";
-import { PhysicalStoreType,  } from "../../features/storeData";
+import { PhysicalStoreType } from "../../features/storeData";
 import { useLocation, useNavigate } from "react-router-dom";
 import MyComponent from "./GoogleMaoComponent";
+import LoadingScreen from "../common components/LoadingScreen";
 
-const PhysicalStoreComp = () => {
+const PhysicalStoreComponent = () => {
   const [storeData, setStoredata] = useState([]);
   const [currentDataLength, setCurrentDataLength] = useState();
   const [loading, setLoading] = useState(true);
@@ -38,8 +38,6 @@ const PhysicalStoreComp = () => {
   const currentCityName = useSelector((store) => store.filterData.currentCity);
 
   useEffect(() => {
-
-
     const params = {
       take: 20,
       page: pageNumber,
@@ -59,17 +57,14 @@ const PhysicalStoreComp = () => {
       isMapView: true,
     };
 
- 
-      getStoreData(params, currentCityName).then((res) => {
-        setLoading(true);
-        setStoredata(res.data.items);
-        dispatch(PhysicalStoreType(res.data));
-        setCurrentDataLength(res.data.items.length);
-        setLoading(false);
-      });
-    
+    getStoreData(params, currentCityName).then((res) => {
+      setLoading(true);
+      setStoredata(res.data.items);
+      dispatch(PhysicalStoreType(res.data));
+      setCurrentDataLength(res.data.items.length);
+      setLoading(false);
+    });
   }, [
-
     storeDiscountType,
     storeCategoryType,
     location.pathname,
@@ -95,19 +90,7 @@ const PhysicalStoreComp = () => {
       >
         {loading ? (
           <>
-            <Box
-              sx={{
-                mt: "6rem",
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                flexDirection: "column",
-              }}
-            >
-              <CircularProgress />
-              <Typography sx={{ mt: "1rem" }}>Loading......</Typography>
-            </Box>
+            <LoadingScreen />
           </>
         ) : (
           currentDataLength !== 0 && (
@@ -287,4 +270,4 @@ const PhysicalStoreComp = () => {
   );
 };
 
-export default PhysicalStoreComp;
+export default PhysicalStoreComponent;

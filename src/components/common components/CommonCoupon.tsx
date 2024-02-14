@@ -238,7 +238,7 @@ const CommonCoupon = (
                         fontSize: theme.typography.subtitle2.xl,
                       }}
                     >
-                      {stores[0].name}
+                      {stores[0]?.name}
                     </Typography>
                   </Box>
                 </>

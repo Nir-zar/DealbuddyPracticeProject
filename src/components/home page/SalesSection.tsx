@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { allCenter } from "../../constant/commonStyle";
-import Category_section_title from "../common components/CategorySection_title";
+import Category_section_title from "../common components/CategorySectionTitle";
 
 import { getData } from "../../api/homeApi";
 import CommonCard from "../common components/CommonCard";
@@ -42,34 +42,20 @@ const SalesSection = () => {
         flexWrap: "wrap",
       }}
     >
-      {salesCardData.map(
-        ({
-          category,
-          productImages,
-          productType,
-          productModes,
-          name,
-          stores,
-          NZWide,
-          locations,
-          clicks,
-          imageUrl,
-          slug
-        }) => {
+      {salesCardData.map((cardData) => {
           return (
            <CommonCard 
-           category={category}
-           imageUrl={imageUrl}
-           clicks={clicks}
-           productImages={productImages}
-           productType={productType}
-           productModes={productModes}
-           stores={stores}
-           name={name}
-           NZWide={NZWide}
-           locations={locations}
-           slug={slug}
-           />
+              category={cardData.category}
+              imageUrl={cardData.imageUrl}
+              clicks={cardData.clicks}
+              productImages={cardData.productImages}
+              productType={cardData.productType}
+              productModes={cardData.productModes}
+              stores={cardData.stores}
+              name={cardData.name}
+              NZWide={cardData.NZWide}
+              locations={cardData.locations}
+              slug={cardData.slug}        />
           );
         }
       )}

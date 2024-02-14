@@ -38,7 +38,7 @@ interface CommonCard {
     location: string;
   }[];
   width: number;
-  slug:string;
+  slug: string;
 }
 
 const CommonCard = ({
@@ -52,13 +52,9 @@ const CommonCard = ({
   name,
   NZWide,
   locations,
-  width=3,
-  slug
+  width = 3,
+  slug,
 }: CommonCard) => {
-
-const navigate = useNavigate();
-
-
   return (
     <Grid item xl={width} sx={{ ...allCenter, height: "494px" }}>
       <Card

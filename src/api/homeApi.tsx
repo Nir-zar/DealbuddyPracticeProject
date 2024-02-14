@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 
-const BASE_URL = "https://www.dealbuddy.co.nz/api";
+const BASE_URL = "http://localhost:3000/api";
 
 
 export const getData = async (url?: string, params?: object, currentCityName?:string | null) =>

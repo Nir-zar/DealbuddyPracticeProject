@@ -27,7 +27,7 @@ const DealInDetailMainComponent = () => {
         setDealInDEtailData(res.data);
         dispatch(sliderImage(res.data.productImages));
         dispatch(dealAndStoreDetail(res.data));
-        dispatch(storeDescription(res.data.stores[0].description));
+        dispatch(storeDescription(res?.data?.stores[0]?.description));
         dispatch(dealProductId(res.data.id));
         dispatch(filterData({ shortBy: "date", pageNumber: 1 }));
       });

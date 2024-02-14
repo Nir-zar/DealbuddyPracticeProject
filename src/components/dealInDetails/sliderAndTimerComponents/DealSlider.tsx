@@ -14,10 +14,10 @@ const DealSlider = () => {
 
       const theme = useTheme();
       const [activeStep, setActiveStep] = React.useState(0);
-      const maxSteps = sliderImages.length;
+      const maxSteps = sliderImages?.length;
     
 
-      const url = "category?order%5BorderBy%5D=ASC&take=6";
+     
       const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
       const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -53,7 +53,7 @@ const DealSlider = () => {
                   width: "100%",
                   borderRadius: "10px",
                 }}
-                src={data.imageUrl}
+                src={data?.imageUrl}
                 alt={"images"}
               />
             ) : null}

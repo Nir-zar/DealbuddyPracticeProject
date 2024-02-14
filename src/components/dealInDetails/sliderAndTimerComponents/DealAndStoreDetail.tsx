@@ -14,13 +14,8 @@ import ApplicableLocations from "./ApplicableLocations";
 
 
 const DealAndStoreDetail = () => {
-  const [timer, setTimer] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setTimer(false);
-    }, 1000);
-  }, []);
+
 
 const dealAndStoreAllDetails = useSelector((store)=> store.dealData.dealAndStoreAllDetails);
 

@@ -9,7 +9,7 @@ interface CancelToken {
     token : object
 }
 
-const BASE_URL = "https://www.dealbuddy.co.nz/api";
+const BASE_URL = "http://localhost:3000/api";
 
 export const dealsApiData = async (cancelTokenSource:CancelToken,params?: Params,) => {
 
