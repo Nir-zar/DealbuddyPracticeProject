@@ -783,6 +783,7 @@ const Header = () => {
             </Box>
 
             <Box
+              onClick={()=> navigae("physical-stores")}
               component={"div"}
               sx={{
                 ...all_center,
