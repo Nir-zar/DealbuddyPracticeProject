@@ -143,7 +143,7 @@ const CategoryAndSlider = () => {
                 flexDirection: "column",
               }}
             >
-              {categoryList.map((category, index) => {
+              {categoryList && categoryList.map((category, index) => {
                 return (
                   <>
                     <Box

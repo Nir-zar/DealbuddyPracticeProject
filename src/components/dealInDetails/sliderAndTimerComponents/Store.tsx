@@ -1,5 +1,5 @@
 import { Box, Typography, Divider, Link } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { allCenter } from "../../../constant/commonStyle";
 import theme from "../../../theme";
 import CallIcon from "@mui/icons-material/Call";
@@ -22,10 +22,28 @@ const Store = () => {
 
   const [showAllText, setShowAllText] = useState(false);
 
-  const testString = storeDescription;
-  const resultArray = testString && testString.split(" ");
-  const arr1 = resultArray && resultArray.slice(0, 20).join(" ");
-  const arr2 = resultArray && resultArray.slice(20).join(" ");
+
+    const testString = useMemo(()=>{
+      const testString = storeDescription;
+      return testString;
+    },[storeDescription])
+
+    const resultArray = useMemo(()=>{
+      const resultArray = testString && testString.split(" ");
+      return resultArray;
+    },[testString])
+
+
+    const arr1 = useMemo(()=>{
+      const arr1 = resultArray && resultArray.slice(0, 20).join(" ");
+      return arr1;
+    },[resultArray])
+
+
+    const arr2 = useMemo(()=>{
+      const arr2 = resultArray && resultArray.slice(20).join(" ");
+      return arr2;
+    },[arr1])
 
   const dealAndStoreAllDetails = useSelector(
     (store) => store.dealData.dealAndStoreAllDetails

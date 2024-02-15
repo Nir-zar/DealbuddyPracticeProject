@@ -7,7 +7,7 @@ interface StoreParams {
     searchKeyword : string;
 }
 
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = import.meta.env.VITE_RAPID_BASE_URL
 
 export const getStoreData = async (  params:StoreParams, currentCityName: string | null)=>{
     const data = await axios.get(`${BASE_URL}/store/stores`,{

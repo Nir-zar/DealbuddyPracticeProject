@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = import.meta.env.VITE_RAPID_BASE_URL
 const url ="location?v=1705562814548&order%5Blocation%5D=ASC";
 
 
