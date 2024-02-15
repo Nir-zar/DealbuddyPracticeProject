@@ -9,15 +9,15 @@ import {
 import React, { useEffect, useState } from "react";
 import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
-import { getData } from "../../api/homeApi";
+import { getAdsData } from "../../api/adsApi";
 
 const AdsSection = () => {
 
-const url = "sponsored-ads?v=1703163820228&take=12"
+
 const [adsData, setAdsData] = useState([])
 
 useEffect(()=>{
-getData(url).then((res)=>{
+  getAdsData().then((res)=>{
   setAdsData(res.data.items)
 
   
@@ -25,7 +25,7 @@ getData(url).then((res)=>{
 },[])
 
   return (
-    <Grid container sx={{ ...allCenter, height: "auto", bgcolor:theme.palette.success.main, mt:"3rem" }}>
+    adsData.length > 0 &&  <Grid container sx={{ ...allCenter, height: "auto", bgcolor:theme.palette.success.main, mt:"3rem" }}>
       <Box
         sx={{
           alignItems: "center",

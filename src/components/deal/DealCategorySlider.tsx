@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { allCenter } from "../../constant/commonStyle";
 import { Box, Grid, Typography } from "@mui/material";
 import Slider from "react-slick";
@@ -32,28 +32,35 @@ const DealCategorySlider = () => {
 
   const navigate = useNavigate();
 
-  const settings = {
-    className: "center",
-    infinite: true,
-    slidesToShow: 6,
-    swipeToSlide: true,
+  const settings = useMemo(()=>{
+    const settings = {
+      className: "center",
+      infinite: true,
+      slidesToShow: 6,
+      swipeToSlide: true,
+  
+      nextArrow: (
+        <Box>
+          <Box className="next-slick-arrow" sx={{ ...prevNextButtonStyle }}>
+            {" "}
+            <KeyboardArrowRight />{" "}
+          </Box>
+        </Box>
+      ),
+      prevArrow: (
+        <Box>
+          <Box className="prev-slick-arrow" sx={{ ...prevNextButtonStyle }}>
+            <KeyboardArrowLeft />{" "}
+          </Box>
+        </Box>
+      ),
+    };
+    return settings;
+  },[])
 
-    nextArrow: (
-      <Box>
-        <Box className="next-slick-arrow" sx={{ ...prevNextButtonStyle }}>
-          {" "}
-          <KeyboardArrowRight />{" "}
-        </Box>
-      </Box>
-    ),
-    prevArrow: (
-      <Box>
-        <Box className="prev-slick-arrow" sx={{ ...prevNextButtonStyle }}>
-          <KeyboardArrowLeft />{" "}
-        </Box>
-      </Box>
-    ),
-  };
+    
+
+  
 
   return (
     <Grid sx={{ ...allCenter }}>

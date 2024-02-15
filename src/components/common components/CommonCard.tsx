@@ -56,7 +56,7 @@ const CommonCard = ({
   slug,
 }: CommonCard) => {
   return (
-    <Grid item xl={width} sx={{ ...allCenter, height: "494px" }}>
+    <Grid item xl={width} sx={{ ...allCenter, height: "494px", mt: "1rem", }}>
       <Card
         sx={{
           alignItems: "center",

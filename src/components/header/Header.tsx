@@ -2,12 +2,10 @@ import {
   Autocomplete,
   Box,
   Button,
-  CircularProgress,
   FormControl,
   Grid,
   Input,
   InputAdornment,
-  InputLabel,
   List,
   ListItem,
   ListItemButton,
@@ -15,9 +13,7 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  OutlinedInput,
   Popper,
-  Stack,
   TextField,
   Typography,
 } from "@mui/material";
@@ -34,15 +30,12 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import Modal from "@mui/material/Modal";
-import { ArrowDropDown, Height, Label } from "@mui/icons-material";
 import SendIcon from "@mui/icons-material/Send";
-import { getData } from "../../api/homeApi";
-import { Params, useLocation, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { storePageNumber } from "../../features/storeData";
 import { dealsApiData } from "../../api/dealApi";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import axios from "axios";
 import { setCurrentCity } from "../../features/filterData";
 import { getAllCityOption, getQuickOption } from "../../api/locationApi";
@@ -122,7 +115,7 @@ const Header = () => {
     });
   }, []);
 
-  const handleSearchKeyword = (citysearchValue: string) => {
+  const handleSearchKeyword = useCallback((citysearchValue: string) => {
     const searchKeyword = {
       searchKeyword: citysearchValue,
       take: 30,
@@ -137,7 +130,7 @@ const Header = () => {
     } else {
       setSearchCityData([]);
     }
-  };
+  },[])
 
   let cancelTokenSource = axios.CancelToken.source();
 
@@ -168,9 +161,11 @@ const Header = () => {
     };
   }, [searchValue]);
 
-  const setCityName = (cityName: string) => {
+  const setCityName = useCallback((cityName: string) => {
     sessionStorage.setItem("City", cityName);
-  };
+  },[])
+
+
 
   return (
     <>

@@ -16,18 +16,23 @@ import Banner from "../common components/Banner";
 import { getData } from "../../api/homeApi";
 import { useSelector } from "react-redux";
 import CategorySectionTitle from "../common components/CategorySectionTitle";
+import { getStoreData } from "../../api/storeApi";
 
 const StoreSection = () => {
   const [storeData, setStoredata] = useState([]);
 
-  const url =
-    "store/stores?v=1705477339221&take=999&isPopular=true&t=1705477339221";
+
 
   const currentCityName = useSelector((store) => store.filterData.currentCity);
 
   useEffect(() => {
-    const params = {};
-    getData(url, params, currentCityName).then((res) => {
+    const params = {
+      take : 999,
+      isPopular : true,
+    };
+
+
+    getStoreData(params, currentCityName).then((res) => {
       setStoredata(res.data.items);
     });
   }, [currentCityName]);

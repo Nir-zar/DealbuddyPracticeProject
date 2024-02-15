@@ -5,23 +5,38 @@ import {
 import React, { useEffect, useState } from "react";
 import { allCenter } from "../../constant/commonStyle";
 import Category_section_title from "../common components/CategorySectionTitle";
-
-import { getData } from "../../api/homeApi";
 import CommonCard from "../common components/CommonCard";
 import { useSelector } from "react-redux";
+import { dealsApiData, homePagedealsApiData } from "../../api/dealApi";
 
 const SalesSection = () => {
   const [salesCardData, setSalesCardData] = useState([]);
 
-  const url =
-    "deal/deals?v=1705405228343&limit=999&page=1&productType=sale&shortBy=clicks&isPopular=true&updateViewCount=true&t=1705405228343";
+ 
 
     const currentCityName = useSelector((store) => store.filterData.currentCity);
 
     useEffect(() => {
-      const params = {};
-      getData(url, params, currentCityName).then((res) => setSalesCardData(res.data.items));
-  }, [currentCityName]);
+      
+      const params = {
+        searchKeyword: "",
+        limit : 999,
+        page : 1,
+        productType : 'sale',
+        shortBy : 'clicks',
+        updateViewCount : true,
+        isPopular : true
+      };
+
+
+
+
+      homePagedealsApiData( params, currentCityName).then((res) => {
+     
+      
+        setSalesCardData(res.data.items);
+      });
+    },[currentCityName]);
 
  
 

@@ -17,17 +17,35 @@ import { getData } from "../../api/homeApi";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { useSelector } from "react-redux";
 import CommonCardButton from "../common components/CommonCardButton";
+import { dealsApiData, homePagedealsApiData } from "../../api/dealApi";
 
 const CouponSection = () => {
   const [couponData, setCouponData] = useState([]);
-  const url =
-    "deal/deals?v=1705473406628&limit=999&page=1&productType=coupon&shortBy=clicks&isPopular=true&updateViewCount=true&t=1705473406628";
+
+   
 
     const currentCityName = useSelector((store) => store.filterData.currentCity);
 
   useEffect(() => {
-    const params = {};
-      getData(url, params, currentCityName).then((res) => {
+
+
+    const params = {
+      searchKeyword : "",
+      limit : 999,
+      page : 1,
+      productType : 'coupon',
+      shortBy : 'clicks',
+      updateViewCount : true,
+      isPopular : true
+    };
+
+
+
+    
+    
+    homePagedealsApiData( params, currentCityName).then((res) => {
+     
+      
       setCouponData(res.data.items);
     });
   },[currentCityName]);

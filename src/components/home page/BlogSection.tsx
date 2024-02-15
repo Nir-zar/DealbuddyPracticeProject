@@ -9,16 +9,15 @@ import {
 import React, { useEffect, useState } from "react";
 import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
-import { getData } from "../../api/homeApi";
 import CommonCardButton from "../common components/CommonCardButton";
 import CategorySectionTitle from "../common components/CategorySectionTitle";
+import { getBlogData } from "../../api/blogApi";
 
 const BlogSection = () => {
   const [blogData, setBlogData] = useState([]);
-  const url =
-    "blog?v=1705410150066&where%5Bstatus%5D=active&where%5BisShowOnHome%5D=true&take=999";
+
   useEffect(() => {
-    getData(url).then((res) => {
+    getBlogData().then((res) => {
       setBlogData(res.data.items);
     });
   }, []);

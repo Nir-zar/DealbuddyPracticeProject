@@ -1,5 +1,5 @@
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { allCenter } from "../../constant/commonStyle";
 import ShortcutSharpIcon from "@mui/icons-material/ShortcutSharp";
 
@@ -15,35 +15,43 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import { getCategoryList } from "../../api/categoryApi";
 
 const CategoryAndSlider = () => {
   const [categoryList, setCategoryList] = useState([]);
 
-  const url = "category?order%5BorderBy%5D=ASC&take=6";
-  const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+ 
+  
+  const AutoPlaySwipeableViews = autoPlay(SwipeableViews); 
 
-  const images = [
-    {
-      label: "San Francisco – Oakland Bay Bridge, United States",
-      imgPath:
-        "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
-    },
-    {
-      label: "Bird",
-      imgPath:
-        "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
-    },
-    {
-      label: "Bali, Indonesia",
-      imgPath:
-        "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
-    },
-    {
-      label: "Goč, Serbia",
-      imgPath:
-        "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
-    },
-  ];
+  const images = useMemo(()=>{
+    const images = [
+      {
+        label: "San Francisco – Oakland Bay Bridge, United States",
+        imgPath:
+          "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
+      },
+      {
+        label: "Bird",
+        imgPath:
+          "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
+      },
+      {
+        label: "Bali, Indonesia",
+        imgPath:
+          "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250",
+      },
+      {
+        label: "Goč, Serbia",
+        imgPath:
+          "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
+      },
+    ];
+    return images;
+  },[])
+
+
+  
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -62,7 +70,12 @@ const CategoryAndSlider = () => {
   };
 
   useEffect(() => {
-    getData(url).then((res) => {
+
+    const params = {
+      take : 6,
+    }
+
+    getCategoryList(params).then((res) => {
       setCategoryList(res.data.items);
       return;
     });

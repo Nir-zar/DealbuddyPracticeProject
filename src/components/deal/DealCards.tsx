@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -45,6 +45,8 @@ const DealCards = () => {
   const location = useLocation();
 
   const searchKeyword = new URLSearchParams(location.search).get("search");
+  
+  
 
   const currentCityName = useSelector((store) => store.filterData.currentCity);
 
@@ -120,17 +122,17 @@ const DealCards = () => {
     currentCityName,
   ]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = useCallback((event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
+  },[])
 
-  const changeProductTypeValue = (productType: string) => {
+  const changeProductTypeValue = useCallback((productType: string) => {
     dispatch(filterDataByCategory(productType));
 
     if (pageNumber > 1) {
       dispatch(filterData({ shortBy: valueNew, pageNumber: 1 }));
     }
-  };
+  },[])
 
   return (
     <Box
@@ -218,7 +220,7 @@ const DealCards = () => {
                   }) => {
                     return (
                       <>
-                        {couponCode == null ? (
+                        {productType == 'sale' ? (
                           <CommonCard
                             key={index}
                             category={category}
