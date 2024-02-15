@@ -1,14 +1,14 @@
-import React from 'react'
-import StoreSearchBar from '../components/store/storeSearchBar'
-import OnlineStoreComp from '../components/store/OnlineStoreComp'
+import React from "react";
+import StoreSearchBar from "../components/store/storeSearchBar";
+import OnlineStoreComponent from "../components/store/OnlineStoreComponent";
 
 const OnlineStore = () => {
   return (
-   <>
-   <StoreSearchBar />
-   <OnlineStoreComp />
-   </>
-  )
-}
+    <>
+      <StoreSearchBar />
+      <OnlineStoreComponent />
+    </>
+  );
+};
 
-export default OnlineStore
+export default OnlineStore;

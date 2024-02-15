@@ -7,7 +7,7 @@ import {
   CardContent,
 } from "@mui/material";
 import React from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import Common_card_button from "./CommonCardButton";
 import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
@@ -62,7 +62,7 @@ const CommonCoupon = (
       item
       xl={width}
       sx={{
-        ...all_center,
+        ...allCenter,
         height: "474px",
         mt: "2rem",    
       }}
@@ -87,7 +87,7 @@ const CommonCoupon = (
         <Box
           component={"div"}
           sx={{
-            ...all_center,
+            ...allCenter,
             position: "absolute",
             bgcolor: "#000000b8",
             height: "36px",
@@ -131,7 +131,7 @@ const CommonCoupon = (
           className="showClicks"
           component={"div"}
           sx={{
-            ...all_center,
+            ...allCenter,
             height: "2rem",
             width: "100%",
             bgcolor: "#000000b8",
@@ -238,7 +238,7 @@ const CommonCoupon = (
                         fontSize: theme.typography.subtitle2.xl,
                       }}
                     >
-                      {stores[0].name}
+                      {stores[0]?.name}
                     </Typography>
                   </Box>
                 </>

@@ -7,13 +7,16 @@ interface StoreParams {
     searchKeyword : string;
 }
 
-const BASE_URL = "https://www.dealbuddy.co.nz/api";
+const BASE_URL = import.meta.env.VITE_RAPID_BASE_URL
 
-export const getStoreData = async (  params:StoreParams)=>{
+export const getStoreData = async (  params:StoreParams, currentCityName: string | null)=>{
     const data = await axios.get(`${BASE_URL}/store/stores`,{
         params : {
             ...params,
-        }
+        },
+        headers : {
+            "City" : currentCityName,
+          }
     });
     return data;
 }

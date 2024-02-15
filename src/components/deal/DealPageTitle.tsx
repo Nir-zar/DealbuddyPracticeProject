@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import { useLocation, useParams } from "react-router-dom";
 import { getIndividualCategoryData } from "../../api/categoryApi";
@@ -20,7 +20,7 @@ const [categoryTitleAndDescription, setCategoryTitleAndDescription] = useState()
   }, []);
 
   return (
-    <Grid container sx={{ ...all_center }}>
+    <Grid container sx={{ ...allCenter }}>
       <Box
         component={"div"}
         sx={{ height: "auto", width: { xl: "1300px" }, p: "3rem 0 0 0" }}

@@ -1,11 +1,11 @@
 import { Grid, Box, Typography } from '@mui/material';
 import React from 'react'
-import { all_center } from '../../constant/commonStyle';
+import { allCenter } from '../../constant/commonStyle';
 import theme from '../../theme';
 
 const ImageSection = () => {
     return (
-      <Grid container sx={{ ...all_center, height: "auto"}}>
+      <Grid container sx={{ ...allCenter, height: "auto"}}>
         <Grid
           item
           xl={12}
@@ -27,7 +27,7 @@ const ImageSection = () => {
               top: 0,
               left: 0,
               backgroundColor: "#0000008f",
-              ...all_center,
+              ...allCenter,
               color: theme.palette.common.white,
               display: "flex",
               flexDirection: "column",

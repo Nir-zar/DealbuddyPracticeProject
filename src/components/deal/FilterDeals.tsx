@@ -1,5 +1,5 @@
 import { Box, Checkbox, Divider, FormGroup, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import theme from "../../theme";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -18,9 +18,22 @@ const FilterDeals = () => {
 
   const dispatch = useDispatch();
 
-  const urlForDealMode = "product-mode";
-  const urlForDiscountType = "discount-type";
+  const urlForDealMode = useMemo(()=>{
+    const urlForDealMode = "product-mode";
+    return urlForDealMode;
+  },[])
+
+  const urlForDiscountType = useMemo(()=>{
+    const urlForDiscountType = "discount-type";
+    return urlForDiscountType
+  },[])
   
+
+  
+  
+
+
+
 
   useEffect(() => {
     getData(urlForDealMode).then((res) => {
@@ -34,23 +47,23 @@ const FilterDeals = () => {
     });
   }, []);
 
-  const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleChange = useCallback((e: { target: { value: React.SetStateAction<string>; }; }) => {
     dispatch(filterData({ shortBy: e.target.value, pageNumber: 1 }));
     setValue(e.target.value);
-  };
+  },[])
 
 
-  const handleChangeDiscountType = (e)=>{
-      const currentDiscountTypeValue = e.target.value;
-      dispatch(filterDataByDiscountTypes({currentDiscountTypeValue,pageNumber : 1}))
-  }
+  const handleChangeDiscountType = useCallback((e)=>{
+    const currentDiscountTypeValue = e.target.value;
+    dispatch(filterDataByDiscountTypes({currentDiscountTypeValue,pageNumber : 1}))
+},[])
 
   
 
-  const handleChangeDealModes = (e)=>{
+  const handleChangeDealModes = useCallback((e)=>{
     const currentValue = e.target.value;
     dispatch(filterDataByDealModes({currentValue, pageNumber :1}))
-  }
+  },[])
 
   return (
     <Box

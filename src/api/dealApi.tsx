@@ -2,23 +2,41 @@ import { PanoramaFishEyeSharp } from "@mui/icons-material";
 import axios, { CancelToken } from "axios";
 
 interface Params {
-  searchKeyword: string;
+  searchKeyword : string;
+  limit : number;
+  page : number;
+  productType : string;
+  shortBy : string;
+  updateViewCount : boolean;
+  isPopular : boolean;
 }
 
 interface CancelToken {
     token : object
 }
 
-const BASE_URL = "https://www.dealbuddy.co.nz/api";
+const BASE_URL = import.meta.env.VITE_RAPID_BASE_URL
 
-export const dealsApiData = async (cancelTokenSource:CancelToken,params?: Params,) => {
-
-    
+export const dealsApiData = async (cancelTokenSource:CancelToken,params?: Params,) => {    
   const data = await axios.get(`${BASE_URL}/deal/deals`, {
     params: {
       ...params,
     },
     cancelToken: cancelTokenSource.token,
+  });
+  return data;
+};
+
+export const homePagedealsApiData = async (params?: Params, currentCityName?:string) => {    
+  const data = await axios.get(`${BASE_URL}/deal/deals`, {
+
+    params: {
+      ...params,
+    },
+    headers : {
+      "City" : currentCityName,
+    }
+  
   });
   return data;
 };

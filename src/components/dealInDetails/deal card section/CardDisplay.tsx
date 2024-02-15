@@ -10,6 +10,7 @@ const CardDisplay = () => {
 const [cardData, setCardData] = useState([])
 
 const productId = useSelector((store)=> store.dealData.dealProductId);
+const currentCityName = useSelector((store)=> store.filterData.currentCity)
 
 useEffect(()=>{
 
@@ -20,65 +21,52 @@ useEffect(()=>{
 
     if(productId)
     {
-        getRelatedProductData(params).then((res)=>{
+        getRelatedProductData(params,currentCityName).then((res)=>{
             setCardData(res.data);
         })
     }
 
 
-},[productId])
+},[productId, currentCityName])
 
   return (
   <Grid container sx={{height:'auto'}}>
     
-    {cardData.map(({ category,
-                    imageUrl,
-                    clicks,
-                    productImages,
-                    productType,
-                    productModes,
-                    stores,
-                    name,
-                    NZWide,
-                    locations,
-                    index,
-                    slug,
-                couponCode,
-            })=>{
+    {cardData.map((cardData, index)=>{
         return(
 
             <>
-            {productType == "sale" ? 
+            {cardData.productType == "sale" ? 
             (<>
              <CommonCard 
        key={index}
-       category={category}
-       imageUrl={imageUrl}
-       clicks={clicks}
-       productImages={productImages}
-       productType={productType}
-       productModes={productModes}
-       stores={stores}
-       name={name}
-       NZWide={NZWide}
-       locations={locations}
-       slug={slug}
+       category={cardData.category}
+       imageUrl={cardData.imageUrl}
+       clicks={cardData.clicks}
+       productImages={cardData.productImages}
+       productType={cardData.productType}
+       productModes={cardData.productModes}
+       stores={cardData.stores}
+       name={cardData.name}
+       NZWide={cardData.NZWide}
+       locations={cardData.locations}
+       slug={cardData.slug}
        width={3}
        />
             </>) : (<>
                 <CommonCoupon
-                            category={category}
-                            imageUrl={imageUrl}
-                            clicks={clicks}
-                            productImages={productImages}
-                            productType={productType}
-                            productModes={productModes}
-                            stores={stores}
-                            name={name}
-                            NZWide={NZWide}
-                            locations={locations}
+                            category={cardData.category}
+                            imageUrl={cardData.imageUrl}
+                            clicks={cardData.clicks}
+                            productImages={cardData.productImages}
+                            productType={cardData.productType}
+                            productModes={cardData.productModes}
+                            stores={cardData.stores}
+                            name={cardData.name}
+                            NZWide={cardData.NZWide}
+                            locations={cardData.locations}
                             width={6}
-                            slug={slug}
+                            slug={cardData.slug}
                           />
             </>)}
             

@@ -10,21 +10,19 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useDispatch } from "react-redux";
 import {
-storeCategoryType, storeDiscountType,
+  storeCategoryType,
+  storeDiscountType,
   storeSearchBarValue,
 } from "../../features/storeData";
 import { getCategoryList } from "../../api/categoryApi";
 import { getData } from "../../api/homeApi";
 import { useLocation } from "react-router-dom";
-
-
-
 
 const StoreSearchBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -42,7 +40,6 @@ const StoreSearchBar = () => {
   const urlForDiscountType = "discount-type";
   const dispatch = useDispatch();
   const location = useLocation();
-
 
   useEffect(() => {
     getCategoryList().then((res) => {
@@ -67,14 +64,12 @@ const StoreSearchBar = () => {
     setbtnTwoAnchorEl(null);
   };
 
-
-
   const searchBarValue = (e) => {
     dispatch(storeSearchBarValue({ searchBarValue: e.target.value }));
   };
 
   return (
-    <Grid container sx={{ ...all_center }}>
+    <Grid container sx={{ ...allCenter }}>
       <Box
         component={"div"}
         sx={{ height: "auto", width: "1300px", p: "2rem 0 0 0" }}
@@ -94,21 +89,22 @@ const StoreSearchBar = () => {
               fontSize: theme.typography.h4.lg,
             }}
           >
-           {location.pathname == "/stores" ? " All Stores" : "Discover stores offering deals on online shopping"}
-           
+            {location.pathname == "/stores"
+              ? " All Stores"
+              : "Discover stores offering deals on online shopping"}
           </Typography>
 
-            {location.pathname == "/stores" &&  <Typography
-            sx={{
-              color: theme.palette.common.black,
-              fontSize: theme.typography.h5.md,
-              mt: { xl: "0.7rem" },
-            }}
-          >
-           Find your store and grab a deal!
-           
-          </Typography>}
-         
+          {location.pathname == "/stores" && (
+            <Typography
+              sx={{
+                color: theme.palette.common.black,
+                fontSize: theme.typography.h5.md,
+                mt: { xl: "0.7rem" },
+              }}
+            >
+              Find your store and grab a deal!
+            </Typography>
+          )}
         </Box>
 
         <Box
@@ -197,9 +193,7 @@ const StoreSearchBar = () => {
                     discountType: "Discount Type",
                   });
                   handleClose();
-                  dispatch(
-                    storeDiscountType("")
-                  );
+                  dispatch(storeDiscountType(""));
                 }}
               >
                 All Discount Type
@@ -213,9 +207,7 @@ const StoreSearchBar = () => {
                         discountType: data.name,
                       });
                       handleClose();
-                      dispatch(
-                        storeDiscountType(data.id)
-                      );
+                      dispatch(storeDiscountType(data.id));
                     }}
                     value={data.id}
                   >
@@ -266,9 +258,7 @@ const StoreSearchBar = () => {
                     discountType: "Categories",
                   });
                   handleClose();
-                  dispatch(
-                    storeCategoryType("")
-                  );
+                  dispatch(storeCategoryType(""));
                 }}
               >
                 All Categories
@@ -283,9 +273,7 @@ const StoreSearchBar = () => {
                         CategoryType: data.name,
                       });
                       handleClose();
-                      dispatch(
-                        storeCategoryType(data.id)
-                      );
+                      dispatch(storeCategoryType(data.id));
                     }}
                   >
                     {data.name}

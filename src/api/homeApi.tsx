@@ -4,25 +4,31 @@ import axios from "axios";
 
 
 
-const BASE_URL = "https://www.dealbuddy.co.nz/api";
+const BASE_URL = import.meta.env.VITE_RAPID_BASE_URL
 
 
-export const getData = async (url?: string, params?: object) =>
+export const getData = async (url?: string, params?: object, currentCityName?:string | null) =>
 {
    const data = await axios.get(`${BASE_URL}/${url}`,{
     params : {
       ...params,
-      // limit:5,
+     
+    },
+    headers : {
+      "City" : currentCityName,
     }
    });
     return data;
 }
 
 
-export const getRelatedProductData = async(params:object)=>{
+export const getRelatedProductData = async(params:object,currentCityName:string)=>{
   const data = await axios.get(`${BASE_URL}/deal/similar/deals`,{
     params : {
       ...params
+    },
+    headers : {
+      "City" : currentCityName,
     }
   });
   return data;

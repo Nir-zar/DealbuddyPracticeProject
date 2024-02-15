@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import theme from "../../theme";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const Footer = () => {
@@ -9,7 +9,7 @@ const Footer = () => {
     <Grid
       container
       sx={{
-        ...all_center,
+        ...allCenter,
         p: "3rem 0 2rem 0",
         height: "auto",
         bgcolor: theme.palette.success.main,
@@ -246,7 +246,7 @@ const Footer = () => {
       <Box
         component={"div"}
         sx={{
-          ...all_center,
+          ...allCenter,
           height: "50px",
           width: "100%",
           borderTop: `1px solid ${theme.palette.grey[300]}`,

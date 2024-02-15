@@ -1,6 +1,6 @@
 import { Box, Grid } from '@mui/material'
 import React from 'react'
-import { all_center } from '../../../constant/commonStyle'
+import { allCenter } from '../../../constant/commonStyle'
 import SliderAndDescription from './SliderAndDescription'
 import Deal from '../../../pages/Deal'
 import DealAndStoreDetail from './DealAndStoreDetail'

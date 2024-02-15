@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import PhysicalStore from "../pages/PhysicalStore";
 
 const initialState = {
   pageNumber: 1,
   searchBarValue: "",
   storeDiscountType: "",
   storeCategoryType: "",
+  physicalStoreData : {},
 };
 
 const storeDataSlice = createSlice({
@@ -25,11 +27,14 @@ const storeDataSlice = createSlice({
 
     storeCategoryType : (state, action)=>{
         state.storeCategoryType = action.payload;
+    },
+    PhysicalStoreType : (state, action)=>{
+      state.physicalStoreData = action.payload;
     }
   },
 });
 
-export const { storePageNumber, storeSearchBarValue, storeDiscountType, storeCategoryType  } =
+export const { storePageNumber, storeSearchBarValue, storeDiscountType, storeCategoryType, PhysicalStoreType  } =
   storeDataSlice.actions;
 
 export default storeDataSlice.reducer;

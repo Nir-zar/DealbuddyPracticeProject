@@ -1,6 +1,6 @@
 import { Box, Typography, Divider } from "@mui/material";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { all_center } from "../../../constant/commonStyle";
+import { allCenter } from "../../../constant/commonStyle";
 import theme from "../../../theme";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -27,7 +27,7 @@ const socialMediaBoxStyyle = {
   height: "2.25rem",
   width: "2.25rem",
   borderRadius: "50%",
-  ...all_center,
+  ...allCenter,
 };
 
 const LimitedOffer = () => {
@@ -37,7 +37,6 @@ const LimitedOffer = () => {
 
   const dates = useMemo(() => {
     const endDates = dealAndStoreAllDetails && dealAndStoreAllDetails?.endDate;
-
     return endDates;
   }, [dealAndStoreAllDetails]);
 
@@ -68,7 +67,7 @@ const LimitedOffer = () => {
       <Box
         gap={0.5}
         sx={{
-          ...all_center,
+          ...allCenter,
           height: "auto",
           width: "40%",
           display: "flex",
@@ -96,7 +95,7 @@ const LimitedOffer = () => {
       <Box
         component={"div"}
         sx={{
-          ...all_center,
+          ...allCenter,
           height: "auto",
           width: "100%",
           display: "flex",
@@ -108,7 +107,7 @@ const LimitedOffer = () => {
           component={"div"}
           gap={3}
           sx={{
-            ...all_center,
+            ...allCenter,
             height: "auto",
             width: "80%",
             display: "flex",
@@ -162,7 +161,7 @@ const LimitedOffer = () => {
 
       <Box
         component={"div"}
-        sx={{ ...all_center, height: "auto", width: "100%" }}
+        sx={{ ...allCenter, height: "auto", width: "100%" }}
       >
         <Box
           component={"div"}

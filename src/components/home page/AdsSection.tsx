@@ -7,26 +7,25 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
-import Common_card_button from "../common components/CommonCardButton";
-import { getData } from "../../api/homeApi";
+import { getAdsData } from "../../api/adsApi";
 
-const Ads_section = () => {
+const AdsSection = () => {
 
-const url = "sponsored-ads?v=1703163820228&take=12"
+
 const [adsData, setAdsData] = useState([])
 
 useEffect(()=>{
-getData(url).then((res)=>{
+  getAdsData().then((res)=>{
   setAdsData(res.data.items)
-  // console.log(res.data.items);
+
   
 })
 },[])
 
   return (
-    <Grid container sx={{ ...all_center, height: "auto", bgcolor:theme.palette.success.main, mt:"3rem" }}>
+    adsData.length > 0 &&  <Grid container sx={{ ...allCenter, height: "auto", bgcolor:theme.palette.success.main, mt:3 }}>
       <Box
         sx={{
           alignItems: "center",
@@ -62,7 +61,7 @@ getData(url).then((res)=>{
         >
           {adsData.map(({imageUrl,shortDescription, title}) => {
             return (
-              <Grid xl={3} sx={{ ...all_center, height: "auto" }}>
+              <Grid xl={3} sx={{ ...allCenter, height: "auto" }}>
                 <Card
                   sx={{
                     alignItems: "center",
@@ -96,10 +95,10 @@ getData(url).then((res)=>{
                     }}
                   >
                     <Typography
+                    color={theme.palette.common.black}
                       sx={{
                         mt: "0.2rem",
                         fontSize: theme.typography.h6.xl,
-                        color: theme.palette.common.black,
                         lineHeight: "22px",
                       }}
                     >
@@ -115,9 +114,9 @@ getData(url).then((res)=>{
                       }}
                     >
                       <Typography
+                      color={theme.palette.grey[500]}
                         sx={{
                           fontSize: theme.typography.caption.xl,
-                          color: theme.palette.grey[500],
                           fontWeight: 300,
                         }}
                       >
@@ -135,4 +134,4 @@ getData(url).then((res)=>{
   );
 };
 
-export default Ads_section;
+export default AdsSection;

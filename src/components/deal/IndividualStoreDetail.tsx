@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
 import { getIndividualStoreData } from "../../api/storeApi";
 import { useParams } from "react-router-dom";
@@ -17,12 +17,11 @@ const IndividualStoreDetail = () => {
   const { storeSlug } = useParams();
 
   useEffect(() => {
-    console.log(storeSlug);
+
 
     if (storeSlug) {
       getIndividualStoreData(storeSlug).then((res) => {
         setIndividualStoreData(res.data);
-        console.log(res.data);
       });
     }
   }, [storeSlug]);
@@ -38,7 +37,7 @@ const IndividualStoreDetail = () => {
     <Box
       component={"div"}
       sx={{
-        ...all_center,
+        ...allCenter,
         height: "auto",
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: "10px",
@@ -179,7 +178,7 @@ const IndividualStoreDetail = () => {
           <Box
             component={"div"}
             sx={{
-              ...all_center,
+              ...allCenter,
               height: "40px",
               width: "40px",
               display: "flex",

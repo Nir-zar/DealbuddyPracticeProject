@@ -2,34 +2,30 @@ import {
   Grid,
   Box,
   Typography,
-  Button,
   Card,
   CardMedia,
   CardContent,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { all_center } from "../../constant/commonStyle";
+import { allCenter } from "../../constant/commonStyle";
 import theme from "../../theme";
-import Banner from "../common components/Banner";
-import Category_section_title from "../common components/CategorySection_title";
-import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
-import Common_card_button from "../common components/CommonCardButton";
-import { getData } from "../../api/homeApi";
+import CommonCardButton from "../common components/CommonCardButton";
+import CategorySectionTitle from "../common components/CategorySectionTitle";
+import { getBlogData } from "../../api/blogApi";
 
-const Blog_section = () => {
+const BlogSection = () => {
   const [blogData, setBlogData] = useState([]);
-  const url =
-    "blog?v=1705410150066&where%5Bstatus%5D=active&where%5BisShowOnHome%5D=true&take=999";
+
   useEffect(() => {
-    getData(url).then((res) => {
+    getBlogData().then((res) => {
       setBlogData(res.data.items);
     });
   }, []);
 
   return (
     <>
-      <Grid container sx={{ ...all_center, height: "auto" }}>
-        <Category_section_title title="Blogs" />
+      <Grid container sx={{ ...allCenter, height: "auto" }}>
+        <CategorySectionTitle title="Blogs" />
 
         <Box
           sx={{
@@ -41,12 +37,20 @@ const Blog_section = () => {
             display: "flex",
             justifyContent: "start",
             flexWrap: "wrap",
-            
           }}
         >
           {blogData.map(({ imageUrl, title, sortDescription }) => {
             return (
-              <Grid item xl={3} sx={{ display:"flex",alignItems:"center", justifyContent:"center", height: "494px", }}>
+              <Grid
+                item
+                xl={3}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "494px",
+                }}
+              >
                 <Card
                   sx={{
                     alignItems: "center",
@@ -57,7 +61,6 @@ const Blog_section = () => {
                     display: "flex",
                     flexDirection: "column",
                     borderRadius: "10px",
-                    
                   }}
                 >
                   <CardMedia
@@ -104,14 +107,12 @@ const Blog_section = () => {
                           // ml: "0.7rem",
                           fontSize: theme.typography.subtitle2.xl,
                           color: theme.palette.grey[500],
-                          WebkitLineClamp: 3,
-                          textOverflow: "ellipsis",
-                         
                           overflow: "hidden",
                           height: "auto",
-                         
-                          display:"-webkit-box",
-                          WebkitBoxOrient:"vertical"
+                          display: "-webkit-box",
+                          WebkitBoxOrient: "vertical",
+                          WebkitLineClamp: 3,
+                          textOverflow: "ellipsis",
                         }}
                       >
                         {sortDescription}
@@ -119,7 +120,7 @@ const Blog_section = () => {
                     </Box>
                   </CardContent>
 
-                  <Common_card_button button_text="Read More" />
+                  <CommonCardButton button_text="Read More" />
                 </Card>
               </Grid>
             );
@@ -130,7 +131,7 @@ const Blog_section = () => {
       <Grid
         container
         sx={{
-          ...all_center,
+          ...allCenter,
           height: "1.5rem",
           bgcolor: theme.palette.common.white,
           mt: "1rem",
@@ -141,7 +142,7 @@ const Blog_section = () => {
           gap={2}
           item
           sx={{
-            ...all_center,
+            ...allCenter,
             width: { xl: "1300px" },
             // bgcolor: theme.palette.secondary.main,
             height: "3rem",
@@ -170,4 +171,4 @@ const Blog_section = () => {
   );
 };
 
-export default Blog_section;
+export default BlogSection;
