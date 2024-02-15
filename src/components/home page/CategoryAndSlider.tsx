@@ -19,12 +19,11 @@ import { getCategoryList } from "../../api/categoryApi";
 
 const CategoryAndSlider = () => {
   const [categoryList, setCategoryList] = useState([]);
+  const [activeStep, setActiveStep] = React.useState(0);
 
- 
-  
-  const AutoPlaySwipeableViews = autoPlay(SwipeableViews); 
+  const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-  const images = useMemo(()=>{
+  const images = useMemo(() => {
     const images = [
       {
         label: "San Francisco – Oakland Bay Bridge, United States",
@@ -48,32 +47,28 @@ const CategoryAndSlider = () => {
       },
     ];
     return images;
-  },[])
-
-
-  
+  }, []);
 
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
+
   const maxSteps = images.length;
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+  }, []);
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  }, []);
 
-  const handleStepChange = (step: number) => {
+  const handleStepChange = useCallback((step: number) => {
     setActiveStep(step);
-  };
+  }, []);
 
   useEffect(() => {
-
     const params = {
-      take : 6,
-    }
+      take: 6,
+    };
 
     getCategoryList(params).then((res) => {
       setCategoryList(res.data.items);
@@ -156,68 +151,69 @@ const CategoryAndSlider = () => {
                 flexDirection: "column",
               }}
             >
-              {categoryList && categoryList.map((category, index) => {
-                return (
-                  <>
-                    <Box
-                      key={index}
-                      sx={{
-                        display: "flex",
-                        height: "37px",
-                        p: { xl: "15px 0px" },
-                        width: { xl: "90%" },
-                        borderBottom: `1px solid #00000026`,
-                        m: { xl: "0rem 0 0 1rem" },
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
+              {categoryList &&
+                categoryList.map((category, index) => {
+                  return (
+                    <>
                       <Box
+                        key={index}
                         sx={{
-                          height: "100%",
-                          width: "80%",
                           display: "flex",
+                          height: "37px",
+                          p: { xl: "15px 0px" },
+                          width: { xl: "90%" },
+                          borderBottom: `1px solid #00000026`,
+                          m: { xl: "0rem 0 0 1rem" },
                           alignItems: "center",
-                          // bgcolor:"green"
+                          justifyContent: "space-between",
                         }}
                       >
                         <Box
                           sx={{
-                            ...allCenter,
                             height: "100%",
-                            width: "36px",
-                            bgcolor: theme.palette.primary.main,
-                            color: theme.palette.common.white,
-                            borderRadius: ".5rem",
+                            width: "80%",
+                            display: "flex",
+                            alignItems: "center",
+                            // bgcolor:"green"
                           }}
                         >
                           <Box
-                            component={"img"}
-                            src={`${category?.imageUrl}`}
-                            sx={{ height: "60%", width: "60%" }}
-                          ></Box>
+                            sx={{
+                              ...allCenter,
+                              height: "100%",
+                              width: "36px",
+                              bgcolor: theme.palette.primary.main,
+                              color: theme.palette.common.white,
+                              borderRadius: ".5rem",
+                            }}
+                          >
+                            <Box
+                              component={"img"}
+                              src={`${category?.imageUrl}`}
+                              sx={{ height: "60%", width: "60%" }}
+                            ></Box>
+                          </Box>
+                          <Typography
+                            sx={{
+                              p: "0px 20px",
+                              fontSize: theme.typography.subtitle1.xl,
+                              color: theme.palette.common.black,
+                              width: "auto",
+                              // bgcolor:"red"
+                            }}
+                          >
+                            {category.name}
+                          </Typography>
                         </Box>
-                        <Typography
-                          sx={{
-                            p: "0px 20px",
-                            fontSize: theme.typography.subtitle1.xl,
-                            color: theme.palette.common.black,
-                            width: "auto",
-                            // bgcolor:"red"
-                          }}
-                        >
-                          {category.name}
-                        </Typography>
-                      </Box>
 
-                      <ChevronRightSharpIcon
-                        fontSize="large"
-                        sx={{ fontWeight: 300, ml: "30px" }}
-                      />
-                    </Box>
-                  </>
-                );
-              })}
+                        <ChevronRightSharpIcon
+                          fontSize="large"
+                          sx={{ fontWeight: 300, ml: "30px" }}
+                        />
+                      </Box>
+                    </>
+                  );
+                })}
             </Box>
 
             <Box
@@ -240,52 +236,52 @@ const CategoryAndSlider = () => {
             </Box>
           </Box>
 
-            <Box sx={{ height: "32rem", width: "69%" }}>
-              <Box sx={{ width: "100%", height: "32rem" }}>
-                <AutoPlaySwipeableViews
-                  sx={{ height: "90%", width: "100%" }}
-                  index={activeStep}
-                  onChangeIndex={handleStepChange}
-                  enableMouseEvents
-                >
-                  {images.map((step, index) => (
-                    <div style={{ position: "relative" }} key={step.label}>
-                      {Math.abs(activeStep - index) <= 2 ? (
-                        <Box
-                          component="img"
-                          sx={{
-                            height: "32rem",
-                            display: "flex",
-                            overflow: "hidden",
-                            width: "100%",
-                            borderRadius: "10px",
-                          }}
-                          src={step.imgPath}
-                          alt={step.label}
-                        />
-                      ) : null}
-                      <MobileStepper
-                        variant="dots"
+          <Box sx={{ height: "32rem", width: "69%" }}>
+            <Box sx={{ width: "100%", height: "32rem" }}>
+              <AutoPlaySwipeableViews
+                sx={{ height: "90%", width: "100%" }}
+                index={activeStep}
+                onChangeIndex={handleStepChange}
+                enableMouseEvents
+              >
+                {images.map((step, index) => (
+                  <div style={{ position: "relative" }} key={step.label}>
+                    {Math.abs(activeStep - index) <= 2 ? (
+                      <Box
+                        component="img"
                         sx={{
-                          backgroundColor: "transparent",
-                          position: "absolute",
-                          height: "95%",
-                          top: 0,
-                          "& .MuiMobileStepper-dots": {
-                            float: "end",
-                            alignItems: "end",
-                            height: "100%",
-                          },
+                          height: "32rem",
+                          display: "flex",
+                          overflow: "hidden",
+                          width: "100%",
+                          borderRadius: "10px",
                         }}
-                        steps={maxSteps}
-                        activeStep={activeStep}
-                        nextButton={
-                          <Button
-                            onClick={handleNext}
-                            disabled={activeStep === maxSteps - 1}
-                          >
-                            {index == activeStep ? (
-                              <KeyboardArrowRight
+                        src={step.imgPath}
+                        alt={step.label}
+                      />
+                    ) : null}
+                    <MobileStepper
+                      variant="dots"
+                      sx={{
+                        backgroundColor: "transparent",
+                        position: "absolute",
+                        height: "95%",
+                        top: 0,
+                        "& .MuiMobileStepper-dots": {
+                          float: "end",
+                          alignItems: "end",
+                          height: "100%",
+                        },
+                      }}
+                      steps={maxSteps}
+                      activeStep={activeStep}
+                      nextButton={
+                        <Button
+                          onClick={handleNext}
+                          disabled={activeStep === maxSteps - 1}
+                        >
+                          {index == activeStep ? (
+                            <KeyboardArrowRight
                               sx={{
                                 p: "0.1rem",
                                 borderRadius: "50%",
@@ -293,39 +289,40 @@ const CategoryAndSlider = () => {
                                 color: theme.palette.common.white,
                               }}
                             />
-                            ) : ( <KeyboardArrowRight
+                          ) : (
+                            <KeyboardArrowRight
                               sx={{
                                 p: "0.1rem",
                                 borderRadius: "50%",
                                 bgcolor: "#ffffff85",
                                 color: "green",
                               }}
-                            />)}
-                            
-                          </Button>
-                        }
-                        backButton={
-                          <Button
-                            size="small"
-                            onClick={handleBack}
-                            disabled={activeStep === 0}
-                          >
-                            <KeyboardArrowLeft
-                              sx={{
-                                p: "0.1rem",
-                                borderRadius: "50%",
-                                bgcolor: "#ffffff85",
-                                color: theme.palette.common.white,
-                              }}
                             />
-                          </Button>
-                        }
-                      />
-                    </div>
-                  ))}
-                </AutoPlaySwipeableViews>
-              </Box>
+                          )}
+                        </Button>
+                      }
+                      backButton={
+                        <Button
+                          size="small"
+                          onClick={handleBack}
+                          disabled={activeStep === 0}
+                        >
+                          <KeyboardArrowLeft
+                            sx={{
+                              p: "0.1rem",
+                              borderRadius: "50%",
+                              bgcolor: "#ffffff85",
+                              color: theme.palette.common.white,
+                            }}
+                          />
+                        </Button>
+                      }
+                    />
+                  </div>
+                ))}
+              </AutoPlaySwipeableViews>
             </Box>
+          </Box>
         </Box>
 
         <Box

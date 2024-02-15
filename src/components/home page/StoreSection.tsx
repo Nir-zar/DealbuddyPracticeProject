@@ -21,16 +21,13 @@ import { getStoreData } from "../../api/storeApi";
 const StoreSection = () => {
   const [storeData, setStoredata] = useState([]);
 
-
-
   const currentCityName = useSelector((store) => store.filterData.currentCity);
 
   useEffect(() => {
     const params = {
-      take : 999,
-      isPopular : true,
+      take: 999,
+      isPopular: true,
     };
-
 
     getStoreData(params, currentCityName).then((res) => {
       setStoredata(res.data.items);

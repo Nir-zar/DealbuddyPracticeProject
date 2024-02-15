@@ -22,7 +22,6 @@ const IndividualStoreDetail = () => {
     if (storeSlug) {
       getIndividualStoreData(storeSlug).then((res) => {
         setIndividualStoreData(res.data);
-
       });
     }
   }, [storeSlug]);

@@ -14,8 +14,17 @@ interface CategoryList {
 const CategoryList = () => {
   const [categoryList, setCategoryList] = useState([]);
 
+
+
   useEffect(() => {
-    getCategoryList().then((res) => {
+
+    const params ={
+      where : {
+        status : 'active'
+      },
+    }
+
+    getCategoryList(params).then((res) => {
       setCategoryList(res.data.items);
     });
   }, []);

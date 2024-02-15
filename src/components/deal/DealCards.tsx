@@ -45,8 +45,6 @@ const DealCards = () => {
   const location = useLocation();
 
   const searchKeyword = new URLSearchParams(location.search).get("search");
-  
-  
 
   const currentCityName = useSelector((store) => store.filterData.currentCity);
 
@@ -122,9 +120,13 @@ const DealCards = () => {
     currentCityName,
   ]);
 
-  const handleChange = useCallback((event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  },[])
+  const handleChange = useCallback(
+    (event: React.SyntheticEvent, newValue: number) => {
+      setValue(newValue);
+      alert("Nirzar")
+    },
+    []
+  );
 
   const changeProductTypeValue = useCallback((productType: string) => {
     dispatch(filterDataByCategory(productType));
@@ -132,7 +134,7 @@ const DealCards = () => {
     if (pageNumber > 1) {
       dispatch(filterData({ shortBy: valueNew, pageNumber: 1 }));
     }
-  },[])
+  }, []);
 
   return (
     <Box
@@ -220,7 +222,7 @@ const DealCards = () => {
                   }) => {
                     return (
                       <>
-                        {productType == 'sale' ? (
+                        {productType == "sale" ? (
                           <CommonCard
                             key={index}
                             category={category}

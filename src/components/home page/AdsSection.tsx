@@ -25,7 +25,7 @@ useEffect(()=>{
 },[])
 
   return (
-    adsData.length > 0 &&  <Grid container sx={{ ...allCenter, height: "auto", bgcolor:theme.palette.success.main, mt:"3rem" }}>
+    adsData.length > 0 &&  <Grid container sx={{ ...allCenter, height: "auto", bgcolor:theme.palette.success.main, mt:3 }}>
       <Box
         sx={{
           alignItems: "center",
@@ -95,10 +95,10 @@ useEffect(()=>{
                     }}
                   >
                     <Typography
+                    color={theme.palette.common.black}
                       sx={{
                         mt: "0.2rem",
                         fontSize: theme.typography.h6.xl,
-                        color: theme.palette.common.black,
                         lineHeight: "22px",
                       }}
                     >
@@ -114,9 +114,9 @@ useEffect(()=>{
                       }}
                     >
                       <Typography
+                      color={theme.palette.grey[500]}
                         sx={{
                           fontSize: theme.typography.caption.xl,
-                          color: theme.palette.grey[500],
                           fontWeight: 300,
                         }}
                       >

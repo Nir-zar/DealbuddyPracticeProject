@@ -53,17 +53,17 @@ const FilterDeals = () => {
   },[])
 
 
-  const handleChangeDiscountType = (e)=>{
-      const currentDiscountTypeValue = e.target.value;
-      dispatch(filterDataByDiscountTypes({currentDiscountTypeValue,pageNumber : 1}))
-  }
+  const handleChangeDiscountType = useCallback((e)=>{
+    const currentDiscountTypeValue = e.target.value;
+    dispatch(filterDataByDiscountTypes({currentDiscountTypeValue,pageNumber : 1}))
+},[])
 
   
 
-  const handleChangeDealModes = (e)=>{
+  const handleChangeDealModes = useCallback((e)=>{
     const currentValue = e.target.value;
     dispatch(filterDataByDealModes({currentValue, pageNumber :1}))
-  }
+  },[])
 
   return (
     <Box

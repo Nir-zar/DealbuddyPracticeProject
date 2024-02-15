@@ -1,5 +1,5 @@
 import { Button } from '@mui/material'
-import React from 'react'
+import React, { useMemo } from 'react'
 import theme from '../../theme'
 import { useNavigate } from 'react-router-dom';
 
@@ -14,7 +14,12 @@ const CommonCardButton = ({button_text,slug, width}:Button_title) => {
 
 const navigate = useNavigate();
 
-const buttonWidth = width == 6 ? "100%" : "262px"
+const buttonWidth = useMemo(()=>{
+  const buttonWidth = width == 6 ? "100%" : "262px";
+  return buttonWidth;
+},[])
+
+
 
   return (
     <Button
