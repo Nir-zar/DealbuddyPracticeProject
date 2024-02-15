@@ -17,7 +17,6 @@ const filterDataSlice = createSlice({
     filterData: (state, action) => {
       state.shortBy = action.payload.shortBy;
       state.pageNumber = action.payload.pageNumber;
-      console.log(action.payload);
     },
 
     filterDataByCategory: (state, action) => {

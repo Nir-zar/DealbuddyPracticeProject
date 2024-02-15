@@ -105,7 +105,7 @@ const Header = () => {
     setOpen(false);
   };
 
-  const BASE_URL = "https://www.dealbuddy.co.nz/api";
+
 
   useEffect(() => {
     const params = {
