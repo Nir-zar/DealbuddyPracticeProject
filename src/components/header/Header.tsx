@@ -267,6 +267,7 @@ const Header = () => {
                 }}
               >
                 <Typography
+                variant='caption'
                   sx={{ color: theme.palette.common.black, minWidth: "4rem" }}
                 >
                   {currentCityName ? currentCityName : "NZ Wide"}

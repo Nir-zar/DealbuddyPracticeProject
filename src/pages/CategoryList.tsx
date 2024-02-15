@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Travel from "../components/categories/Travel";
-import Broadband from "../components/categories/Broadband";
 import { Box, Grid, Typography } from "@mui/material";
 import { allCenter } from "../constant/commonStyle";
 import theme from "../theme";
